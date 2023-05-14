@@ -68,9 +68,9 @@ public class DashboardFrame extends JFrame implements MouseListener{
           MatieresPanel.setBackground(new Color(0x1877F2));
           ModulesPanel.setBackground(new Color(0,5,255));
           ProfilePanel.setBackground(new Color(0x1877F2));
-            EvaluationsPanel.setBackground(new Color(0x1877F2));
+           EvaluationsPanel.setBackground(new Color(0x1877F2));
           AccueilPanel.setBackground(new Color(0x1877F2));
-                    StagesPanel.setBackground(new Color(0x1877F2));
+           StagesPanel.setBackground(new Color(0x1877F2));
           
           main.setBackground(Color.white);
           sidebar.setPreferredSize(new Dimension(262,1024));

@@ -2,11 +2,15 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,21 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author Ahmed
- */
-public class DashboardFrame extends JFrame{
+public class DashboardFrame extends JFrame implements MouseListener{
       ImageIcon logoSys;
-      JLabel header;
+      JLabel header,EtudiantsLabel,EnseignantsLabel,ModulesLabel,MatiereLabel,EvaluationLabel,GroupeLabel,StageLabel;
       JPanel sidebar,main;
       JButton Etudiants,Enseignants,Groupes,Matieres,Modules,Profile;
       JPanel EtudiantsPanel,EnseignantsPanel,GroupesPanel,MatieresPanel,ModulesPanel,ProfilePanel;
+      Boolean clicked=false;
+    
       DashboardFrame(){
           this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           this.setSize(1440,720);
@@ -49,6 +47,16 @@ public class DashboardFrame extends JFrame{
           
           // labels
           header = new JLabel();
+          EtudiantsLabel = new JLabel();
+          EnseignantsLabel=new JLabel();
+          ModulesLabel=new JLabel();
+          MatiereLabel=new JLabel();
+          EvaluationLabel=new JLabel();
+          GroupeLabel=new JLabel();
+          StageLabel=new JLabel();
+          
+          
+          
           
           
           // buttons
@@ -72,7 +80,7 @@ public class DashboardFrame extends JFrame{
           
           main.setBackground(Color.white);
           sidebar.setPreferredSize(new Dimension(262,1024));
-          sidebar.setLayout(new GridLayout(7,1));
+          sidebar.setLayout(null);
           header.setBounds(50,50,246,100);
           
           header.setIcon(logoSys);
@@ -90,8 +98,51 @@ public class DashboardFrame extends JFrame{
           
           
           // adding buttons to their containers
-          EtudiantsPanel.add(Etudiants);
-          EnseignantsPanel.add(Enseignants);
+          
+          //EtudiantsPanel.add(Etudiants);
+      
+           
+     
+            ImageIcon  normal_etudiants = new ImageIcon(DashboardFrame.class.getResource("normal_etudiants.png"));
+           EtudiantsLabel.setIcon(normal_etudiants);
+          
+          
+          
+          EtudiantsPanel.setBounds(50,250,220,50);
+          EtudiantsPanel.setBackground(     new Color(0x1877F2));
+          EtudiantsPanel.add(EtudiantsLabel);
+          EtudiantsPanel.addMouseListener(this);
+          EtudiantsPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+          
+          
+          
+          
+            ImageIcon  normal_enseignants = new ImageIcon(DashboardFrame.class.getResource("normal_enseignants.png"));
+           EnseignantsLabel.setIcon(normal_enseignants);    
+          EnseignantsPanel.setBounds(50,300,220,50);
+          EnseignantsPanel.addMouseListener(this);
+          EnseignantsPanel.setBackground(     new Color(0x1877F2));
+          EnseignantsPanel.add(EnseignantsLabel);
+          
+          
+                      ImageIcon  normal_Modules = new ImageIcon(DashboardFrame.class.getResource("normal_enseignants.png"));
+           ModulesLabel.setIcon(normal_Modules);    
+          ModulesLabel.setBounds(50,350,220,50);
+          ModulesLabel.addMouseListener(this);
+          ModulesLabel.setBackground(     new Color(0x1877F2));
+          ModulesPanel.add(ModulesLabel);
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           GroupesPanel.add(Groupes);
           MatieresPanel.add(Matieres);
           ModulesPanel.add(Modules);
@@ -102,6 +153,65 @@ public class DashboardFrame extends JFrame{
           this.setVisible(true);       
 
       }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        clicked=true;
+           ImageIcon  focused_etudiants = new ImageIcon(DashboardFrame.class.getResource("focused_etudiants.png"));
+           EtudiantsLabel.setIcon(focused_etudiants);
+           
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+   
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+   
+       if(e.getSource()==EtudiantsPanel){
+         
+      ImageIcon  focused_etudiants = new ImageIcon(DashboardFrame.class.getResource("focused_etudiants.png"));
+           EtudiantsLabel.setIcon(focused_etudiants);
+          }
+        System.out.println(e.getSource());
+      if(e.getSource()==EnseignantsPanel){
+              
+       
+                 ImageIcon  focused_enseignants = new ImageIcon(DashboardFrame.class.getResource("focused_enseignants.png"));
+           EnseignantsLabel.setIcon(focused_enseignants);
+      
+         }
+
+           
+      
+               
+                
+      
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+ 
+        if(!clicked){
+            
+                
+                           ImageIcon  normal_etudiants = new ImageIcon(DashboardFrame.class.getResource("normal_etudiants.png"));
+           EtudiantsLabel.setIcon(normal_etudiants);
+            
+         
+                 
+           
+        }
+
+    }
     private static class RoundedBorder implements Border {
 
     private int radius;

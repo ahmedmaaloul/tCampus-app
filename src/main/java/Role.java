@@ -68,7 +68,7 @@ public class Role extends JPanel implements ActionListener {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 setFont(new Font("Inter", Font.BOLD, 16));
-        setPreferredSize(new Dimension(200, 50)); 
+        setPreferredSize(new Dimension(200, 75)); 
                 setHorizontalAlignment(SwingConstants.CENTER); 
 
 
@@ -177,7 +177,7 @@ private class CustomTableCellRenderer extends DefaultTableCellRenderer  {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             
-            // Set the font and size for the cell
+            
             Font font = new Font("Inter", Font.ITALIC, 14);
             setHorizontalAlignment(SwingConstants.CENTER); 
             component.setFont(font);

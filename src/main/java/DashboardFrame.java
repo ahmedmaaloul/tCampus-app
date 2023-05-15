@@ -242,11 +242,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
           RolePanel.setBackground(     new Color(0x1877F2));
           RolePanel.add(RoleLabel);
                RolePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-          // ----------------------------------------
           
-            
-          // repaint
-          // ------------------------------------
           this.add(sidebar,BorderLayout.WEST);
           this.add(main);
           
@@ -405,12 +401,16 @@ public class DashboardFrame extends JFrame implements MouseListener{
           unfocus_ALL(e);
            focus(e);
             
-          
+       
+           
+           
            
        Role newRole=new Role();
            JPanel x=newRole.getInterface();
         
-            remove(main);
+           
+           
+            remove(main);    
             main = x;
             add(main);
             revalidate();

@@ -117,8 +117,8 @@ public class Role extends JPanel implements ActionListener {
             }
             else if (e.getSource()==addButton){
                 System.out.println("wouiw");
-                 AddRoleWindow addForm = new AddRoleWindow();
-                 addForm.setVisible(true);
+               new  AddRoleFrame();
+           
             }
 
 
@@ -188,52 +188,5 @@ private class CustomTableCellRenderer extends DefaultTableCellRenderer  {
 //----------------------------------------ADD NEW ROLE ----------------------------------------
 
 
-private  class AddRoleWindow extends JFrame implements ActionListener {
-    private JTextField IdField, NomField,DescField;
-    private JButton submitButton, cancelButton;
-
-    public AddRoleWindow() {
-        setTitle("Add Role");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(6,1));
-
-
-        IdField = new JTextField(20);
-        
-        NomField = new JTextField(20);
-            DescField = new JTextField(20);
-        submitButton = new JButton("Submit");
-        submitButton.addActionListener(this);
-        cancelButton = new JButton("Cancel");
-submitButton.addActionListener(this);
-
-
-
-    add(IdField);
-        add(NomField);
-        add(DescField);
-        add(submitButton);
-        add(cancelButton);
-
-        
-                    setSize(720,720);
-        setLocationRelativeTo(null); 
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-            if(e.getSource()==submitButton){
-                System.out.println("in submit section");
-
-            }
-            else if(e.getSource()==cancelButton){
-       
-            }
-    
-    
-    
-}
-
-}
 
 }

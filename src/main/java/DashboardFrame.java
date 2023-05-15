@@ -16,9 +16,9 @@ import javax.swing.JPanel;
 
 public class DashboardFrame extends JFrame implements MouseListener{
       ImageIcon logoSys;
-      JLabel header,EtudiantsLabel,EnseignantsLabel,ModulesLabel,MatieresLabel,EvaluationsLabel,GroupesLabel,StagesLabel,AccueilLabel,ProfileLabel;
+      JLabel header,EtudiantsLabel,EnseignantsLabel,ModulesLabel,MatieresLabel,EvaluationsLabel,GroupesLabel,StagesLabel,AccueilLabel,ProfileLabel,UserLabel,DeptLabel,RoleLabel;
       JPanel sidebar,main;
-      JPanel EtudiantsPanel,EnseignantsPanel,GroupesPanel,MatieresPanel,ModulesPanel,ProfilePanel,AccueilPanel,EvaluationsPanel,StagesPanel;
+      JPanel EtudiantsPanel,EnseignantsPanel,GroupesPanel,MatieresPanel,ModulesPanel,ProfilePanel,AccueilPanel,EvaluationsPanel,StagesPanel,UserPanel,DeptPanel,RolePanel;
       Object ClickedPanel;
    
     
@@ -43,6 +43,9 @@ public class DashboardFrame extends JFrame implements MouseListener{
           EvaluationsPanel=new JPanel();
           AccueilPanel=new JPanel();
           StagesPanel=new JPanel();
+          UserPanel=new JPanel();
+          RolePanel=new JPanel();
+          DeptPanel=new JPanel();
           // labels
           header = new JLabel();
           EtudiantsLabel = new JLabel();
@@ -54,7 +57,9 @@ public class DashboardFrame extends JFrame implements MouseListener{
           StagesLabel=new JLabel();
           AccueilLabel=new JLabel();
           ProfileLabel=new JLabel();
-          
+          UserLabel=new JLabel();
+          RoleLabel=new JLabel();
+          DeptLabel=new JLabel();
           
           
      
@@ -71,6 +76,9 @@ public class DashboardFrame extends JFrame implements MouseListener{
            EvaluationsPanel.setBackground(new Color(0x1877F2));
           AccueilPanel.setBackground(new Color(0x1877F2));
            StagesPanel.setBackground(new Color(0x1877F2));
+              UserPanel.setBackground(new Color(0x1877F2));
+                 DeptPanel.setBackground(new Color(0x1877F2));
+                    RolePanel.setBackground(new Color(0x1877F2));
           
           main.setBackground(Color.white);
           sidebar.setPreferredSize(new Dimension(262,1024));
@@ -92,6 +100,9 @@ public class DashboardFrame extends JFrame implements MouseListener{
           sidebar.add(AccueilPanel);
           sidebar.add(EvaluationsPanel);
           sidebar.add(StagesPanel);
+            sidebar.add(UserPanel);
+              sidebar.add(RolePanel);
+                sidebar.add(DeptPanel);
           
           
 
@@ -101,7 +112,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
           
           
           
-          AccueilPanel.setBounds(50,150,220,50);
+          AccueilPanel.setBounds(50,100,220,50);
           AccueilPanel.setBackground(     new Color(0x1877F2));
           AccueilPanel.add(AccueilLabel);
           AccueilPanel.addMouseListener(this);
@@ -115,7 +126,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
           
           
           
-          EtudiantsPanel.setBounds(50,200,220,50);
+          EtudiantsPanel.setBounds(50,150,220,50);
           EtudiantsPanel.setBackground(     new Color(0x1877F2));
           EtudiantsPanel.add(EtudiantsLabel);
           EtudiantsPanel.addMouseListener(this);
@@ -127,7 +138,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
             ImageIcon  normal_enseignants = new ImageIcon(DashboardFrame.class.getResource("normal_enseignants.png"));
            EnseignantsLabel.setIcon(normal_enseignants);    
            
-          EnseignantsPanel.setBounds(50,250,220,50);
+          EnseignantsPanel.setBounds(50,200,220,50);
           EnseignantsPanel.addMouseListener(this);
           EnseignantsPanel.setBackground(     new Color(0x1877F2));
           EnseignantsPanel.add(EnseignantsLabel);
@@ -136,7 +147,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
           ImageIcon  normal_Modules = new ImageIcon(DashboardFrame.class.getResource("normal_Modules.png"));
            ModulesLabel.setIcon(normal_Modules);    
            
-          ModulesPanel.setBounds(50,300,220,50);
+          ModulesPanel.setBounds(50,250,220,50);
           ModulesPanel.addMouseListener(this);
           ModulesPanel.setBackground(     new Color(0x1877F2));
           ModulesPanel.add(ModulesLabel);
@@ -147,7 +158,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
            MatieresLabel.setIcon(normal_Matieres);    
            
            
-          MatieresPanel.setBounds(50,350,220,50);
+          MatieresPanel.setBounds(50,300,220,50);
           MatieresPanel.addMouseListener(this);
           MatieresPanel.setBackground(     new Color(0x1877F2));
           MatieresPanel.add(MatieresLabel);
@@ -156,7 +167,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
                   ImageIcon  normal_Evaluations = new ImageIcon(DashboardFrame.class.getResource("normal_Evaluations.png"));
            EvaluationsLabel.setIcon(normal_Evaluations); 
            
-          EvaluationsPanel.setBounds(50,400,220,50);
+          EvaluationsPanel.setBounds(50,350,220,50);
           EvaluationsPanel.addMouseListener(this);
           EvaluationsPanel.setBackground(     new Color(0x1877F2));
           EvaluationsPanel.add(EvaluationsLabel);
@@ -166,7 +177,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
                 ImageIcon  normal_Groupes = new ImageIcon(DashboardFrame.class.getResource("normal_Groupes.png"));
            GroupesLabel.setIcon(normal_Groupes); 
            
-          GroupesPanel.setBounds(50,450,220,50);
+          GroupesPanel.setBounds(50,400,220,50);
           GroupesPanel.addMouseListener(this);
           GroupesPanel.setBackground(     new Color(0x1877F2));
           GroupesPanel.add(GroupesLabel);
@@ -176,7 +187,7 @@ public class DashboardFrame extends JFrame implements MouseListener{
                 ImageIcon  normal_Stages = new ImageIcon(DashboardFrame.class.getResource("normal_Stages.png"));
            StagesLabel.setIcon(normal_Stages); 
            
-          StagesPanel.setBounds(50,500,220,50);
+          StagesPanel.setBounds(50,450,220,50);
           StagesPanel.addMouseListener(this);
           StagesPanel.setBackground(     new Color(0x1877F2));
           StagesPanel.add(StagesLabel);
@@ -185,27 +196,60 @@ public class DashboardFrame extends JFrame implements MouseListener{
                 ImageIcon  normal_Profile = new ImageIcon(DashboardFrame.class.getResource("normal_Profile.png"));
            ProfileLabel.setIcon(normal_Profile); 
            
-          ProfilePanel.setBounds(50,550,220,50);
+          ProfilePanel.setBounds(50,500,220,50);
           ProfilePanel.addMouseListener(this);
           ProfilePanel.setBackground(     new Color(0x1877F2));
           ProfilePanel.add(ProfileLabel);
                ProfilePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+               
+               
+               
+            
+               
+               
+               
+                //ImageIcon  normal_Dept = new ImageIcon(DashboardFrame.class.getResource("normal_Dept.png"));
+           //DeptLabel.setIcon(normal_Dept); 
+           DeptLabel.setText("Departement");
+          DeptPanel.setBounds(50,550,220,50);
+          DeptPanel.addMouseListener(this);
+          DeptPanel.setBackground(     new Color(0x1877F2));
+          DeptPanel.add(DeptLabel);
+               DeptPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+               
+               
+               
+              //  ImageIcon  normal_User = new ImageIcon(DashboardFrame.class.getResource("normal_User.png"));
+          // UserLabel.setIcon(normal_User); 
+           UserLabel.setText("Utilisateur");
+           
+          UserPanel.setBounds(50,600,220,50);
+          UserPanel.addMouseListener(this);
+          UserPanel.setBackground(     new Color(0x1877F2));
+          UserPanel.add(UserLabel);
+               UserPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
           
           
           
           
           
+             // ImageIcon  normal_Role = new ImageIcon(DashboardFrame.class.getResource("normal_Role.png"));
+    //       RoleLabel.setIcon(normal_Role); 
+        RoleLabel.setText("Role");
+    
+          RolePanel.setBounds(50,650,220,50);
+          RolePanel.addMouseListener(this);
+          RolePanel.setBackground(     new Color(0x1877F2));
+          RolePanel.add(RoleLabel);
+               RolePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+          // ----------------------------------------
           
-          
-          
-          
-          
-          
-          
- 
-          
+            
+          // repaint
+          // ------------------------------------
           this.add(sidebar,BorderLayout.WEST);
           this.add(main);
+          
           this.setVisible(true);       
 
       }
@@ -360,8 +404,17 @@ public class DashboardFrame extends JFrame implements MouseListener{
         ClickedPanel=e.getSource();
           unfocus_ALL(e);
            focus(e);
+            
+          
            
+       Role newRole=new Role();
+           JPanel x=newRole.getInterface();
         
+            remove(main);
+            main = x;
+            add(main);
+            revalidate();
+            repaint();
    
        
            

@@ -24,6 +24,8 @@ public class StudentPanel extends javax.swing.JPanel {
         fetchStudents();
      }
     private void fetchStudents(){
+        // instance mil classe
+        //instance.consulter 
                try (
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
 
@@ -46,7 +48,7 @@ public class StudentPanel extends javax.swing.JPanel {
                 rowData[2] = resultSet.getString("prenom");
                 rowData[3] = resultSet.getString("tel");
                 rowData[4] = resultSet.getString("email");
-                rowData[5] = "Actions";
+                rowData[5] = TypeClass.ETUDIANT;
                 table.addRow(rowData);
                 System.out.println(rowData);
             }
@@ -59,6 +61,7 @@ public class StudentPanel extends javax.swing.JPanel {
         }
 
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,14 +117,16 @@ public class StudentPanel extends javax.swing.JPanel {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "CIN/Passport", "Nom", "Prénom", "Tel", "Email", "Actions"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

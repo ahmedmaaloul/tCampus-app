@@ -21,13 +21,14 @@ public class Etudiant extends Utilisateur {
     private int num_insc;
 
     public Etudiant(int num_insc, String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
-        super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance);
+        super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance,2);
         this.num_insc = num_insc;
     }
 
     public Etudiant() {
         super();
         this.num_insc = 0;
+        this.setIdRole(2);
     }
 
     @Override
@@ -87,6 +88,26 @@ public class Etudiant extends Utilisateur {
     @Override
     public void setPhoto(String photo) {
         super.setPhoto(photo); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getGenre() {
+        return super.getGenre(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setGenre(int genre) {
+        super.setGenre(genre); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setIdRole(int idRole) {
+        super.setIdRole(idRole); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getIdRole() {
+        return super.getIdRole(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

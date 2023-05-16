@@ -21,8 +21,9 @@ public class Utilisateur {
     protected String CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, photo;
     protected String dateNaissance; // should be stored as date type in DB
     protected int genre;
+    protected int idRole;
 
-    public Utilisateur(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel,int genre,String photo, String dateNaissance) {
+    public Utilisateur(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel,int genre,String photo, String dateNaissance,int idRole) {
         this.CIN_Passport = CIN_Passport;
         this.nomUtilisateur = nomUtilisateur;
         this.email = email;
@@ -33,6 +34,7 @@ public class Utilisateur {
         this.tel = tel;
         this.photo = photo;
         this.dateNaissance = dateNaissance;
+        this.idRole= idRole;
     }
 
     public Utilisateur() {
@@ -46,6 +48,15 @@ public class Utilisateur {
         this.tel = "";
         this.photo = "";
         this.dateNaissance = "";
+        this.idRole= 0;
+    }
+
+    public int getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
     }
 
     public String getCIN_Passport() {

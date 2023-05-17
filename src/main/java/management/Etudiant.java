@@ -1,6 +1,5 @@
 package management;
 
-
 import management.Utilisateur;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,15 +21,17 @@ import javax.swing.JOptionPane;
 public class Etudiant extends Utilisateur {
 
     private int num_insc;
-
-    public Etudiant(int num_insc, String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
-        super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance,2);
+    private int idGRP;
+    public Etudiant(int num_insc, String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance,int idGRP) {
+        super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance, 2);
         this.num_insc = num_insc;
+        this.idGRP= idGRP;
     }
 
     public Etudiant() {
         super();
         this.num_insc = 0;
+        this.idGRP= 0;
         this.setIdRole(2);
     }
 
@@ -330,7 +331,9 @@ public class Etudiant extends Utilisateur {
             int rowsAffected = statement.executeUpdate(query);
 
             if (rowsAffected > 0) {
-                this.displaySuccAssign();
+                this.displaySuccRemove();
+                idGRP=0;
+                
             } else {
                 displayError("La requête de mise à jour n'a modifié aucune donnée.");
             }
@@ -356,6 +359,7 @@ public class Etudiant extends Utilisateur {
 
             if (rowsAffected > 0) {
                 this.displaySuccAssign();
+                this.idGRP=idGRP;
             } else {
                 displayError("La requête de mise à jour n'a modifié aucune donnée.");
             }
@@ -374,7 +378,7 @@ public class Etudiant extends Utilisateur {
     }
 
     public void ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int num_insc) {
-        if(this.verifExistanceEt(CIN_Passport, num_insc)){
+        if (this.verifExistanceEt(CIN_Passport, num_insc)) {
             this.displayError("probleme d'unicite");
             return;
         }
@@ -429,7 +433,7 @@ public class Etudiant extends Utilisateur {
     }
 
     public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int num_insc) {
-        if(this.verifUnicite_num_insc(num_insc)){
+        if (this.verifUnicite_num_insc(num_insc)) {
             this.displayErrorModif();
             return;
         }
@@ -481,4 +485,44 @@ public class Etudiant extends Utilisateur {
         }
     }
 
+    public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
+
+        String selectQuery = "SELECT * FROM UTILISATEUR WHERE typeUser='Etudiant' AND num_insc=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String num_insc_str = Integer.toString(num_insc);
+            statement.setString(1, num_insc_str);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                CIN_Passport = resultSet.getString("CIN_Passport");
+                nomUtilisateur = resultSet.getString("nomUtilisateur");
+                email = resultSet.getString("email");
+                password = resultSet.getString("password");
+                prenom = resultSet.getString("prenom");
+                nom = resultSet.getString("nom");
+                tel = resultSet.getString("tel");
+                photo =resultSet.getString("photo");
+                dateNaissance =resultSet.getString("dateNaissance");
+                num_insc =resultSet.getInt("num_insc");
+                idGRP = resultSet.getInt("idGRP");
+                return 0;
+            }
+            else{
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
+    }
 }

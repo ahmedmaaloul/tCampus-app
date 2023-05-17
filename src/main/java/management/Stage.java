@@ -264,5 +264,36 @@ public class Stage {
 
         frame.dispose();
     }
+      public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
 
+        String selectQuery = "SELECT * FROM STAGE WHERE id=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String id_str = Integer.toString(this.id);
+            statement.setString(1, id_str);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                type = resultSet.getString("type");
+                dateDebut = resultSet.getString("dateDebut");
+                dateFin = resultSet.getString("dateFin");
+                idEtu= resultSet.getString("idEtu");
+                return 0;
+            } else {
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
+    }
 }

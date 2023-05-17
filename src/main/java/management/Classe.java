@@ -318,4 +318,38 @@ public class Classe {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
+      public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
+
+        String selectQuery = "SELECT * FROM CLASSE WHERE id=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String id_str = Integer.toString(this.id);
+            statement.setString(1, id_str);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                nom = resultSet.getString("nom");
+                specialite = resultSet.getString("specialite");
+                diplome = resultSet.getString("diplome");
+                niveau = resultSet.getString("niveau");
+                anneeUni = resultSet.getString("anneeUni");
+                idDept = resultSet.getInt("idDept");
+                return 0;
+            } else {
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
+    }
 }

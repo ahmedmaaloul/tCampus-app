@@ -261,5 +261,36 @@ public class Absence {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
+   public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
 
+        String selectQuery = "SELECT * FROM ABSENCE WHERE idE=? AND idC=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String idC_str = Integer.toString(this.IdC);
+            statement.setString(1, this.IdE);
+            statement.setString(2, idC_str);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                justifie = resultSet.getBoolean("justifie");
+                justification = resultSet.getString("justification");
+                return 0;
+            }
+            else{
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
+    }
 }

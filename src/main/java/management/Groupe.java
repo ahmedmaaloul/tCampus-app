@@ -85,7 +85,7 @@ public class Groupe {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
-        String insertQuery = "INSERT INTO GROUPE (Id, nom,num,idc) VALUES (?, ?, ? ,?)";
+        String insertQuery = "INSERT INTO GROUPE (Id, nom,num,idClasse) VALUES (?, ?, ? ,?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(insertQuery)) {
@@ -279,5 +279,36 @@ public class Groupe {
         JOptionPane.showMessageDialog(frame, "Groupe modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
+    }
+      public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
+
+        String selectQuery = "SELECT * FROM GROUPE WHERE id=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String id_str = Integer.toString(this.Id);
+            statement.setString(1, id_str);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                nom = resultSet.getString("nom");
+                num = resultSet.getInt("num");
+                IdC = resultSet.getInt("idClasse");
+                return 0;
+            } else {
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
     }
 }

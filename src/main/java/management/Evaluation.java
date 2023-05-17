@@ -261,4 +261,36 @@ public class Evaluation {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
+       public int fsetInfo() {
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
+
+        String selectQuery = "SELECT * FROM EVALUATION WHERE idE=? AND idM=? and type=?";
+
+        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+
+            // Set the parameter value for the condition
+            String idM_str = Integer.toString(this.idM);
+            statement.setString(1, this.idE);
+            statement.setString(2, idM_str);
+            statement.setString(3,this.type);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Retrieve values from the result set
+                note = resultSet.getFloat("note");
+                return 0;
+            }
+            else{
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error executing select query: " + e.getMessage());
+            return -1;
+        }
+    }
 }

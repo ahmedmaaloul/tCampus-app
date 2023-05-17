@@ -1,3 +1,5 @@
+package management;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -137,11 +139,11 @@ public class Classe {
         frame.dispose();
     }
 
-    public void displayErrorAdd() {
+    public void displayErrorAdd(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Classe non ajouté", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, reason, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
@@ -198,7 +200,12 @@ public class Classe {
 
     public void ajouter(int id, String nom, String specialite, String diplome, String niveau, String anneeUni, int idDept) {
         if(this.verifExistence(id)){
-            this.displayErrorAdd();
+            this.displayErrorAdd("Problème d'unicité");
+            return;
+        }
+        Departement t = new Departement();
+        if(t.verifExistence(idDept) == false){
+            this.displayErrorAdd("Departement inconnu");
             return;
         }
         this.id = id;
@@ -233,12 +240,12 @@ public class Classe {
             if (rowsAffected > 0) {
                 this.displaySuccAdd();
             } else {
-                this.displayErrorAdd();
+                this.displayErrorAdd("Classe existe déja");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd();
+            this.displayErrorAdd("Erreur dans l'ajout de la classe");
             return;
 
         }

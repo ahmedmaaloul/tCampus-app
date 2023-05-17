@@ -1,3 +1,5 @@
+package management;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -68,7 +70,12 @@ public class Groupe {
 
     public void ajouter(int Id, String nom, int num, int IdC) {
         if(this.verifExistence(Id)){
-            this.displayErrorAdd();
+            this.displayErrorAdd("Problème d'unicite");
+            return;
+        }
+        Classe c = new Classe();
+        if(c.verifExistence(IdC) == false){
+            this.displayErrorAdd("Classe non trouvée !");
             return;
         }
         this.Id = Id;
@@ -98,12 +105,12 @@ public class Groupe {
             if (rowsAffected > 0) {
                 this.displaySuccAdd();
             } else {
-                this.displayErrorAdd();
+                this.displayErrorAdd("Groupe existe déja");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd();
+            this.displayErrorAdd("Impossible d'ajouter le groupe");
             return;
 
         }
@@ -248,11 +255,11 @@ public class Groupe {
         frame.dispose();
     }
 
-    public void displayErrorAdd() {
+    public void displayErrorAdd(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Groupe non ajouté", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, reason, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }

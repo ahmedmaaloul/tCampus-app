@@ -247,5 +247,10 @@ public class Salle {
                                                JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
+    
+    private void displayErrorSearch() {
+                                               JOptionPane.showMessageDialog(null, "ERROR", "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+    }
 
 }

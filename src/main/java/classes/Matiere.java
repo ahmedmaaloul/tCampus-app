@@ -197,7 +197,105 @@ private float vHoraire;
         
         
     }
+       private boolean verifExistenceGM(int id) {
+        
+              boolean gmExists = false;
+        try (
+                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+
+            String query = "SELECT 1 FROM groupeModule where id=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+
+                gmExists = resultSet.getInt(1) > 0;
+
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+        return gmExists;
+        
+        
+        
+    }
+  ///////////===================================> ADD   
     
+    public void AssignerMat_GM(int idGM) {
+         if(verifExistenceGM(idGM))return;
+        
+         
+
+        try (
+                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+
+            String query = "UPDATE Matiere SET idGM = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+              statement.setInt(1,idGM );
+            statement.setInt(2, this.id);
+      
+
+            int rows = statement.executeUpdate();
+            if (rows > 0) {
+                displaySuccModif();
+
+            } else {
+                displayErrorModif("impossible d'ajouter la matiere !");
+
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            displayErrorModif("impossible d'ajouter la matiere!");
+            e.printStackTrace();
+
+        }
+
+    }
+            ///////////===================================> REMOVE
+     public void RetierMat_GM() {
+      
+        
+            
+
+        try (
+                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+
+            String query = "UPDATE Matiere SET idGM =NULL  WHERE  id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+                    statement.setInt(1,this.id );
+     
+            int rows = statement.executeUpdate();
+            if (rows > 0) {
+                displaySuccModif();
+
+            } else {
+                displayErrorModif("impossible de retirer  la matiere !");
+
+            }   
+
+            statement.close();
+
+        } catch (SQLException e) {
+            displayErrorModif("impossible de retirer  la matiere!");
+            e.printStackTrace();
+
+        }
+
+    }
 ///////////===================================> DISPLAY
 private void displayErrorDel(String Message) {
                                    JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
@@ -228,7 +326,11 @@ private void displayErrorDel(String Message) {
 
         
     }
+    private void displayErrorSearch() {
+                                       JOptionPane.showMessageDialog(null, "ERROR", "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
 
+    }
+    
     
     
     

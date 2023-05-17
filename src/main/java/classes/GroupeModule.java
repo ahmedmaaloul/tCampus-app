@@ -150,43 +150,41 @@ public class GroupeModule {
     }
         ///////////===================================> ADD
     
-     public void AjouterMat(int idMat) {
-         if(verifExistenceInGM(idMat))return;
-         if(!verifExistenceMat(idMat))return;
-         
+     public void AjouterGM_Classe(int idClasse) {
+         if(!verifExistenceInClasse(idClasse))return;
+        
 
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Matiere SET idGM = ? WHERE id = ?";
+            String query = "UPDATE GroupeModule SET idClasse = ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-
-            statement.setInt(1, this.id);
-                    statement.setInt(2,idMat );
+         statement.setInt(1,idClasse );
+            statement.setInt(2, this.id);
+           
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
                 displaySuccModif();
 
             } else {
-                displayErrorModif("impossible d'ajouter la matiere !");
+                displayErrorModif("impossible d'ajouter le groupemodule !");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorModif("impossible d'ajouter la matiere!");
+            displayErrorModif("impossible d'ajouter le groupemodule!");
             e.printStackTrace();
 
         }
 
     }
             ///////////===================================> REMOVE
-     public void removeMatiere(int idMat) {
-         if(!verifExistenceInGM(idMat))return;
-        
+     public void removeGM_Classe() {
+
             
 
         try (
@@ -195,21 +193,21 @@ public class GroupeModule {
             String query = "UPDATE Matiere SET idGM =NULL  WHERE  id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-                    statement.setInt(1,idMat );
+                    statement.setInt(1,this.id );
      
             int rows = statement.executeUpdate();
             if (rows > 0) {
                 displaySuccModif();
 
             } else {
-                displayErrorModif("impossible de retirer  la matiere !");
+                displayErrorModif("impossible de retirer  le groupemodule !");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorModif("impossible de retirer  la matiere!");
+            displayErrorModif("impossible de retirer  le groupemodule!");
             e.printStackTrace();
 
         }
@@ -252,23 +250,23 @@ public class GroupeModule {
         
     }
     
-     private boolean verifExistenceInGM(int idMat) {
+     private boolean verifExistenceInClasse(int idClasse) {
         
-              boolean matExistsInGM = false;
+              boolean classeExists = false;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "SELECT 1 FROM Matiere where idGM=? and id=?";
+            String query = "SELECT 1 FROM Classe where  id=?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, this.id);
-            statement.setInt(2, idMat);
+   
+            statement.setInt(1, idClasse);
 
             ResultSet resultSet = statement.executeQuery(query);
 
             if (resultSet.next()) {
 
-                matExistsInGM = resultSet.getInt(1) > 0;
+                classeExists = resultSet.getInt(1) > 0;
 
             }
 
@@ -280,7 +278,7 @@ public class GroupeModule {
             e.printStackTrace();
 
         }
-        return matExistsInGM;
+        return classeExists;
         
         
         
@@ -351,7 +349,11 @@ public class GroupeModule {
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
-    
+        private void displayErrorSearch() {
+                               JOptionPane.showMessageDialog(null, "ERROR", "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+    }
+
     
     
 }

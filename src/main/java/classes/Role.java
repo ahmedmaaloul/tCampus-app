@@ -239,6 +239,11 @@ public class Role {
 
     }
 
+        private void displayErrorSearch() {
+                                               JOptionPane.showMessageDialog(null, "ERROR", "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+    }
+
     
     
 }

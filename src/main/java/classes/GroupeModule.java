@@ -132,7 +132,16 @@ public class GroupeModule {
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccDel();
+                           query ="Update Matiere set idGM=NULL where  idGM=?";
+                 statement = connection.prepareStatement(query);
+                 statement.setInt(1, this.id);
+                 rows = statement.executeUpdate();
+                 if(rows>0){
+                        displaySuccDel();   
+                 }else{
+                                      displayErrorDel("ERREUR !");
+
+                 }
 
             } else {
                 displayErrorDel("impossible de supprimer  le gourpe module!");

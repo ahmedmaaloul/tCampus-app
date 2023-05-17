@@ -121,7 +121,16 @@ private String nom;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccDel();
+                          query ="Update Classe set idDept=NULL where  idDept=?";
+                 statement = connection.prepareStatement(query);
+                 statement.setInt(1, this.id);
+                 rows = statement.executeUpdate();
+                 if(rows>0){
+                        displaySuccDel();   
+                 }else{
+                                      displayErrorDel("ERREUR !");
+
+                 }
 
             } else {
                 displayErrorDel("impossible de supprimer  le Departement!");

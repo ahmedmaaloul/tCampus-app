@@ -146,7 +146,16 @@ private float vHoraire;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccDel();
+                      query ="Update Cours set idMat=NULL where  idMat=?";
+                 statement = connection.prepareStatement(query);
+                 statement.setInt(1, this.id);
+                 rows = statement.executeUpdate();
+                 if(rows>0){
+                        displaySuccDel();   
+                 }else{
+                                      displayErrorDel("ERREUR !");
+
+                 }
 
             } else {
                 displayErrorDel("impossible de supprimer  cette matiere!");

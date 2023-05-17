@@ -145,7 +145,16 @@ public class Role {
             
             int rows = statement.executeUpdate();
             if(rows>0){
-                         displaySuccDel();
+                                       query ="Update utilisateur set idRole=NULL where  idRole=?";
+                 statement = connection.prepareStatement(query);
+                 statement.setInt(1, this.id);
+                 rows = statement.executeUpdate();
+                 if(rows>0){
+                        displaySuccDel();   
+                 }else{
+                                      displayErrorDel("ERREUR !");
+
+                 }
                 
             }else{
                  displayErrorDel("impossible de supprimer  ce role !");

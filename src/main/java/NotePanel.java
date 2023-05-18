@@ -1,5 +1,4 @@
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,28 +14,26 @@ import java.sql.Statement;
  *
  * @author Ahmed
  */
-public class StudentPanel extends javax.swing.JPanel {
+public class NotePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form StudentPanel
+     * Creates new form NotePanel
      */
-    public StudentPanel() {
+    public NotePanel() {
         initComponents();
-        fetchStudents();
-     }
-    private void fetchStudents(){
-        // instance mil classe
-        //instance.consulter 
+        fetchEvaluations();
+    }
+ private void fetchEvaluations(){
                try (
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
 
             String search = header2.getText();
             System.out.println(search);
-            String query = "SELECT CIN_Passport,nom,prenom,tel,email FROM Utilisateur";
+            String query = "SELECT IdE,IdM,note,type FROM Evaluation";
 
             if (!search.isEmpty()) {
 
-                query += " WHERE typeUser='Etudiant' AND nom LIKE '%" + search + "%'    OR CIN_Passport LIKE '%" + search + "%' ";
+                query += " WHERE IdE LIKE '%" + search + "%'    OR IdM LIKE '%" + search + "%' ";
             }
 
             ResultSet resultSet = statement.executeQuery(query);
@@ -44,12 +41,11 @@ public class StudentPanel extends javax.swing.JPanel {
             table.setRowCount(0);
             while (resultSet.next()) {
                 Object[] rowData = new Object[6];
-                rowData[0] = resultSet.getString("CIN_Passport");
-                rowData[1] = resultSet.getString("nom");
-                rowData[2] = resultSet.getString("prenom");
-                rowData[3] = resultSet.getString("tel");
-                rowData[4] = resultSet.getString("email");
-                rowData[5] = TypeClass.ETUDIANT;
+                rowData[0] = resultSet.getString("IdE");
+                rowData[1] = resultSet.getString("IdM");
+                rowData[2] = resultSet.getString("note");
+                rowData[3] = resultSet.getString("type");
+                rowData[4] = TypeClass.EVALUATION;
                 table.addRow(rowData);
                 System.out.println(rowData);
             }
@@ -62,7 +58,6 @@ public class StudentPanel extends javax.swing.JPanel {
         }
 
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,14 +74,14 @@ public class StudentPanel extends javax.swing.JPanel {
         header2 = new Header();
         panelBorder1 = new PanelBorder();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new Table();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new TableEv();
 
         jPanel1.setBackground(new java.awt.Color(228, 228, 228));
 
         jLabel1.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Gestion des étudiants");
+        jLabel1.setText("Gestion des Evaluations");
 
         searchBtn.setBackground(new java.awt.Color(22, 129, 255));
         searchBtn.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -112,29 +107,25 @@ public class StudentPanel extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(127, 127, 127));
-        jLabel3.setText("Liste des Etudiants");
-
-        jScrollPane1.setBorder(null);
+        jLabel3.setText("Liste des Evalutaions");
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "CIN/Passport", "Nom", "Prénom", "Tel", "Email", "Actions"
+                "CIN_Passport", "IdM", "Note", "Type", "Actions"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -142,13 +133,12 @@ public class StudentPanel extends javax.swing.JPanel {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(588, 588, 588))))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(588, 588, 588))
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,8 +146,8 @@ public class StudentPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -208,22 +198,21 @@ public class StudentPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        fetchStudents();
+        fetchEvaluations();
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-    
+        new AddEvaluationFrame();
         /*.
         ajouterEt(jdzoeizn,dzoiezjd,zeiod;dzuedzhdjk);
 
         */
-
     }//GEN-LAST:event_AddBtnActionPerformed
 
 
@@ -233,9 +222,9 @@ public class StudentPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private PanelBorder panelBorder1;
     private javax.swing.JButton searchBtn;
-    private Table table;
+    private TableEv table;
     // End of variables declaration//GEN-END:variables
 }

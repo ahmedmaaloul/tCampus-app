@@ -19,9 +19,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ahmed
  */
-public class Table extends JTable {
+public class TableEv extends JTable {
 
-    public Table() {
+    public TableEv() {
         setShowHorizontalLines(true);
         setGridColor(new Color(230, 230, 230));
         setRowHeight(40);
@@ -53,8 +53,9 @@ public class Table extends JTable {
                     return com;
                 } else {
                     TypeClass type = (TypeClass) o;
-                    String idE = (String) jtable.getValueAt(i, 0);
-                    CellStatus cell = new CellStatus(type,idE);
+                    String firstCellValue = (String) jtable.getValueAt(i, 0);
+                    System.out.println(firstCellValue);
+                    ActionPanelEvaluation cell = new ActionPanelEvaluation(type);
                     return cell;
                 }
             }
@@ -82,8 +83,9 @@ public class Table extends JTable {
             if (column == getColumnCount() - 1) {
                 //CellStatus cell = (CellStatus) value;
                 TypeClass type = (TypeClass) value;
-                 String idE = (String) table.getValueAt(row, 0);
-                 CellStatus cell = new CellStatus(type,idE);
+                ActionPanelEvaluation cell = new ActionPanelEvaluation(type);
+                String firstCellValue = (String) table.getValueAt(row, 0);
+                System.out.println(firstCellValue);
                 /*JButton button1 = cell.getButton1();
                 button1.addActionListener(new ActionListener() {
                     @Override

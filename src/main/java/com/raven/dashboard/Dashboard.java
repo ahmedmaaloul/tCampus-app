@@ -17,8 +17,8 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelBorder1 = new com.raven.swing.PanelBorder();
-        menu1 = new com.raven.component.Menu();
+        panelBorder1 = new dashBoard.PanelBorder();
+        menu1 = new dashBoard.Menu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -90,7 +90,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.component.Menu menu1;
-    private com.raven.swing.PanelBorder panelBorder1;
+    private dashBoard.Menu menu1;
+    private dashBoard.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 }

@@ -40,7 +40,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="com.raven.swing.PanelBorder" name="panelBorder1">
+    <Container class="dashBoard.PanelBorder" name="panelBorder1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -63,7 +63,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.raven.component.Menu" name="menu1">
+        <Component class="dashBoard.Menu" name="menu1">
         </Component>
       </SubComponents>
     </Container>

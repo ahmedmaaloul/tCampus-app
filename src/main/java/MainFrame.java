@@ -46,7 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
                 rowData[2] = resultSet.getString("prenom");
                 rowData[3] = resultSet.getString("tel");
                 rowData[4] = resultSet.getString("email");
-                rowData[5] = "Actions";
+                rowData[5] = TypeClass.ETUDIANT;
                 table.addRow(rowData);
                 System.out.println(rowData);
             }
@@ -218,7 +218,8 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        new AddStudentFrame();
+   
+
         
         /*.
          ajouterEt(jdzoeizn,dzoiezjd,zeiod;dzuedzhdjk);
@@ -260,6 +261,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainFrame().setVisible(true);
             }

@@ -1,5 +1,6 @@
 package management;
 
+import Frame.ConsulterStageForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -147,7 +148,7 @@ public class Stage {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Stage ajouté");
             } else {
                 this.displayError("Stage existe déja");
             }
@@ -183,7 +184,7 @@ public class Stage {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccModif();
+                this.displaySucc("Stage modifié");
             } else {
                 System.out.println("error in updating");
             }
@@ -210,7 +211,7 @@ public class Stage {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccDel();
+                this.displaySucc("Stage supprimé");
             } else {
                 System.out.println("No rows affected. Delete query did not delete any data.");
             }
@@ -220,47 +221,19 @@ public class Stage {
         }
     }
 
-    public void displayErrorSearch() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation non trouvé", "Erreur", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccAdd() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation ajouté", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
     public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, reason, "Erreur", JOptionPane.ERROR_MESSAGE);
+
+        frame.dispose();
+    }
+      public void displaySucc(String info) {
+        JFrame frame = new JFrame("Error Dialog");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JOptionPane.showMessageDialog(frame, info, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
@@ -295,5 +268,20 @@ public class Stage {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+    public void Consulter(int id){
+        this.id=id;
+        if(fsetInfo() == -1){
+            this.displayError("Impossible de trouver ce stage");
+        }else{
+            displayInfo();
+        }
+    }
+    public void displayInfo(){
+        new ConsulterStageForm(this);
+    }
+    public static void main(String[] args) {
+        Stage s = new Stage();
+        s.Consulter(1);
     }
 }

@@ -1,6 +1,6 @@
 package management;
 
-import management.Utilisateur;
+import Frame.ConsulterStudentFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,46 +33,6 @@ public class Etudiant extends Utilisateur {
         this.num_insc = 0;
         this.idGRP= 0;
         this.setIdRole(2);
-    }
-
-    @Override
-    public void displayError(String reason) {
-        super.displayError(reason); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void displaySuccAssign() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Etudiant ajouté au groupe", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    @Override
-    public void displaySuccModif() {
-        super.displaySuccModif(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void displayErrorModif() {
-        super.displayErrorModif(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void displaySuccDel() {
-        super.displaySuccDel(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void displaySuccAdd() {
-        super.displaySuccAdd(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void displayErrorSearch() {
-        super.displayErrorSearch(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -230,24 +190,6 @@ public class Etudiant extends Utilisateur {
         return false;
     }
 
-    public void displayErrorDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Erreur lors de la suppression", "Erreur", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccRemove() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "L'Etudaint a été retiré du groupe", "MAJ", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
     public void calculerTauxAbsence(int IdMat) {
         int NbreCoursAb, NbreCours;
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
@@ -331,7 +273,7 @@ public class Etudiant extends Utilisateur {
             int rowsAffected = statement.executeUpdate(query);
 
             if (rowsAffected > 0) {
-                this.displaySuccRemove();
+                this.displaySucc("L'Etudiant a été retiré du groupe");
                 idGRP=0;
                 
             } else {
@@ -358,7 +300,7 @@ public class Etudiant extends Utilisateur {
             int rowsAffected = statement.executeUpdate(query);
 
             if (rowsAffected > 0) {
-                this.displaySuccAssign();
+                this.displaySucc("Etudiant ajouté au groupe");
                 this.idGRP=idGRP;
             } else {
                 displayError("La requête de mise à jour n'a modifié aucune donnée.");
@@ -422,7 +364,7 @@ public class Etudiant extends Utilisateur {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Etudiant ajouté");
             } else {
                 this.displayError("Echec lors de l'ajout");
             }
@@ -432,9 +374,9 @@ public class Etudiant extends Utilisateur {
         }
     }
 
-    public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int num_insc) {
+    public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
         if (this.verifUnicite_num_insc(num_insc)) {
-            this.displayErrorModif();
+            this.displayError("Etudiant non modifié");
             return;
         }
         this.nomUtilisateur = nomUtilisateur;
@@ -446,11 +388,10 @@ public class Etudiant extends Utilisateur {
         this.tel = tel;
         this.photo = photo;
         this.dateNaissance = dateNaissance;
-        this.num_insc = num_insc;
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String updateQuery = "UPDATE UTILISATEUR SET nomUtilisateur= ? ,email=?,password=?,prenom=?,nom=?genre=?,tel=?,photo=?,dateNaissance=?,num_insc=? WHERE CIN_Passport= ?";
+        String updateQuery = "UPDATE UTILISATEUR SET nomUtilisateur= ? ,email=?,password=?,prenom=?,nom=?genre=?,tel=?,photo=?,dateNaissance=? WHERE CIN_Passport= ?";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(updateQuery)) {
@@ -466,22 +407,20 @@ public class Etudiant extends Utilisateur {
             statement.setString(7, tel);
             statement.setString(8, photo);
             statement.setString(9, dateNaissance);
-            String num_insc_str = Integer.toString(num_insc);
-            statement.setString(10, num_insc_str);
             statement.setString(10, CIN_Passport);
 
             int rowsAffected = statement.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccModif();
+                this.displaySucc("Etudiant modifié");
             } else {
-                this.displayErrorModif();
+                this.displayError("Etudiant non modifié");
             }
 
         } catch (SQLException e) {
             System.err.println("Error executing update query: " + e.getMessage());
-            this.displayErrorModif();
+            this.displayError("Etudiant non modifié");
         }
     }
 
@@ -524,5 +463,24 @@ public class Etudiant extends Utilisateur {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+    public void Consulter(int num_insc){
+        this.num_insc = num_insc;
+        if(this.fsetInfo() == -1)
+        {
+            this.displayError("Etudiant non trouvé");
+            return;
+        }
+        else{
+            displayInfo();
+        }
+        
+    }
+    public void displayInfo(){
+        new ConsulterStudentFrame(this);
+    }
+    public static void main(String[] args) {
+        Etudiant e = new Etudiant();
+        e.Consulter(156132);
     }
 }

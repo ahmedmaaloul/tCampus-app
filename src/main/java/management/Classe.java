@@ -1,6 +1,6 @@
 package management;
 
-
+import Frame.ConsulterClasseFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -103,43 +103,7 @@ public class Classe {
         this.anneeUni = anneeUni;
     }
 
-    public void displayErrorSearch() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Classe non trouvé", "Erreur", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccAdd() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Classe ajouté", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Classe supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Classe non supprimé", "Error", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorAdd(String reason) {
+    public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -148,20 +112,11 @@ public class Classe {
         frame.dispose();
     }
 
-    public void displaySuccModif() {
+    public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Classe modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayError(String reason) {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, reason, "Info", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
@@ -199,13 +154,13 @@ public class Classe {
     }
 
     public void ajouter(int id, String nom, String specialite, String diplome, String niveau, String anneeUni, int idDept) {
-        if(this.verifExistence(id)){
-            this.displayErrorAdd("Problème d'unicité");
+        if (this.verifExistence(id)) {
+            this.displayError("Problème d'unicité");
             return;
         }
         Departement t = new Departement();
-        if(t.verifExistence(idDept) == false){
-            this.displayErrorAdd("Departement inconnu");
+        if (t.verifExistence(idDept) == false) {
+            this.displayError("Departement inconnu");
             return;
         }
         this.id = id;
@@ -238,21 +193,26 @@ public class Classe {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Classe ajouté");
             } else {
-                this.displayErrorAdd("Classe existe déja");
+                this.displayError("Classe existe déja");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd("Erreur dans l'ajout de la classe");
+            this.displayError("Erreur dans l'ajout de la classe");
             return;
 
         }
 
     }
 
-    public void modifier(String specialite, String diplome, String niveau, String anneeUni, int idDept) {
+    public void modifier(String nom, String specialite, String diplome, String niveau, String anneeUni, int idDept) {
+        Departement t = new Departement();
+        if (t.verifExistence(idDept) == false) {
+            this.displayError("Departement inconnu");
+            return;
+        }
         this.nom = nom;
         this.specialite = specialite;
         this.diplome = diplome;
@@ -278,12 +238,11 @@ public class Classe {
             statement.setString(6, idDept_str);
             statement.setString(7, Id_str);
 
-
             int rowsAffected = statement.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccModif();
+                this.displaySucc("Classe modifié");
             } else {
                 System.out.println("error in updating");
             }
@@ -293,7 +252,8 @@ public class Classe {
             System.out.println("error in updating");
         }
     }
-     public void supprimer() {
+
+    public void supprimer() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
@@ -309,7 +269,7 @@ public class Classe {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccDel();
+                this.displaySucc("Classe supprimé");
             } else {
                 System.out.println("No rows affected. Delete query did not delete any data.");
             }
@@ -318,7 +278,8 @@ public class Classe {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
-      public int fsetInfo() {
+
+    public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
@@ -351,5 +312,18 @@ public class Classe {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+
+    public void Consulter(int id) {
+        this.id = id;
+        if (fsetInfo() == -1) {
+            this.displayError("Classe non trouvé");
+        } else {
+            displayInfo();
+        }
+    }
+
+    public void displayInfo() {
+        new ConsulterClasseFrame(this);
     }
 }

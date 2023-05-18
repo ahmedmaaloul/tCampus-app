@@ -1,6 +1,6 @@
 package management;
 
-
+import Frame.ConsulterAbsenceFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -71,56 +71,19 @@ public class Absence {
         this.justification = justification;
     }
 
-    public void displaySuccAdd() {
+    public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Ajouté avec succès", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-
-    public void displayErrorAdd() {
+     public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Échec de l'ajout", "Info", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccChg() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Modifié avec succès", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorChg() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Échec de modification", "Info", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Supprimé avec succès", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorSearch() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Non trouvé", "Info", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, reason, "Erreur", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
@@ -158,14 +121,14 @@ public class Absence {
             int rowsAffected = statement.executeUpdate(query);
 
             if (rowsAffected > 0) {
-                this.displaySuccChg();
+                this.displaySucc("Modifié avec succès");
             } else {
-                this.displayErrorChg();
+                this.displayError("Échec de modification");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorChg();
+            this.displayError("Échec de modification");
             return;
 
         }
@@ -182,22 +145,22 @@ public class Absence {
             int rowsAffected = statement.executeUpdate(query);
 
             if (rowsAffected > 0) {
-                this.displaySuccChg();
+                this.displaySucc("Modifié avec succès");
             } else {
-                this.displayErrorChg();
+                this.displayError("Échec de modification");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorChg();
+            this.displayError("Échec de modification");
             return;
 
         }
     }
 
     public void ajouter(String IdE, int IdC, boolean justifie, String justification) {
-        if(this.verifExistance(IdE, IdC)){
-            this.displayErrorAdd();
+        if (this.verifExistance(IdE, IdC)) {
+            this.displayError("Échec de l'ajout");
             return;
         }
         this.IdE = IdE;
@@ -224,14 +187,14 @@ public class Absence {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Ajouté avec succès");
             } else {
-                this.displayErrorAdd();
+                this.displayError("Échec de l'ajout");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd();
+            this.displayError("Échec de l'ajout");
             return;
 
         }
@@ -243,7 +206,7 @@ public class Absence {
         String username = "root";
         String password = "root";
 
-        String deleteQuery = "DELETE FROM Absence WHERE IdE='" + IdE + "' AND IdC="+IdC;
+        String deleteQuery = "DELETE FROM Absence WHERE IdE='" + IdE + "' AND IdC=" + IdC;
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
@@ -252,7 +215,7 @@ public class Absence {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccDel();
+                this.displaySucc("Supprimé avec succès");
             } else {
                 System.out.println("Error in deleting");
             }
@@ -261,13 +224,13 @@ public class Absence {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
-   public int fsetInfo() {
+
+    public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
 
         String selectQuery = "SELECT * FROM ABSENCE WHERE idE=? AND idC=?";
-
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
@@ -283,8 +246,7 @@ public class Absence {
                 justifie = resultSet.getBoolean("justifie");
                 justification = resultSet.getString("justification");
                 return 0;
-            }
-            else{
+            } else {
                 return -1;
             }
 
@@ -292,5 +254,26 @@ public class Absence {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+
+    public void Consulter(String IdE, int IdC) {
+        this.IdE = IdE;
+        this.IdC = IdC;
+        if (this.fsetInfo() == -1) {
+            this.displayError("Non trouvé");
+            return;
+        } else {
+            displayInfo();
+        }
+
+    }
+
+    public void displayInfo() {
+        new ConsulterAbsenceFrame(this);
+    }
+
+    public static void main(String[] args) {
+        Absence a = new Absence();
+        a.Consulter("165123", 1);
     }
 }

@@ -1,6 +1,6 @@
 package management;
 
-
+import Frame.ConsulterGroupeFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -69,13 +69,13 @@ public class Groupe {
     }
 
     public void ajouter(int Id, String nom, int num, int IdC) {
-        if(this.verifExistence(Id)){
-            this.displayErrorAdd("Problème d'unicite");
+        if (this.verifExistence(Id)) {
+            this.displayError("Problème d'unicite");
             return;
         }
         Classe c = new Classe();
-        if(c.verifExistence(IdC) == false){
-            this.displayErrorAdd("Classe non trouvée !");
+        if (c.verifExistence(IdC) == false) {
+            this.displayError("Classe non trouvée !");
             return;
         }
         this.Id = Id;
@@ -103,20 +103,21 @@ public class Groupe {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Groupe ajouté");
             } else {
-                this.displayErrorAdd("Groupe existe déja");
+                this.displayError("Groupe existe déja");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd("Impossible d'ajouter le groupe");
+            this.displayError("Impossible d'ajouter le groupe");
             return;
 
         }
 
     }
-  public boolean verifExistence(int id) {
+
+    public boolean verifExistence(int id) {
         String url = "jdbc:mysql://localhost:3306/database_name";
         String username = "root";
         String password = "root";
@@ -147,6 +148,7 @@ public class Groupe {
 
         }
     }
+
     public void modifier(String nom, int num) {
         this.num = num;
         this.nom = nom;
@@ -168,16 +170,17 @@ public class Groupe {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccModif();
+                this.displaySucc("Groupe modifié");
             } else {
-                this.displayErrorModif();
+                this.displayError("Groupe non modifié");
             }
 
         } catch (SQLException e) {
             System.err.println("Error executing update query: " + e.getMessage());
-            this.displayErrorModif();
+            this.displayError("Groupe non modifié");
         }
     }
+
     public void supprimer() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
@@ -194,7 +197,7 @@ public class Groupe {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccDel();
+                this.displaySucc("Groupe supprimé");
             } else {
                 System.out.println("No rows affected. Delete query did not delete any data.");
             }
@@ -203,14 +206,7 @@ public class Groupe {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
-    public void displayErrorSearch() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Groupe non trouvé", "Erreur", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
     public void genererPV() {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,6 +215,7 @@ public class Groupe {
 
         frame.dispose();
     }
+
     public void displayPV(String result) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,34 +225,7 @@ public class Groupe {
         frame.dispose();
     }
 
-    public void displaySuccAdd() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Groupe ajouté", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Groupe supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Groupe non supprimé", "Error", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorAdd(String reason) {
+    public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -263,24 +233,15 @@ public class Groupe {
 
         frame.dispose();
     }
-       public void displayErrorModif() {
+    public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Groupe non modifié", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-
-    public void displaySuccModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Groupe modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-      public int fsetInfo() {
+    public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
@@ -310,5 +271,21 @@ public class Groupe {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+
+    public void Consulter(int id) {
+        this.Id = id;
+        if (fsetInfo() == -1) {
+            this.displayError("Groupe non trouvé");
+        }else{
+            displayInfo();
+        }
+    }
+    public void displayInfo(){
+        new ConsulterGroupeFrame(this);
+    }
+    public static void main(String[] args) {
+        Groupe g = new Groupe();
+        g.Consulter(1);
     }
 }

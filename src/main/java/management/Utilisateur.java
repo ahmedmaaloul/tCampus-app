@@ -4,8 +4,6 @@ package management;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,18 +23,18 @@ public class Utilisateur {
     protected int genre;
     protected int idRole;
 
-    public Utilisateur(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel,int genre,String photo, String dateNaissance,int idRole) {
+    public Utilisateur(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int idRole) {
         this.CIN_Passport = CIN_Passport;
         this.nomUtilisateur = nomUtilisateur;
         this.email = email;
         this.password = password;
         this.prenom = prenom;
         this.nom = nom;
-        this.genre= genre;
+        this.genre = genre;
         this.tel = tel;
         this.photo = photo;
         this.dateNaissance = dateNaissance;
-        this.idRole= idRole;
+        this.idRole = idRole;
     }
 
     public Utilisateur() {
@@ -46,11 +44,11 @@ public class Utilisateur {
         this.password = "";
         this.prenom = "";
         this.nom = "";
-        this.genre =0;
+        this.genre = 0;
         this.tel = "";
         this.photo = "";
         this.dateNaissance = "";
-        this.idRole= 0;
+        this.idRole = 0;
     }
 
     public int getIdRole() {
@@ -141,7 +139,7 @@ public class Utilisateur {
         this.dateNaissance = dateNaissance;
     }
 
-    public int ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel,int genre,String photo, String dateNaissance) {
+    public int ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
         return 0;
     }
 
@@ -152,7 +150,7 @@ public class Utilisateur {
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 int nbreU = resultSet.getInt("NbreU");
-                if(nbreU == 0){
+                if (nbreU == 0) {
                     resultSet.close();
                     return true;
                 }
@@ -166,71 +164,87 @@ public class Utilisateur {
 
         }
     }
-    public void displayErrorSearch(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displayErrorSearch() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur non trouvé", "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
-    public void displaySuccAdd(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displaySuccAdd() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur ajouté", "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-     public void displaySuccDel(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displaySucc(String info) {
+        JFrame frame = new JFrame("Error Dialog");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JOptionPane.showMessageDialog(frame, info, "MAJ", JOptionPane.INFORMATION_MESSAGE);
+
+        frame.dispose();
+    }
+
+    public void displaySuccDel() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-      public void displayErrorModif(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displayErrorModif() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur non modifié", "Info", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
-       public void displaySuccModif(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displaySuccModif() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-       public void displaySuccAssign(){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displaySuccAssign() {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, "Utilisateur modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
-         public void displayError(String reason){
-      JFrame frame = new JFrame("Error Dialog");
+
+    public void displayError(String reason) {
+        JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JOptionPane.showMessageDialog(frame, reason, "Info", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
-      
-     public boolean verifExistence(String CIN_Passport) {
+
+    public boolean verifExistence(String CIN_Passport) {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
 
             String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE CIN_Passport='" + CIN_Passport + "'";
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 int nbreU = resultSet.getInt("NbreU");
-                if(nbreU == 1){
+                if (nbreU == 1) {
                     resultSet.close();
                     return true;
                 }

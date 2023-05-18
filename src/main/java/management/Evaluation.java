@@ -1,6 +1,6 @@
 package management;
 
-
+import Frame.ConsulterEvaluationFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -70,56 +70,20 @@ public class Evaluation {
         this.type = type;
     }
 
-    public void displayErrorSearch() {
+    public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Evalutation non trouvé", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
 
-    public void displaySuccAdd() {
+    public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Evalutation ajouté", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation non modifié", "Erreur", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displayErrorAdd() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Evalutation non ajouté", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, reason, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         frame.dispose();
     }
@@ -159,8 +123,8 @@ public class Evaluation {
     }
 
     public void ajouter(String idE, int idM, float note, String type) {
-        if(this.verifExistence(idE, idM, note, type)){
-            this.displayErrorAdd();
+        if (this.verifExistence(idE, idM, note, type)) {
+            this.displayError("Evalutation non ajouté");
             return;
         }
         this.idE = idE;
@@ -187,14 +151,14 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccAdd();
+                this.displaySucc("Evalutation ajouté");
             } else {
-                this.displayErrorAdd();
+                this.displayError("Evalutation non ajouté");
             }
         } catch (SQLException e) {
 
             e.printStackTrace();
-            this.displayErrorAdd();
+            this.displayError("Evalutation non ajouté");
             return;
 
         }
@@ -223,14 +187,14 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccModif();
+                this.displaySucc("Evalutation modifié");
             } else {
-                this.displayErrorModif();
+                this.displayError("Evalutation non modifié");
             }
 
         } catch (SQLException e) {
             System.err.println("Error executing update query: " + e.getMessage());
-            this.displayErrorModif();
+            this.displayError("Evalutation non modifié");
         }
     }
 
@@ -252,7 +216,7 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySuccDel();
+                this.displaySucc("Evalutation supprimé");
             } else {
                 System.out.println("No rows affected. Delete query did not delete any data.");
             }
@@ -261,7 +225,8 @@ public class Evaluation {
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
-       public int fsetInfo() {
+
+    public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
@@ -275,7 +240,7 @@ public class Evaluation {
             String idM_str = Integer.toString(this.idM);
             statement.setString(1, this.idE);
             statement.setString(2, idM_str);
-            statement.setString(3,this.type);
+            statement.setString(3, this.type);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -283,8 +248,7 @@ public class Evaluation {
                 // Retrieve values from the result set
                 note = resultSet.getFloat("note");
                 return 0;
-            }
-            else{
+            } else {
                 return -1;
             }
 
@@ -292,5 +256,25 @@ public class Evaluation {
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
+    }
+
+    public void Consulter(String idE, int idM, String type) {
+        this.idE = idE;
+        this.idM = idM;
+        this.type = type;
+        if (fsetInfo() == -1) {
+            this.displayError("Evalutation non trouvé");
+        } else {
+            displayInfo();
+        }
+    }
+
+    public void displayInfo() {
+        new ConsulterEvaluationFrame(this);
+    }
+
+    public static void main(String[] args) {
+        Evaluation ev = new Evaluation();
+        ev.Consulter("1651651", 1, "DS");
     }
 }

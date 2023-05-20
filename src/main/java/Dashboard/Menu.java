@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 public class Menu extends javax.swing.JPanel {
 
     private String id;
-    private String roles;
+    private String roles="";
     private EventMenuSelected event;
 
     public void addEventMenuSelected(EventMenuSelected event) {
@@ -27,7 +27,16 @@ public class Menu extends javax.swing.JPanel {
 
     }
 
-    ;  
+      public Menu( ) {
+        initComponents();
+
+        this.id = id;
+        setOpaque(false);
+        listMenu1.setOpaque(false);
+        fetchRoles();
+    
+        init();
+    }
     public Menu(String id) {
         initComponents();
 
@@ -35,7 +44,7 @@ public class Menu extends javax.swing.JPanel {
         setOpaque(false);
         listMenu1.setOpaque(false);
         fetchRoles();
-        System.out.println("Roles are " + this.roles);
+    
         init();
     }
 

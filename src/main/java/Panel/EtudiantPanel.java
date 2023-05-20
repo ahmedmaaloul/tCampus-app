@@ -2,7 +2,7 @@ package Panel;
 
 
 
-import Frame.AjouterGroupeModuleFrame;
+import Frame.AddStudentFrame;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import management.GroupeModule;
+import management.Etudiant;
 
 
 public class EtudiantPanel extends javax.swing.JPanel {
@@ -35,7 +35,7 @@ public class EtudiantPanel extends javax.swing.JPanel {
     try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
         String search = header2.getText();
         System.out.println(search);
-        String query = "SELECT * FROM Utilisateur where num_insc is not null ";
+        String query = "SELECT CIN_Passport,nomUtilisateur,nom,prenom,tel,email FROM Utilisateur where num_insc is not null ";
 
         if (!search.isEmpty()) {
             query += " and  (id LIKE ? OR nom LIKE ? or prenom like ?) ";
@@ -54,27 +54,29 @@ public class EtudiantPanel extends javax.swing.JPanel {
         table.setRowCount(0);
         while (resultSet.next()) {
             Object[] rowData = new Object[5];
-            rowData[0] = resultSet.getString("id");
-            String holderID=resultSet.getString("id");
-            rowData[1] = resultSet.getString("nom");
-            rowData[2] = resultSet.getString("coefficient");
-            rowData[3] = resultSet.getString("idClasse");
+            rowData[0] = resultSet.getString("CIN_Passport");
+            String holderID=resultSet.getString("CIN_Passport");
+            rowData[1] = resultSet.getString("nomUtilisateur");
+            rowData[2] = resultSet.getString("nom");
+            rowData[3] = resultSet.getString("prenom");
+            rowData[4] = resultSet.getString("tel");
+              rowData[5] = resultSet.getString("Email");
 
             JButton consButton = new JButton(new ImageIcon("./src/main/resources/info.png"));
             consButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-               GroupeModule gm=new GroupeModule();
+               Etudiant etu=new Etudiant();
                
                
-               int to_int=Integer.parseInt(holderID);
-               gm.consulter( to_int);
+               
+               etu.consulter( holderID);
                
                
                
                 }
             });
-            rowData[4] = consButton;
+            rowData[6] = consButton;
 
             table.addRow(rowData);
             System.out.println(rowData);
@@ -160,7 +162,7 @@ public class EtudiantPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Gestion des Groupes Modules");
+        jLabel1.setText("Gestion des Etudiants");
 
         searchBtn.setBackground(new java.awt.Color(22, 129, 255));
         searchBtn.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -186,21 +188,21 @@ public class EtudiantPanel extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(127, 127, 127));
-        jLabel3.setText("Liste des Groupes Modules");
+        jLabel3.setText("Liste des Etudiants");
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Identifiant", "nom", "Coefficient", "identifiant Classe", "Actions"
+                "CIN_Passport", "Username", "nom", "prenom", "telephone", "Email", "Actions"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, true, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -293,7 +295,7 @@ public class EtudiantPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        new AjouterGroupeModuleFrame();
+        new AddStudentFrame();
  
 
     }//GEN-LAST:event_AddBtnActionPerformed

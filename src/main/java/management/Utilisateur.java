@@ -258,21 +258,28 @@ statement.setString(1, this.CIN_Passport);
       
       
   }
-  public boolean Login(String username,String password){
+  public String Login(String email,String password){
   
          try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = " Select from Utilisateur where username=? and password=? ";
+            String query = " Select CIn_Passport from Utilisateur where email=? and password=? ";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
+            statement.setString(1, email);
 statement.setString(2, password);
           
 
-            int rows = statement.executeUpdate();
-            if (rows > 0) {
-                displaySucc();
-                return true;
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                     String id = resultSet.getString(1);
+                     if(!"".equals(id)){
+                         displaySucc();
+                return id;
+                     }else{
+                           displayError("username ou mot de passe incorrect !");
+                    
+                     }
+                
                 
             } else {
     displayError("username ou mot de passe incorrect !");
@@ -287,7 +294,7 @@ statement.setString(2, password);
 
         }
       
-      return false;
+      return "";
   
   }
   

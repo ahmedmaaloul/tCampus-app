@@ -20,22 +20,21 @@ import javax.swing.JComponent;
 
 
 public class DashBoard extends javax.swing.JFrame {
+private String id;
+    
+    public DashBoard(String id) {
+              this.id=id;
+    
+     initComponents();
 
     
-    public DashBoard() {
-        initComponents();
-          
         setBackground(new Color(0,0,0,0));
         menu.initMoving(DashBoard.this);
         
         menu.addEventMenuSelected((String gestionNom) -> {
             System.out.println("Selected Index :"+gestionNom);
             
-            if( "Accueil".equals(gestionNom)){
-
-
-                
-            }else if("Classes".equals(gestionNom)){
+         if("Classes".equals(gestionNom)){
                 
                 setForm(new ClassePanel() );
             }
@@ -93,7 +92,7 @@ public class DashBoard extends javax.swing.JFrame {
                 
             }
         });
-        
+        this.setVisible(true);
     }
 private void setForm (JComponent com) {
     mainPanel.removeAll();
@@ -107,7 +106,7 @@ private void setForm (JComponent com) {
 
         panelBorder1 = new Dashboard.PanelBorder();
         panelBorder2 = new Dashboard.PanelBorder();
-        menu = new Dashboard.Menu();
+        menu = new Dashboard.Menu(this.id);
         mainPanel = new javax.swing.JPanel();
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
@@ -197,7 +196,7 @@ private void setForm (JComponent com) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashBoard().setVisible(true);
+            
             }
         });
     }

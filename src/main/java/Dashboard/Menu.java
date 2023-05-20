@@ -8,40 +8,94 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 
 public class Menu extends javax.swing.JPanel {
 
-        private EventMenuSelected event;
-    public void addEventMenuSelected( EventMenuSelected event){
-        this.event=event;
+    private String id;
+    private String roles;
+    private EventMenuSelected event;
+
+    public void addEventMenuSelected(EventMenuSelected event) {
+        this.event = event;
         listMenu1.addEventMenuSelected(event);
-        
-        
-    };
-    public Menu() {
+
+    }
+
+    ;  
+    public Menu(String id) {
         initComponents();
+
+        this.id = id;
         setOpaque(false);
         listMenu1.setOpaque(false);
+        fetchRoles();
+        System.out.println("Roles are " + this.roles);
         init();
     }
 
     private void init() {
-        listMenu1.addItem(new Model_Menu("1", "Accueil", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Classes", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Groupes", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Etudiants", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Groupe Modules", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Stages", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Matieres", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Departement", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Enseignants", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Evaluations", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Cours", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Salles", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Absences", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("Groupes", "Utilisateurs", Model_Menu.MenuType.MENU));
+        if (this.roles.contains("G_CLASSE")) {
+            listMenu1.addItem(new Model_Menu("Groupes", "Classes", Model_Menu.MenuType.MENU));
+        }
+        if (this.roles.contains("G_GRP")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Groupes", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_ETU")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Etudiants", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_GM")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Groupe Modules", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_STG")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Stages", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_MAT")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Matieres", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_DEPT")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Departement", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_ENS")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Enseignants", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_EVA")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Evaluations", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_COURS")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Cours", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_SAL")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Salles", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_ABS")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Absences", Model_Menu.MenuType.MENU));
+
+        }
+        if (this.roles.contains("G_UTI")) {
+                    listMenu1.addItem(new Model_Menu("Groupes", "Utilisateurs", Model_Menu.MenuType.MENU));
+
+        }
+             if (this.roles.contains("G_ROLE")) {
         listMenu1.addItem(new Model_Menu("Groupes", "Roles", Model_Menu.MenuType.MENU));
+
+        }
+
 
     }
 
@@ -140,4 +194,31 @@ public class Menu extends javax.swing.JPanel {
     private javax.swing.JPanel panelMoving;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
+
+    private void fetchRoles() {
+
+        try (
+                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+
+            String query = " Select Description from Role where id=( select idRole from utilisateur where CIN_Passport =?    )";
+            PreparedStatement statement = connection.prepareStatement(query);
+            System.out.println("this id " + this.id);
+            statement.setString(1, this.id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                this.roles = resultSet.getString(1);
+
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
+
 }

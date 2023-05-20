@@ -3,10 +3,7 @@ package Panel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -56,7 +53,19 @@ public class Table extends JTable {
                     return com;
                 } else {
                     TypeClass type = (TypeClass) o;
-                    int idE = (int) jtable.getValueAt(i, 1);
+                    int idE = 0;
+                        if (jtable.getValueAt(i, 1) != null) {
+                    Object idMValue = jtable.getValueAt(i, 1);
+                    if (idMValue instanceof Integer) {
+                        idE = (int) idMValue;
+                    } else if (idMValue instanceof String) {
+                        try {
+                            idE = Integer.parseInt((String) idMValue);
+                        } catch (NumberFormatException e) {
+                            // Handle the case when the value cannot be parsed as an integer
+                        }
+                    }
+                }
                     CellStatus cell = new CellStatus(type, idE);
                     return cell;
                 }
@@ -87,7 +96,19 @@ public class Table extends JTable {
             if (column == getColumnCount() - 1) {
                 //CellStatus cell = (CellStatus) value;
                 TypeClass type = (TypeClass) value;
-                int idE = (int) table.getValueAt(row, 1);
+           int idE = 0;
+                           if (table.getValueAt(row, 1) != null) {
+                    Object idMValue = table.getValueAt(row, 1);
+                    if (idMValue instanceof Integer) {
+                        idE = (int) idMValue;
+                    } else if (idMValue instanceof String) {
+                        try {
+                            idE = Integer.parseInt((String) idMValue);
+                        } catch (NumberFormatException e) {
+                            // Handle the case when the value cannot be parsed as an integer
+                        }
+                    }
+                }
                 CellStatus cell = new CellStatus(type, idE);
                 /*JButton button1 = cell.getButton1();
                 button1.addActionListener(new ActionListener() {

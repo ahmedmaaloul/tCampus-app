@@ -1,11 +1,12 @@
 
-import Dashboard.DashBoard;
+
+
 
 
 
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args)  {
         
        
    
@@ -14,7 +15,9 @@ public class Main {
         
 System.out.println("going in");
 
-        
-        new DashBoard();
+    //new Login();
+    new Login();
+   // DashBoard dashboard=new DashBoard();
+    
     }
 }

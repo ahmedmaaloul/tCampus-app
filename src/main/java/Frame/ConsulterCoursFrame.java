@@ -1,6 +1,5 @@
 package Frame;
 
-import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Cours;
@@ -18,8 +17,8 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
         id_JField.setText(Integer.toString(cours.getId()  ));
         nom_JFIELD.setText(cours.getNom());
         duree_JFILED.setText(Float.toString(cours.getDuree()));
-             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        horaire_JFIELD.setText(dateFormat.format(cours.getHoraireDebut()));
+        horaire_JFIELD.setText(cours.getHoraireDebut());
+        desc_JFIELD1.setText(cours.getDescription());
         idEns_JFIELD.setText(Integer.toString(cours.getIdEns()));
         idMat_JFIELD.setText(Integer.toString(cours.getIdMat()));
         idSalle_JFILED.setText(Integer.toString(cours.getIdSalle()));
@@ -102,7 +101,6 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel3);
         jLabel3.setBounds(6, 198, 381, 35);
 
-        nom_JFIELD.setEditable(false);
         nom_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
         nom_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         nom_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
@@ -393,6 +391,7 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
 
     private void Modifier_ROLE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modifier_ROLE1ActionPerformed
         ModifierCoursFrame tempFrame=new ModifierCoursFrame(cours);
+        this.dispose();
     }//GEN-LAST:event_Modifier_ROLE1ActionPerformed
 
     private void Supprimer_ROLE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Supprimer_ROLE1ActionPerformed
@@ -402,6 +401,7 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
        if(option==JOptionPane.OK_OPTION){
     
                    cours.supprimer();
+                   this.dispose();
        }
 
        

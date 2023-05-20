@@ -3,6 +3,7 @@ package Frame;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Enseignant;
 
@@ -20,6 +21,8 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
         username.setText(enseignant.getNomUtilisateur());
         email.setText(enseignant.getEmail());
         password.setText(enseignant.getPassword());
+        System.out.println("cnss is "+enseignant.getCNSS());
+        System.out.println("birthdya is "+enseignant.getDateNaissance());
         String[] birthday = enseignant.getDateNaissance().split("-");
         day.setValue(Integer.parseInt(birthday[2]));
         month.setValue(Integer.parseInt(birthday[1]));
@@ -35,7 +38,8 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
         }else{
              type.setSelectedIndex(0);
         }
-     
+     this.setResizable(false);
+                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         savedImageIcon= new javax.swing.ImageIcon(enseignant.getPhoto());
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
@@ -349,6 +353,7 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
         type.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         type.setForeground(new java.awt.Color(0, 0, 0));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vacataire", "Permenant" }));
+        type.setEnabled(false);
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeActionPerformed(evt);
@@ -361,11 +366,11 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
         );
 
         pack();
@@ -389,7 +394,7 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
             ModifierEnseignantFrame tempFrame=new ModifierEnseignantFrame(enseignant);
-        dispose();
+      this. dispose();
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -400,6 +405,7 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
        if(option==JOptionPane.OK_OPTION){
           
            enseignant.supprimer();
+           this.dispose();
            
        }
     }//GEN-LAST:event_deleteButtonActionPerformed

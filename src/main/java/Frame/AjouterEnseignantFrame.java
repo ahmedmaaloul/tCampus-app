@@ -4,19 +4,21 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.Enseignant;
 
 
 public class AjouterEnseignantFrame extends javax.swing.JFrame {
 
-    Enseignant enseignant;
+    
     ImageIcon savedImageIcon = new javax.swing.ImageIcon(getClass().getResource("/photo_profile.jpg"));
 
-    public AjouterEnseignantFrame(Enseignant enseignant) {
+    public AjouterEnseignantFrame() {
         initComponents();
-        this.enseignant = enseignant;
         
+        this.setResizable(false);
+                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     
         this.setVisible(true);
@@ -34,7 +36,7 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        cnss = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -66,10 +68,10 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         cinpassport = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        cnss = new javax.swing.JPasswordField();
         jLabel19 = new javax.swing.JLabel();
         type = new javax.swing.JComboBox<>();
         SaveButton1 = new javax.swing.JButton();
+        username1 = new javax.swing.JTextField();
 
         setTitle("Modifier un étudiant");
         setResizable(false);
@@ -90,16 +92,16 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel3);
         jLabel3.setBounds(32, 172, 422, 35);
 
-        username.setBackground(new java.awt.Color(187, 206, 255));
-        username.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        username.setForeground(new java.awt.Color(0, 0, 0));
-        username.addActionListener(new java.awt.event.ActionListener() {
+        cnss.setBackground(new java.awt.Color(187, 206, 255));
+        cnss.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        cnss.setForeground(new java.awt.Color(0, 0, 0));
+        cnss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                cnssActionPerformed(evt);
             }
         });
-        kGradientPanel1.add(username);
-        username.setBounds(32, 220, 422, 42);
+        kGradientPanel1.add(cnss);
+        cnss.setBounds(260, 550, 200, 42);
 
         email.setBackground(new java.awt.Color(187, 206, 255));
         email.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -312,12 +314,6 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel18);
         jLabel18.setBounds(270, 510, 180, 35);
 
-        cnss.setBackground(new java.awt.Color(187, 206, 255));
-        cnss.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        cnss.setForeground(new java.awt.Color(0, 0, 0));
-        kGradientPanel1.add(cnss);
-        cnss.setBounds(270, 550, 180, 43);
-
         jLabel19.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(51, 51, 51));
         jLabel19.setText("type");
@@ -348,6 +344,17 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
         });
         kGradientPanel1.add(SaveButton1);
         SaveButton1.setBounds(800, 580, 102, 39);
+
+        username1.setBackground(new java.awt.Color(187, 206, 255));
+        username1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        username1.setForeground(new java.awt.Color(0, 0, 0));
+        username1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                username1ActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(username1);
+        username1.setBounds(32, 220, 422, 42);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -391,7 +398,7 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
             Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
             PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
         } else {
-            FileUploaded.setText(enseignant.getPhoto());
+            FileUploaded.setText("");
             Image image = savedImageIcon.getImage();
             Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
             PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
@@ -405,9 +412,9 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_AnnulerActionPerformed
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void cnssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnssActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }//GEN-LAST:event_cnssActionPerformed
 
     private void cinpassportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cinpassportActionPerformed
         // TODO add your handling code here:
@@ -418,24 +425,31 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_typeActionPerformed
 
     private void SaveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButton1ActionPerformed
-        
+        Enseignant enseignant=new Enseignant();
         String cin_passport=cinpassport.getText();
         int  cnssln=Integer.parseInt(cnss.getText());
-        String nomUtilisateur = username.getText().trim();
+        String nomUtilisateur = cnss.getText().trim();
         String emailIn = (email.getText().trim());
         String passwordIn = new String(password.getPassword());
         String nomIn = nom.getText();
         String prenomIn = prenom.getText();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+        int genreIn = genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         String typeln=type.getSelectedItem().toString();
         String fonctionln=fonction.getText();
         enseignant.ajouter(cin_passport,nomUtilisateur, emailIn, passwordIn, prenomIn, nomIn, telIn, genreIn, photo, dateNaissance,cnssln,typeln,fonctionln);
-        enseignant.consulter(enseignant.getCNSS());
+        if (enseignant.getCNSS()!=0) {
+                    enseignant.consulter(enseignant.getCNSS());
+
+        }
         this.dispose();
     }//GEN-LAST:event_SaveButton1ActionPerformed
+
+    private void username1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_username1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -444,7 +458,7 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
     private javax.swing.JLabel PhotoLabel;
     private javax.swing.JButton SaveButton1;
     private javax.swing.JTextField cinpassport;
-    private javax.swing.JPasswordField cnss;
+    private javax.swing.JTextField cnss;
     private javax.swing.JSpinner day;
     private javax.swing.JTextField email;
     private javax.swing.JTextField fonction;
@@ -476,7 +490,7 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
     private javax.swing.JTextField tel;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JButton upload;
-    private javax.swing.JTextField username;
+    private javax.swing.JTextField username1;
     private javax.swing.JSpinner year;
     // End of variables declaration//GEN-END:variables
 }

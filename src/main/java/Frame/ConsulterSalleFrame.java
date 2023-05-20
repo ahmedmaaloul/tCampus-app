@@ -7,22 +7,18 @@ import management.Salle;
 
 public class ConsulterSalleFrame extends javax.swing.JFrame {
   
-private int id,capacite;
-private String type;
-private Boolean contientProjecteur;
+private Salle salle;
 
-    public ConsulterSalleFrame(int idSalle,int capacite,String type,Boolean contientProjecteur) {
+    public ConsulterSalleFrame(Salle salle) {
         initComponents();
         this.setResizable(false);
-        id=idSalle;
-        this.capacite=capacite;
-        this.type=type;
-        this.contientProjecteur=contientProjecteur;
+ 
+        this.salle=salle;
                     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                id_JField.setText( Integer.toString(idSalle) );
-                capacite_JFIELD.setText(Integer.toString(capacite));
-                Type_JFIELD.setText(type);
-                if(contientProjecteur){
+                id_JField.setText( Integer.toString(salle.getId()) );
+                capacite_JFIELD.setText(Integer.toString(salle.getCapacite()));
+                Type_JFIELD.setText(salle.getType());
+                if(salle.isContientProjecteur()){
                     
                     contientProjecteur_JFIELD.setSelected(true);
                 }else{
@@ -235,7 +231,8 @@ private Boolean contientProjecteur;
     }// </editor-fold>//GEN-END:initComponents
 
     private void Modifier_ROLEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modifier_ROLEActionPerformed
-       ModifierSalleFrame tempFrame=new ModifierSalleFrame(id,capacite,type,contientProjecteur);
+       ModifierSalleFrame tempFrame=new ModifierSalleFrame(salle);
+       this.dispose();
     }//GEN-LAST:event_Modifier_ROLEActionPerformed
 
     private void Type_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Type_JFIELDActionPerformed
@@ -256,9 +253,9 @@ private Boolean contientProjecteur;
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
        if(option==JOptionPane.OK_OPTION){
-           Salle tempSalle=new Salle(id,capacite,type,contientProjecteur);
-           tempSalle.supprimer();
            
+           salle.supprimer();
+           this.dispose();
        }
 
     }//GEN-LAST:event_Supprimer_ROLEActionPerformed

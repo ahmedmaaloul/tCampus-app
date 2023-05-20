@@ -2,14 +2,12 @@ package management;
 
 import Frame.ConsulterUtilisateurFrame;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -193,16 +191,7 @@ public class Utilisateur {
             String query = " UPDATE Utilisateur set nomUtilisateur=?,  email=?, password=?, prenom=?, nom=? ,tel=?, genre=?,  photo=?,dateNaissance=? where CIN_Passport=?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-            // =>(dataNaissence) converting string to date
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dateNaissence_db = new Date(1, 1, 1);
-            try {
-                dateNaissence_db = (Date) sdf.parse(dateNaissance);
-                System.out.println(dateNaissence_db);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            // end of converting
+       
            
             statement.setString(1, nomUtilisateur);
             statement.setString(2, email);
@@ -212,7 +201,7 @@ public class Utilisateur {
             statement.setString(6, tel);
             statement.setInt(7, genre);
             statement.setString(8, photo);
-            statement.setDate(9, dateNaissence_db);
+            statement.setString(9, dateNaissance);
            statement.setString(10, this.CIN_Passport);
             int rows = statement.executeUpdate();
             if (rows > 0) {
@@ -471,10 +460,15 @@ statement.setString(2, this.CIN_Passport);
     }
 
     public boolean verifExistence(String CIN_Passport) {
-        try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");  Statement statement = connection.createStatement()) {
-
-            String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE CIN_Passport='" + CIN_Passport + "'";
-            ResultSet resultSet = statement.executeQuery(query);
+        String url = "jdbc:mysql://localhost:3306/tCampus";
+        String usernameDB = "root";
+        String passwordDB = "root";
+          String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE CIN_Passport=?'";
+      try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+         
+          statement.setString(1, CIN_Passport);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int nbreU = resultSet.getInt("NbreU");
                 if (nbreU == 1) {
@@ -498,14 +492,14 @@ statement.setString(2, this.CIN_Passport);
     public void consulter(String CIN_Passport) {
         this.CIN_Passport = CIN_Passport;
         fsetInfo();
-        displayInfo(this);
+        displayInfo();
 
     }
 
-    private void displayInfo(Utilisateur utilisateur) {
+    private void displayInfo() {
    
 
-       ConsulterUtilisateurFrame utlisateurFrame = new ConsulterUtilisateurFrame(utilisateur);
+       ConsulterUtilisateurFrame utlisateurFrame = new ConsulterUtilisateurFrame(this);
     }
 
     private void fsetInfo() {
@@ -519,7 +513,18 @@ statement.setString(2, this.CIN_Passport);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 this.nom = resultSet.getString("nom");
-                this.prenom= resultSet.getString("prenom");
+                this.prenom = resultSet.getString("prenom");
+                this.CIN_Passport = resultSet.getString("CIN_Passport");
+                this.email = resultSet.getString("email");
+                this.password=resultSet.getString("password");
+                this.tel = resultSet.getString("tel");
+                this.dateNaissance = resultSet.getString("dateNaissance");
+                this.photo = resultSet.getString("photo");
+                this.nomUtilisateur = resultSet.getString("nomUtilisateur");
+                this.genre= resultSet.getInt("genre");
+                this.idRole=resultSet.getInt("idRole");
+       
+                
              
               
             }

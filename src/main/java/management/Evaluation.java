@@ -9,14 +9,6 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/**
- *
- * @author Ahmed
- */
 public class Evaluation {
 
     private String idE;
@@ -89,16 +81,18 @@ public class Evaluation {
     }
 
     public boolean verifExistence(String idE, int idM, float note, String type) {
-        String url = "jdbc:mysql://localhost:3306/database_name";
+        // Informations de connexion à la base de données
+        String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
 
+        // Requête de sélection pour vérifier l'existence de l'évaluation
         String selectQuery = "SELECT Count(*) as NbreE FROM Evaluation WHERE idE = ? AND idM =? AND type=?";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définition des valeurs des paramètres pour la condition
             statement.setString(1, idE);
             String idm_str = Integer.toString(idM);
             statement.setString(2, idm_str);
@@ -115,31 +109,37 @@ public class Evaluation {
             resultSet.close();
             return false;
         } catch (SQLException e) {
-
+            // Affichage de l'erreur SQL
             e.printStackTrace();
             return false;
-
         }
     }
 
     public void ajouter(String idE, int idM, float note, String type) {
+        // Vérifier l'existence de l'évaluation
         if (this.verifExistence(idE, idM, note, type)) {
-            this.displayError("Evalutation non ajouté");
+            this.displayError("Evaluation non ajoutée");
             return;
         }
+
+        // Affecter les valeurs aux variables membres de la classe
         this.idE = idE;
         this.idM = idM;
         this.note = note;
         this.type = type;
+
+        // Informations de connexion à la base de données
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
-        String insertQuery = "INSERT INTO Evaluation (IdE, IdM,note,type) VALUES (?, ?, ? ,?)";
+
+        // Requête d'insertion pour ajouter l'évaluation
+        String insertQuery = "INSERT INTO Evaluation (IdE, IdM, note, type) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
-            // Set the values for the parameters
+            // Affecter les valeurs aux paramètres
             statement.setString(1, idE);
             String idm_str = Integer.toString(idM);
             statement.setString(2, idm_str);
@@ -151,31 +151,34 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySucc("Evalutation ajouté");
+                this.displaySucc("Evaluation ajoutée");
             } else {
-                this.displayError("Evalutation non ajouté");
+                this.displayError("Evaluation non ajoutée");
             }
         } catch (SQLException e) {
-
+            // Affichage de l'erreur SQL
             e.printStackTrace();
-            this.displayError("Evalutation non ajouté");
+            this.displayError("Evaluation non ajoutée");
             return;
-
         }
-
     }
 
     public void modifier(float note) {
+        // Affecter la nouvelle note à la variable membre
         this.note = note;
+
+        // Informations de connexion à la base de données
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String updateQuery = "UPDATE EVALUATION SET note= ? WHERE  idE = ? AND idM =? AND type=?";
+
+        // Requête de mise à jour pour modifier l'évaluation
+        String updateQuery = "UPDATE EVALUATION SET note = ? WHERE idE = ? AND idM = ? AND type = ?";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(updateQuery)) {
 
-            // Set the new value for the column
+            // Affecter la nouvelle valeur à la colonne
             String note_str = Float.toString(note);
             statement.setString(1, note_str);
             statement.setString(2, idE);
@@ -187,26 +190,31 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySucc("Evalutation modifié");
+                this.displaySucc("Evaluation modifiée");
             } else {
-                this.displayError("Evalutation non modifié");
+                this.displayError("Evaluation non modifiée");
             }
 
         } catch (SQLException e) {
+            // Affichage de l'erreur SQL
             System.err.println("Error executing update query: " + e.getMessage());
-            this.displayError("Evalutation non modifié");
+            this.displayError("Evaluation non modifiée");
         }
     }
 
     public void supprimer() {
+        // Informations de connexion à la base de données
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String deleteQuery = "DELETE FROM EVALUATION WHERE WHERE idE = ? AND idM =? AND type=?";
+
+        // Requête de suppression pour supprimer l'évaluation
+        String deleteQuery = "DELETE FROM EVALUATION WHERE idE = ? AND idM = ? AND type = ?";
+
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
 
-            // Set the parameter value for the condition
+            // Affecter les valeurs des paramètres pour la condition
             statement.setString(1, idE);
             String idm_str = Integer.toString(idM);
             statement.setString(2, idm_str);
@@ -216,27 +224,30 @@ public class Evaluation {
             System.out.println("Rows affected: " + rowsAffected);
 
             if (rowsAffected > 0) {
-                this.displaySucc("Evalutation supprimé");
+                this.displaySucc("Evaluation supprimée");
             } else {
                 System.out.println("No rows affected. Delete query did not delete any data.");
             }
 
         } catch (SQLException e) {
+            // Affichage de l'erreur SQL
             System.err.println("Error executing delete query: " + e.getMessage());
         }
     }
 
     public int fsetInfo() {
+        // Informations de connexion à la base de données
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
 
-        String selectQuery = "SELECT * FROM EVALUATION WHERE idE=? AND idM=? and type=?";
+        // Requête de sélection pour récupérer les informations de l'évaluation
+        String selectQuery = "SELECT * FROM EVALUATION WHERE idE = ? AND idM = ? AND type = ?";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Affecter les valeurs des paramètres pour la condition
             String idM_str = Integer.toString(this.idM);
             statement.setString(1, this.idE);
             statement.setString(2, idM_str);
@@ -245,7 +256,7 @@ public class Evaluation {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Retrieve values from the result set
+                // Récupérer les valeurs du résultat
                 note = resultSet.getFloat("note");
                 return 0;
             } else {
@@ -253,28 +264,37 @@ public class Evaluation {
             }
 
         } catch (SQLException e) {
+            // Affichage de l'erreur SQL
             System.err.println("Error executing select query: " + e.getMessage());
             return -1;
         }
     }
 
     public void Consulter(String idE, int idM, String type) {
+        // Affecter les valeurs des paramètres
         this.idE = idE;
         this.idM = idM;
         this.type = type;
+
+        // Vérifier si l'évaluation existe en récupérant ses informations
         if (fsetInfo() == -1) {
-            this.displayError("Evalutation non trouvé");
+            this.displayError("Evaluation non trouvée");
         } else {
             displayInfo();
         }
     }
 
     public void displayInfo() {
+        // Afficher les informations de l'évaluation dans une nouvelle fenêtre
         new ConsulterEvaluationFrame(this);
     }
 
     public static void main(String[] args) {
+        // Créer une instance d'évaluation
         Evaluation ev = new Evaluation();
+
+        // Consulter une évaluation spécifique avec des valeurs prédéfinies
         ev.Consulter("1651651", 1, "DS");
     }
+
 }

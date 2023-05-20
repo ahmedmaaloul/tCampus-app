@@ -6,22 +6,18 @@ import management.Salle;
 
 public class ModifierSalleFrame extends javax.swing.JFrame {
   
-private int id,capacite;
-private String type;
-private Boolean contientProjecteur;
+private Salle salle;
 
-    public ModifierSalleFrame(int idSalle,int capacite,String type,Boolean contientProjecteur) {
+    public ModifierSalleFrame(Salle salle) {
         initComponents();
         this.setResizable(false);
-        id=idSalle;
-        this.capacite=capacite;
-        this.type=type;
-        this.contientProjecteur=contientProjecteur;
+        this.salle=salle;
+ 
                     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                id_JField.setText( Integer.toString(idSalle) );
-                capacite_JFIELD.setText(Integer.toString(capacite));
-                Type_JFIELD.setText(type);
-                if(contientProjecteur){
+                id_JField.setText( Integer.toString(salle.getId()) );
+                capacite_JFIELD.setText(Integer.toString(salle.getCapacite()));
+                Type_JFIELD.setText(salle.getType());
+                if(salle.isContientProjecteur()){
                     
                     contientProjecteur_JFIELD.setSelected(true);
                 }else{
@@ -144,8 +140,6 @@ private Boolean contientProjecteur;
         contientPasProjecteur_JFIELD.setText("NON");
 
         id_JField.setEditable(false);
-        capacite_JFIELD.setEditable(false);
-        Type_JFIELD.setEditable(false);
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -232,16 +226,14 @@ private Boolean contientProjecteur;
 
     private void Modifier_ROLEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modifier_ROLEActionPerformed
         
-              id=Integer.parseInt(id_JField.getText()   )   ;
-         capacite=Integer.parseInt(capacite_JFIELD.getText());
-         type=Type_JFIELD.getText();
-         contientProjecteur=false;
+
+     Boolean    contientProjecteur=false;
         if(contientProjecteur_JFIELD.isSelected()==true){
             contientProjecteur=true;
         }
-        Salle tempSalle=new Salle(id,capacite,type,contientProjecteur);
-        tempSalle.modifier(capacite, type, contientProjecteur);
-        
+        salle.modifier(Integer.parseInt(capacite_JFIELD.getText()),Type_JFIELD.getText(),contientProjecteur);
+        salle.consulter(salle.getId());
+               this.dispose();
         
     }//GEN-LAST:event_Modifier_ROLEActionPerformed
 
@@ -259,7 +251,7 @@ private Boolean contientProjecteur;
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
 
-dispose();
+this.dispose();
 
     }//GEN-LAST:event_AnnulerActionPerformed
 

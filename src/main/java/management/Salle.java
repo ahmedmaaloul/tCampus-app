@@ -63,12 +63,12 @@ public class Salle {
     public void ajouter(int id, int capacite, String type, boolean contientProjecteur) {
 
         if(verifExistence(id)){
-            System.out.println("bueno");
+            
              displayError("Salle Existante  !");
             return ;
         }
         
-        System.out.println("inin");
+       
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
@@ -164,12 +164,9 @@ public class Salle {
                  statement = connection.prepareStatement(query);
                  statement.setInt(1, this.id);
                  rows = statement.executeUpdate();
-                 if(rows>0){
+           
                         displaySucc();   
-                 }else{
-                                      displayError("ERREUR !");
-
-                 }
+                 
                     
                 
             }else{
@@ -257,7 +254,7 @@ public class Salle {
 
 
     private  void displayInfo() {
-     ConsulterSalleFrame salleFrame=new ConsulterSalleFrame(id,capacite,type,contientProjecteur);
+     ConsulterSalleFrame salleFrame=new ConsulterSalleFrame(this);
     }
 
     private void fsetInfo() {

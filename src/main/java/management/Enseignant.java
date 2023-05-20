@@ -1,6 +1,4 @@
-
 package management;
-
 
 import Frame.ConsulterEnseignantFrame;
 import java.sql.Connection;
@@ -9,20 +7,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class Enseignant extends Utilisateur {
-     public enum Type {
+
+    public enum Type {
         PERMANENT,
         VACATAIRE
     }
     private int CNSS;
     private String fonction;
     private Type type;
+
     public Enseignant() {
     }
 
-    public Enseignant(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance,int CNSS, String fonction) {
-          super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance, 3);
+    public Enseignant(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int CNSS, String fonction) {
+        super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance, 3);
         this.CNSS = CNSS;
         this.fonction = fonction;
     }
@@ -50,9 +49,8 @@ public class Enseignant extends Utilisateur {
     public void setFonction(String fonction) {
         this.fonction = fonction;
     }
-    
-    
-    public void ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int CNSS,String type,String fonction) {
+
+    public void ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int CNSS, String type, String fonction) {
         if (this.verifExistanceEns(CIN_Passport, CNSS)) {
             this.displayError("probleme d'unicite");
             return;
@@ -68,22 +66,21 @@ public class Enseignant extends Utilisateur {
         this.photo = photo;
         this.dateNaissance = dateNaissance;
         this.CNSS = CNSS;
-        this.fonction=fonction;
-        if("Permanent".equals(type)){
-            this.type=Type.PERMANENT;
-                    }   else{
-            this.type=Type.VACATAIRE;
-            type="Vacataire";
-            
-        }     
+        this.fonction = fonction;
+        if ("Permanent".equals(type)) {
+            this.type = Type.PERMANENT;
+        } else {
+            this.type = Type.VACATAIRE;
+            type = "Vacataire";
+
+        }
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
 
-        String insertQuery = "INSERT INTO UTILISATEUR (CIN_Passport, nomUtilisateur,email,password,prenom,nom,tel,genre,photo,dateNaissance,CNSS,type,fonction,idRole) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO UTILISATEUR (CIN_Passport, nomUtilisateur,email,password,prenom,nom,genre,tel,photo,dateNaissance,CNSS,type,fonction,idRole) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
-                PreparedStatement statement = connection.prepareStatement(insertQuery)) {
+        try ( Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);  PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
             // Set the values for the parameters
             statement.setString(1, CIN_Passport);
@@ -102,9 +99,8 @@ public class Enseignant extends Utilisateur {
             statement.setString(14, "3");
 
             int rows = statement.executeUpdate();
-  
 
-            if (rows> 0) {
+            if (rows > 0) {
                 this.displaySucc();
             } else {
                 this.displayError("Echec lors de l'ajout");
@@ -114,9 +110,10 @@ public class Enseignant extends Utilisateur {
             System.err.println("Error executing insert query: " + e.getMessage());
         }
     }
-      public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance,String type,String fonction) {
+
+    public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, String type, String fonction) {
         if (this.verifUnicite_CNSS(CNSS)) {
-            this.displayError("");
+            this.displayError("impossible de modifier !");
             return;
         }
         this.nomUtilisateur = nomUtilisateur;
@@ -128,22 +125,21 @@ public class Enseignant extends Utilisateur {
         this.tel = tel;
         this.photo = photo;
         this.dateNaissance = dateNaissance;
-        
-        this.fonction=fonction;
-              if("Permanent".equals(type)){
-            this.type=Type.PERMANENT;
-                    }   else{
-            this.type=Type.VACATAIRE;
-            type="Vacataire";
-            
-        }   
+
+        this.fonction = fonction;
+        if ("Permanent".equals(type)) {
+            this.type = Type.PERMANENT;
+        } else {
+            this.type = Type.VACATAIRE;
+            type = "Vacataire";
+
+        }
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
         String updateQuery = "UPDATE UTILISATEUR SET nomUtilisateur= ? ,email=?,password=?,prenom=?,nom=?genre=?,tel=?,photo=?,dateNaissance=?,type=?,fonction=? WHERE CIN_Passport= ?";
 
-        try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
-                PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+        try ( Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);  PreparedStatement statement = connection.prepareStatement(updateQuery)) {
 
             // Set the new value for the column
             statement.setString(1, nomUtilisateur);
@@ -155,8 +151,8 @@ public class Enseignant extends Utilisateur {
             statement.setString(7, tel);
             statement.setString(8, photo);
             statement.setString(9, dateNaissance);
-               statement.setString(10, type);
-                           statement.setString(11, fonction);
+            statement.setString(10, type);
+            statement.setString(11, fonction);
 
             statement.setString(12, CIN_Passport);
 
@@ -173,21 +169,22 @@ public class Enseignant extends Utilisateur {
             this.displayError("");
         }
     }
-    
-    
+
     ///////////===================================>  EXISTENCE
-       public boolean verifExistanceEns(String CIN_Passport, int num_insc) {
+    public boolean verifExistanceEns(String CIN_Passport, int CNSS) {
         if (super.verifExistence(CIN_Passport)) {
+
             return true;
         }
-        if (!verifUnicite_CNSS(num_insc) ) {
+        if (!verifUnicite_CNSS(CNSS)) {
+
             return true;
         }
         return false;
     }
-  
-private boolean verifUnicite_CNSS(int CNSS) {
-        boolean cnssExists = false;
+
+    private boolean verifUnicite_CNSS(int CNSS) {
+        boolean unique = true;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
@@ -196,12 +193,12 @@ private boolean verifUnicite_CNSS(int CNSS) {
 
             statement.setInt(1, CNSS);
 
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
 
-                cnssExists = resultSet.getInt(1) > 0;
-
+                unique = resultSet.getInt(1) > 0;
+                System.out.println("unique is " + unique);
             }
 
             resultSet.close();
@@ -212,26 +209,21 @@ private boolean verifUnicite_CNSS(int CNSS) {
             e.printStackTrace();
 
         }
-        return cnssExists;
+        return unique;
     }
 ///////////===================================>  DISPLAY
-   
-    
-   
 
 ///////////===================================>  CONSULTER 
-    
     public void consulter(int CNSS) {
         this.CNSS = CNSS;
         fsetInfo();
-        displayInfo(this);
+        displayInfo();
 
     }
 
-    private void displayInfo(Enseignant enseignant) {
-   
+    private void displayInfo() {
 
-       ConsulterEnseignantFrame matiereFrame = new ConsulterEnseignantFrame(enseignant);
+        ConsulterEnseignantFrame matiereFrame = new ConsulterEnseignantFrame(this);
     }
 
     private void fsetInfo() {
@@ -245,9 +237,26 @@ private boolean verifUnicite_CNSS(int CNSS) {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 this.nom = resultSet.getString("nom");
-                this.prenom= resultSet.getString("prenom");
-             
-              
+                this.prenom = resultSet.getString("prenom");
+                this.CIN_Passport = resultSet.getString("CIN_Passport");
+                this.CNSS = resultSet.getInt("CNSS");
+                this.email = resultSet.getString("email");
+                this.tel = resultSet.getString("tel");
+                this.dateNaissance = resultSet.getString("dateNaissance");
+                this.photo = resultSet.getString("photo");
+                this.nomUtilisateur = resultSet.getString("nomUtilisateur");
+                this.fonction = resultSet.getString("fonction");
+                this.genre= resultSet.getInt("genre");
+                this.idRole=resultSet.getInt("idRole");
+                if ("Vacataire".equals(resultSet.getString("typeUser"))) {
+
+                    this.type = Enseignant.Type.VACATAIRE;
+
+                } else {
+                    this.type = Enseignant.Type.PERMANENT;
+
+                }
+                
             }
 
             resultSet.close();
@@ -264,7 +273,4 @@ private boolean verifUnicite_CNSS(int CNSS) {
 
     }
 
-
-    
-    
 }

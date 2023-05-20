@@ -1,10 +1,6 @@
 package Frame;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import management.Cours;
 
 public class AjouterCoursFrame extends javax.swing.JFrame {
@@ -72,7 +68,6 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel2);
         jLabel2.setBounds(10, 120, 381, 35);
 
-        id_JField.setEditable(false);
         id_JField.setBackground(new java.awt.Color(187, 206, 255));
         id_JField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         id_JField.setForeground(new java.awt.Color(0, 0, 0));
@@ -120,7 +115,6 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(Annuler);
         Annuler.setBounds(730, 510, 98, 39);
 
-        duree_JFILED.setEditable(false);
         duree_JFILED.setBackground(new java.awt.Color(187, 206, 255));
         duree_JFILED.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         duree_JFILED.setForeground(new java.awt.Color(0, 0, 0));
@@ -170,7 +164,6 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel11);
         jLabel11.setBounds(6, 287, 381, 35);
 
-        horaire_JFIELD.setEditable(false);
         horaire_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
         horaire_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         horaire_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
@@ -242,16 +235,17 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
 
     private void Ajouter_CoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ajouter_CoursActionPerformed
         
-        
-              SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+       
+              
+   
+       
+
+     cours=new Cours();
       
-       try {
-           cours.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , (Date) dateFormat.parse(horaire_JFIELD.getText()));
-       } catch (ParseException ex) {
-            int option = JOptionPane.showOptionDialog(null, "fomat de date incorrect?", "Warning",
-                JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-       }
-dispose();
+      
+      
+      cours.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText());
+this.dispose();
 
 
     }//GEN-LAST:event_Ajouter_CoursActionPerformed

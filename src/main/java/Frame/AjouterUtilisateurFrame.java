@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.Utilisateur;
 
@@ -15,8 +16,8 @@ public class AjouterUtilisateurFrame extends javax.swing.JFrame {
 
     public AjouterUtilisateurFrame( ) {
         initComponents();
-      
-     
+              this.setResizable(false);
+         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -367,6 +368,8 @@ public class AjouterUtilisateurFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cinpassportActionPerformed
 
     private void SaveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButton1ActionPerformed
+      utilisateur=new Utilisateur();
+
         String cinPassport=cinpassport.getText();
         String nomUtilisateur = username.getText().trim();
         String emailIn = (email.getText().trim());
@@ -374,12 +377,12 @@ public class AjouterUtilisateurFrame extends javax.swing.JFrame {
         String nomIn = nom.getText();
         String prenomIn = prenom.getText();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+     int genreIn = genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         //=> when creating a default user ==> agent administartif
         utilisateur.ajouter(cinPassport,nomUtilisateur, emailIn, passwordIn, prenomIn, nomIn, telIn, genreIn, photo, dateNaissance,1);
-        utilisateur.consulter(utilisateur.getCIN_Passport());
+        utilisateur.consulter(cinPassport);
         this.dispose();
 
 

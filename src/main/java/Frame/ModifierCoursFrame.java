@@ -1,10 +1,7 @@
 package Frame;
 
-import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import management.Cours;
 
 public class ModifierCoursFrame extends javax.swing.JFrame {
@@ -24,7 +21,8 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         nom_JFIELD.setText(cours.getNom());
         duree_JFILED.setText(Float.toString(cours.getDuree()));
              SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        horaire_JFIELD.setText(dateFormat.format(cours.getHoraireDebut()));
+        horaire_JFIELD.setText(cours.getHoraireDebut());
+        desc_JFIELD1.setText(cours.getDescription());
         idEns_JFIELD.setText(Integer.toString(cours.getIdEns()));
         idMat_JFIELD.setText(Integer.toString(cours.getIdMat()));
         idSalle_JFILED.setText(Integer.toString(cours.getIdSalle()));
@@ -326,15 +324,12 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
     private void Modifier_ROLE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modifier_ROLE1ActionPerformed
         
         
-              SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+             
       
-       try {
-           cours.modifier(nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , (Date) dateFormat.parse(horaire_JFIELD.getText()));
-       } catch (ParseException ex) {
-            int option = JOptionPane.showOptionDialog(null, "fomat de date incorrect?", "Warning",
-                JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-       }
-
+       
+           cours.modifier(nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText());
+           cours.consulter(cours.getId());
+this.dispose();
 
 
     }//GEN-LAST:event_Modifier_ROLE1ActionPerformed

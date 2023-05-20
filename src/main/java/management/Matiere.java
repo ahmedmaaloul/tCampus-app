@@ -160,12 +160,7 @@ private int idGm;
                  statement = connection.prepareStatement(query);
                  statement.setInt(1, this.id);
                  rows = statement.executeUpdate();
-                 if(rows>0){
-                        displaySucc();   
-                 }else{
-                                      displayError("ERREUR !");
-
-                 }
+           
 
             } else {
                 displayError("impossible de supprimer  cette matiere!");

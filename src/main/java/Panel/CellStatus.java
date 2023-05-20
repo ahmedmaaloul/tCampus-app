@@ -1,7 +1,6 @@
 package Panel;
 
 
-import Frame.EditStudentFrame;
 import javax.swing.JButton;
 import management.Etudiant;
 import underHood.TypeClass;
@@ -11,10 +10,17 @@ public class CellStatus extends javax.swing.JPanel {
     // Classe Made for Student Dashboard
     private TypeClass type;
     private int num_insc;
+    
+    
+    
     public CellStatus(TypeClass type,int num_insc) {
         initComponents();
         this.type = type ;
         this.num_insc = num_insc;
+    }
+
+    CellStatus(int i) {
+        System.out.println("his");
     }
 
     public JButton getButton1() {

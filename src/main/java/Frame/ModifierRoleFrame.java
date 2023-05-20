@@ -458,7 +458,8 @@ public class ModifierRoleFrame extends javax.swing.JFrame {
         };
         Role temp_role=new Role(id,nom,Description);
         temp_role.modifier(nom, Description);
-
+        temp_role.consulter(id);
+        this.dispose();
     }//GEN-LAST:event_Submit_ChangeActionPerformed
 
     private void Id_RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Id_RoleActionPerformed

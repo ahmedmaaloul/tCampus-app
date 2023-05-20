@@ -5,19 +5,13 @@ import management.Matiere;
 
 public class AjouterMatiereFrame extends javax.swing.JFrame {
 
- private Matiere matiere;
 
-    public AjouterMatiereFrame(Matiere matiere) {
+
+    public AjouterMatiereFrame() {
         initComponents();
         this.setResizable(false);
-           this.matiere=matiere;
+                         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        id_JField.setText(Integer.toString(matiere.getId()  ));
-        nom_JFIELD.setText(matiere.getNom());
-      
-           coeff_JFIELD1.setText(Float.toString(matiere.getCoefficient()));
-        vhoraire_JFIELD.setText(Float.toString(matiere.getvHoraire()));
 
 
         this.setVisible(true);
@@ -210,7 +204,7 @@ public class AjouterMatiereFrame extends javax.swing.JFrame {
 
     private void AjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AjouterActionPerformed
              
-        Matiere tempMatiere=matiere;
+        Matiere tempMatiere=new Matiere();
         
         tempMatiere.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(), Float.parseFloat(coeff_JFIELD1.getText()),Float.parseFloat(vhoraire_JFIELD.getText())    );
 
@@ -218,7 +212,7 @@ public class AjouterMatiereFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AjouterActionPerformed
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
-dispose();
+this.dispose();
        
     }//GEN-LAST:event_AnnulerActionPerformed
 

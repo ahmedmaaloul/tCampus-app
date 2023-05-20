@@ -277,7 +277,7 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
      
 
         ModifierMatiereFrame tempFrame = new ModifierMatiereFrame(matiere);
-
+        this.dispose();
     }//GEN-LAST:event_ModifierActionPerformed
 
     private void Supprimer_ROLE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Supprimer_ROLE1ActionPerformed
@@ -287,6 +287,7 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
        if(option==JOptionPane.OK_OPTION){
     
                    matiere.supprimer();
+                   this.dispose();
        }
 
        

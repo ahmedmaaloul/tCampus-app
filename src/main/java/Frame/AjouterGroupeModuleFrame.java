@@ -5,23 +5,11 @@ import management.GroupeModule;
 
 
 public class AjouterGroupeModuleFrame extends javax.swing.JFrame {
-  
-private int id;
-private String nom;
-private float coefficient;
-private int idClasse;
 
-    public AjouterGroupeModuleFrame(int idGM,String nom,float Coefficient,int idClasse) {
+    public AjouterGroupeModuleFrame() {
         initComponents();
         this.setResizable(false);
-        id=idGM;
-        this.nom=nom;
-        this.coefficient=Coefficient;
-        this.idClasse=idClasse;
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                id_JField.setText( Integer.toString(id) );
-                nom_JFIELD.setText(nom);
-                coef_JFIELD1.setText(Float.toString(coefficient));
+                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
           
         this.setVisible(true);
@@ -200,7 +188,8 @@ private int idClasse;
         
         GroupeModule tempGm=new GroupeModule();
         tempGm.ajouter(Integer.parseInt(id_JField.getText()),        nom_JFIELD.getText(),Float.parseFloat(coef_JFIELD1.getText())  );
-        dispose();
+       
+        this.dispose();
     }//GEN-LAST:event_AjouterActionPerformed
 
     private void nom_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom_JFIELDActionPerformed

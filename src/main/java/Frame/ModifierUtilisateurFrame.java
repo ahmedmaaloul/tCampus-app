@@ -5,6 +5,7 @@ import java.io.File;
 import java.text.ParseException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.Utilisateur;
@@ -32,7 +33,11 @@ public class ModifierUtilisateurFrame extends javax.swing.JFrame {
         cinpassport.setText(utilisateur.getCIN_Passport()   );
         genre.setSelectedIndex(utilisateur.getGenre());
         tel.setText(utilisateur.getTel());
+             this.setResizable(false);
+                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
+    
+        this.setVisible(true);
         FileUploaded.setText(utilisateur.getPhoto());
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
@@ -394,7 +399,7 @@ public class ModifierUtilisateurFrame extends javax.swing.JFrame {
         String nomIn = nom.getText();
         String prenomIn = prenom.getText();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+            int genreIn = genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         try {

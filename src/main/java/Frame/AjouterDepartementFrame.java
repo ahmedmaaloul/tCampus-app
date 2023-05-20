@@ -38,8 +38,6 @@ private String nom;
         id_JField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         nom_JFIELD = new javax.swing.JTextField();
-        idChefDept_JFIELD = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         Ajouter = new javax.swing.JButton();
         Annuler = new javax.swing.JButton();
 
@@ -80,19 +78,6 @@ private String nom;
             }
         });
 
-        idChefDept_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
-        idChefDept_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        idChefDept_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
-        idChefDept_JFIELD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idChefDept_JFIELDActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("identifiant chef departement :");
-
         Ajouter.setBackground(new java.awt.Color(0, 102, 153));
         Ajouter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         Ajouter.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,13 +114,6 @@ private String nom;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Annuler, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(102, Short.MAX_VALUE))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(idChefDept_JFIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 57, Short.MAX_VALUE)))
-                        .addGap(374, 374, 374))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
@@ -164,11 +142,7 @@ private String nom;
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(id_JField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nom_JFIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idChefDept_JFIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Ajouter, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Annuler, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,7 +160,7 @@ private String nom;
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -195,18 +169,14 @@ private String nom;
 
     private void AjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AjouterActionPerformed
               id=Integer.parseInt(id_JField.getText());               
-              idChefDept=Integer.parseInt(idChefDept_JFIELD.getText());               
                nom=nom_JFIELD.getText();
-               Departement tempDept=new Departement(id,nom,idChefDept);
-               tempDept.ajouter(id,nom,idChefDept);
+               Departement tempDept=new Departement();
+               tempDept.ajouter(id,nom);
+               this.dispose();
                
         
         
     }//GEN-LAST:event_AjouterActionPerformed
-
-    private void idChefDept_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idChefDept_JFIELDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idChefDept_JFIELDActionPerformed
 
     private void nom_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom_JFIELDActionPerformed
         // TODO add your handling code here:
@@ -218,7 +188,7 @@ private String nom;
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
 
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_AnnulerActionPerformed
 
     
@@ -228,12 +198,10 @@ private String nom;
     private javax.swing.JButton Ajouter;
     private javax.swing.JButton Annuler;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JTextField idChefDept_JFIELD;
     private javax.swing.JTextField id_JField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JTextField nom_JFIELD;
     // End of variables declaration//GEN-END:variables

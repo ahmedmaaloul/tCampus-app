@@ -6,23 +6,23 @@ import management.GroupeModule;
 
 public class ModifierGroupeModuleFrame extends javax.swing.JFrame {
   
-private int id;
-private String nom;
-private float coefficient;
-private int idClasse;
-
-    public ModifierGroupeModuleFrame(int idGM,String nom,float Coefficient,int idClasse) {
+private GroupeModule       grpM;
+    public ModifierGroupeModuleFrame(GroupeModule       grpM) {
         initComponents();
         this.setResizable(false);
-        id=idGM;
-        this.nom=nom;
-        this.coefficient=Coefficient;
-        this.idClasse=idClasse;
+        this.grpM  =grpM;
                     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                id_JField.setText( Integer.toString(id) );
-                nom_JFIELD.setText(nom);
-                coef_JFIELD1.setText(Float.toString(coefficient));
-
+                id_JField.setText( Integer.toString(      grpM.getId()) );
+                nom_JFIELD.setText(      grpM.getNom());
+               
+                coef_JFIELD1.setText( Float.toString(      grpM.getCoefficient()));
+         if(grpM.getIdClasse()==0){
+                    idClasse_JFIELD.setText("non assigné !");
+      
+                }else{
+                                        idClasse_JFIELD.setText(Integer.toString(grpM.getIdClasse()));
+            
+                }
           
         this.setVisible(true);
     }
@@ -231,9 +231,10 @@ private int idClasse;
     private void ModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifierActionPerformed
        
         
-        GroupeModule tempGm=new GroupeModule(id,nom,coefficient,idClasse);
         
-        tempGm.modifier(nom_JFIELD.getText(), Float.parseFloat(coef_JFIELD1.getText()));
+              grpM.modifier(nom_JFIELD.getText(), Float.parseFloat(coef_JFIELD1.getText()));
+                    grpM.consulter(      grpM.getId());
+                    dispose();
         
     }//GEN-LAST:event_ModifierActionPerformed
 

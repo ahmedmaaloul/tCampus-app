@@ -239,12 +239,13 @@ public class ModifierMatiereFrame extends javax.swing.JFrame {
         Matiere tempMatiere=matiere;
         
         tempMatiere.modifier(nom_JFIELD.getText(), Float.parseFloat(coeff_JFIELD1.getText()),Float.parseFloat(vhoraire_JFIELD.getText())    );
-
+        tempMatiere.consulter(tempMatiere.getId());
+        this.dispose();
 
     }//GEN-LAST:event_ModifierActionPerformed
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
-dispose();
+this.dispose();
        
     }//GEN-LAST:event_AnnulerActionPerformed
 

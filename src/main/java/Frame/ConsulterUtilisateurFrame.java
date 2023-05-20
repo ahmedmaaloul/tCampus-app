@@ -3,6 +3,7 @@ package Frame;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Utilisateur;
 
@@ -15,6 +16,11 @@ public class ConsulterUtilisateurFrame extends javax.swing.JFrame {
    
     public ConsulterUtilisateurFrame(Utilisateur utilisateur ) {
         initComponents();
+             this.setResizable(false);
+                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+    
+        this.setVisible(true);
         this.utilisateur = utilisateur;
         cin_passport.setText(utilisateur.getCIN_Passport());
         username.setText(utilisateur.getNomUtilisateur());
@@ -410,7 +416,7 @@ public class ConsulterUtilisateurFrame extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
             ModifierUtilisateurFrame tempFrame=new ModifierUtilisateurFrame(utilisateur);
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -421,7 +427,7 @@ public class ConsulterUtilisateurFrame extends javax.swing.JFrame {
        if(option==JOptionPane.OK_OPTION){
           
            utilisateur.supprimer();
-                dispose();
+                this.dispose();
        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 

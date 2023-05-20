@@ -31,6 +31,14 @@ public class GroupeModule {
         return id;
     }
 
+    public int getIdClasse() {
+        return idClasse;
+    }
+
+    public void setIdClasse(int idClasse) {
+        this.idClasse = idClasse;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -98,7 +106,7 @@ public class GroupeModule {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Matiere SET nom = ?, coefficient= ? WHERE id = ?";
+            String query = "UPDATE GroupeModule SET nom = ?, coefficient= ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, nom);
@@ -140,13 +148,9 @@ public class GroupeModule {
                            query ="Update Matiere set idGM=NULL where  idGM=?";
                  statement = connection.prepareStatement(query);
                  statement.setInt(1, this.id);
-                 rows = statement.executeUpdate();
-                 if(rows>0){
-                        displaySucc();   
-                 }else{
-                                      displayError("ERREUR !");
-
-                 }
+                  statement.executeUpdate();
+                  displaySucc();
+          
 
             } else {
                 displayError("impossible de supprimer  le gourpe module!");
@@ -204,7 +208,7 @@ public class GroupeModule {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Matiere SET idGM =NULL  WHERE  id = ?";
+            String query = "UPDATE GroupeModule SET idGM =NULL  WHERE  id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
                     statement.setInt(1,this.id );
@@ -332,7 +336,7 @@ public class GroupeModule {
 
 
     private  void displayInfo() {
-     ConsulterGroupeModuleFrame salleFrame=new ConsulterGroupeModuleFrame(id,nom,coefficient,idClasse);
+     ConsulterGroupeModuleFrame salleFrame=new ConsulterGroupeModuleFrame(this);
     }
 
     private void fsetInfo() {
@@ -347,7 +351,7 @@ public class GroupeModule {
                 ResultSet   resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 this.nom=resultSet.getString("nom");
-                this.coefficient=resultSet.getInt("coefficient");
+                this.coefficient=resultSet.getFloat("coefficient");
                 this.idClasse=resultSet.getInt("idClasse");
            
                     

@@ -9,14 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/**
- *
- * @author Ahmed
- */
+
 public class Stage {
 
     private int id;
@@ -82,7 +75,7 @@ public class Stage {
     }
 
     public boolean verifExistence(int id) {
-        String url = "jdbc:mysql://localhost:3306/database_name";
+        String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
 
@@ -91,7 +84,7 @@ public class Stage {
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String id_str = Integer.toString(id);
             statement.setString(1, id_str);
 
@@ -106,10 +99,8 @@ public class Stage {
             resultSet.close();
             return false;
         } catch (SQLException e) {
-
             e.printStackTrace();
             return false;
-
         }
     }
 
@@ -131,14 +122,14 @@ public class Stage {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
-        String insertQuery = "INSERT INTO STAGE (id, type,dateDebut,dateFin,idEtu) VALUES (?,?,?,?,?)";
+        String insertQuery = "INSERT INTO STAGE (id, type, dateDebut, dateFin, idEtu) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
-            // Set the values for the parameters
-            String Id_str = Integer.toString(id);
-            statement.setString(1, Id_str);
+            // Définir les valeurs des paramètres
+            String id_str = Integer.toString(id);
+            statement.setString(1, id_str);
             statement.setString(2, type);
             statement.setString(3, dateDebut);
             statement.setString(4, dateFin);
@@ -150,16 +141,13 @@ public class Stage {
             if (rowsAffected > 0) {
                 this.displaySucc("Stage ajouté");
             } else {
-                this.displayError("Stage existe déja");
+                this.displayError("Stage existe déjà");
             }
         } catch (SQLException e) {
-
             e.printStackTrace();
             this.displayError("Erreur dans l'ajout du Stage");
             return;
-
         }
-
     }
 
     public void modifier(String type, String dateDebut, String dateFin) {
@@ -169,16 +157,16 @@ public class Stage {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String updateQuery = "UPDATE STAGE SET type= ?,dateDebut=?,dateFin=? WHERE  id= ?";
+        String updateQuery = "UPDATE STAGE SET type=?, dateDebut=?, dateFin=? WHERE id=?";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(updateQuery)) {
 
-            String Id_str = Integer.toString(id);
+            String id_str = Integer.toString(id);
             statement.setString(1, type);
             statement.setString(2, dateDebut);
             statement.setString(3, dateFin);
-            statement.setString(4, Id_str);
+            statement.setString(4, id_str);
 
             int rowsAffected = statement.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
@@ -186,12 +174,12 @@ public class Stage {
             if (rowsAffected > 0) {
                 this.displaySucc("Stage modifié");
             } else {
-                System.out.println("error in updating");
+                System.out.println("Erreur lors de la mise à jour");
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing update query: " + e.getMessage());
-            System.out.println("error in updating");
+            System.err.println("Erreur lors de l'exécution de la requête de mise à jour : " + e.getMessage());
+            System.out.println("Erreur lors de la mise à jour");
         }
     }
 
@@ -199,25 +187,26 @@ public class Stage {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String deleteQuery = "DELETE FROM STAGE WHERE WHERE id= ?";
+        String deleteQuery = "DELETE FROM STAGE WHERE id=?";
+
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
 
-            // Set the parameter value for the condition
-            String Id_str = Integer.toString(id);
-            statement.setString(1, Id_str);
+            // Définir la valeur du paramètre pour la condition
+            String id_str = Integer.toString(id);
+            statement.setString(1, id_str);
 
             int rowsAffected = statement.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
+            System.out.println("Lignes affectées : " + rowsAffected);
 
             if (rowsAffected > 0) {
                 this.displaySucc("Stage supprimé");
             } else {
-                System.out.println("No rows affected. Delete query did not delete any data.");
+                System.out.println("Aucune ligne affectée. La requête de suppression n'a pas supprimé de données.");
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing delete query: " + e.getMessage());
+            System.err.println("Erreur lors de l'exécution de la requête de suppression : " + e.getMessage());
         }
     }
 
@@ -229,7 +218,8 @@ public class Stage {
 
         frame.dispose();
     }
-      public void displaySucc(String info) {
+
+    public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -237,7 +227,8 @@ public class Stage {
 
         frame.dispose();
     }
-      public int fsetInfo() {
+
+    public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
@@ -247,39 +238,42 @@ public class Stage {
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String id_str = Integer.toString(this.id);
             statement.setString(1, id_str);
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Retrieve values from the result set
+                // Récupérer les valeurs à partir du résultat de la requête
                 type = resultSet.getString("type");
                 dateDebut = resultSet.getString("dateDebut");
                 dateFin = resultSet.getString("dateFin");
-                idEtu= resultSet.getString("idEtu");
+                idEtu = resultSet.getString("idEtu");
                 return 0;
             } else {
                 return -1;
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing select query: " + e.getMessage());
+            System.err.println("Erreur lors de l'exécution de la requête de sélection : " + e.getMessage());
             return -1;
         }
     }
-    public void Consulter(int id){
-        this.id=id;
-        if(fsetInfo() == -1){
+
+    public void Consulter(int id) {
+        this.id = id;
+        if (fsetInfo() == -1) {
             this.displayError("Impossible de trouver ce stage");
-        }else{
+        } else {
             displayInfo();
         }
     }
-    public void displayInfo(){
+
+    public void displayInfo() {
         new ConsulterStageForm(this);
     }
+
     public static void main(String[] args) {
         Stage s = new Stage();
         s.Consulter(1);

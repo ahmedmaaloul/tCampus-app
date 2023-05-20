@@ -2,12 +2,11 @@ package management;
 
 import Frame.ConsulterCoursFrame;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
+import java.time.LocalTime;
 import javax.swing.JOptionPane;
 
 public class Cours {
@@ -15,13 +14,13 @@ public class Cours {
     private int id;
     private String nom, description;
     private float duree;
-    private Date horaireDebut;
+    private String horaireDebut;
     private int idEns, idMat, idSalle;
 
     public Cours() {
     }
 
-    public Cours(int id, String nom, String description, float duree, Date horaireDebut) {
+    public Cours(int id, String nom, String description, float duree, String horaireDebut) {
         this.id = id;
         this.nom = nom;
         this.description = description;
@@ -45,7 +44,7 @@ public class Cours {
         return duree;
     }
 
-    public Date getHoraireDebut() {
+    public String getHoraireDebut() {
         return horaireDebut;
     }
 
@@ -89,12 +88,12 @@ public class Cours {
         this.duree = duree;
     }
 
-    public void setHoraireDebut(Date horaireDebut) {
+    public void setHoraireDebut(String horaireDebut) {
         this.horaireDebut = horaireDebut;
     }
 
     ///////////===================================> AJOUT
-    public void ajouter(int id, String nom, String description, float duree, Date horaireDebut) {
+    public void ajouter(int id, String nom, String description, float duree, String horaireDebut) {
 
         if (verifExistence(id)) {
             displayError("Cours Existant  !");
@@ -110,7 +109,7 @@ public class Cours {
             statement.setInt(1, id);
             statement.setString(2, nom);
             statement.setString(3, description);
-            statement.setDate(4, horaireDebut);
+            statement.setString(4, horaireDebut);
             statement.setFloat(5, duree);
 
             int rows = statement.executeUpdate();
@@ -135,7 +134,7 @@ public class Cours {
     ;
     ///////////===================================> MODIF
     
-    public void modifier(String nom, String description, float duree, Date horaireDebut) {
+    public void modifier(String nom, String description, float duree, String horaireDebut) {
 
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
@@ -146,7 +145,7 @@ public class Cours {
             statement.setString(1, nom);
             statement.setString(2, description);
             statement.setFloat(3, duree);
-            statement.setDate(4, horaireDebut);
+            statement.setString(4, horaireDebut);
             statement.setInt(5, this.id);
 
             int rows = statement.executeUpdate();
@@ -174,7 +173,7 @@ public class Cours {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "DELETE from salle WHERE id = ?";
+            String query = "DELETE from cours WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, this.id);
@@ -244,7 +243,7 @@ public class Cours {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Cours SET idMat= ?WHERE id = ?";
+            String query = "UPDATE Cours SET idMat= ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, idMat);
@@ -415,16 +414,14 @@ public class Cours {
                     query = "SELECT 1 FROM Cours where idSalle=? and  HoraireDebut>=? and HoraireDebut<=?";
                     statement = connection.prepareStatement(query);
                     statement.setInt(1, IdSalle);
-                    statement.setDate(2, this.horaireDebut);
+                    statement.setString(2, this.horaireDebut);
 
                     // ==> preparing the horaire of ending the course
-                    int duration = (int) this.duree * 60;
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(this.horaireDebut);
-                    calendar.add(Calendar.MINUTE, duration);
-                    Date HoraireFin = (Date) calendar.getTime();
-                    //
-                    statement.setDate(3, HoraireFin);
+                   int duration = (int) this.duree * 60;
+    LocalTime horaireDebutTime = LocalTime.parse(this.horaireDebut);
+    LocalTime horaireFinTime = horaireDebutTime.plusMinutes(duration);
+
+    statement.setString(3, horaireFinTime.toString()); // Set HoraireFin
 
                     resultSet = statement.executeQuery();
 
@@ -525,7 +522,7 @@ public class Cours {
             if (resultSet.next()) {
                 this.nom = resultSet.getString("nom");
                 this.description = resultSet.getString("description");
-                this.horaireDebut = resultSet.getDate("horaireDebut");
+                this.horaireDebut = resultSet.getString("horaireDebut");
                 this.duree = resultSet.getFloat("duree");
                 this.idMat = resultSet.getInt("idMat");
                 this.idSalle = resultSet.getInt("idSalle");

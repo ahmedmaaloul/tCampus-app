@@ -411,6 +411,7 @@ private String description;
        if(option==JOptionPane.OK_OPTION){
            Role tempRole=new Role(id,nom,description);
            tempRole.supprimer();
+           this.dispose();
            
        }
     }//GEN-LAST:event_supprimerActionPerformed
@@ -443,7 +444,7 @@ private String description;
     private void Submit_Role1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_Role1ActionPerformed
         
         ModifierRoleFrame modifierRole=new ModifierRoleFrame(id,nom,description);
-        
+        this.dispose();
     }//GEN-LAST:event_Submit_Role1ActionPerformed
 
     private void Id_RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Id_RoleActionPerformed

@@ -7,27 +7,22 @@ import management.GroupeModule;
 
 public class ConsulterGroupeModuleFrame extends javax.swing.JFrame {
   
-private int id;
-private String nom;
-private float coefficient;
-private int idClasse;
+    private GroupeModule grpM;
 
-    public ConsulterGroupeModuleFrame(int idGM,String nom,float Coefficient,int idClasse) {
+    public ConsulterGroupeModuleFrame(GroupeModule grpM) {
         initComponents();
         this.setResizable(false);
-        id=idGM;
-        this.nom=nom;
-        this.coefficient=Coefficient;
-        this.idClasse=idClasse;
+        this.grpM =    grpM;
+     
                     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                id_JField.setText( Integer.toString(id) );
-                nom_JFIELD.setText(nom);
-                coef_JFIELD1.setText(Float.toString(coefficient));
-                if(idClasse==0){
+                id_JField.setText( Integer.toString(grpM.getId()    ) );
+                nom_JFIELD.setText(grpM.getNom()    );
+                coef_JFIELD1.setText(Float.toString(grpM.getCoefficient()));
+                if(grpM.getIdClasse()==0){
                     idClasse_JFIELD.setText("non assigné !");
                     AssignerClasse.setText("Assigner à un classe");
                 }else{
-                                        idClasse_JFIELD.setText(Integer.toString(idClasse));
+                                        idClasse_JFIELD.setText(Integer.toString(grpM.getIdClasse()));
                   AssignerClasse.setText("Retirer du classe");
                 }
           
@@ -255,7 +250,8 @@ private int idClasse;
     }// </editor-fold>//GEN-END:initComponents
 
     private void Modifier_ROLEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modifier_ROLEActionPerformed
-       ModifierGroupeModuleFrame tempFrame=new ModifierGroupeModuleFrame(id,nom,coefficient,idClasse);
+       ModifierGroupeModuleFrame tempFrame=new ModifierGroupeModuleFrame(grpM);
+       this.dispose();
     }//GEN-LAST:event_Modifier_ROLEActionPerformed
 
     private void idClasse_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idClasse_JFIELDActionPerformed
@@ -276,8 +272,8 @@ private int idClasse;
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
        if(option==JOptionPane.OK_OPTION){
-           GroupeModule tempObject=new  GroupeModule(id,nom,coefficient,idClasse);
-           tempObject.supprimer();
+           
+           grpM.supprimer();
            
        }
 
@@ -285,17 +281,18 @@ private int idClasse;
     }//GEN-LAST:event_Supprimer_ROLEActionPerformed
 
     private void AssignerClasseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignerClasseActionPerformed
-               GroupeModule tempGm=new GroupeModule(id,nom,coefficient,idClasse);
-        if(idClasse==0){
+               
+        if(grpM.getIdClasse()==0){
                     String userInput = JOptionPane.showInputDialog(null, "Enter l'identifiant du classe:", "Assigner à une Classe", JOptionPane.QUESTION_MESSAGE);
              
-                        idClasse=Integer.parseInt(userInput);
-                    tempGm.AjouterGM_Classe(idClasse);
-                
+                        
+                    grpM.AjouterGM_Classe(Integer.parseInt(userInput));
+                    grpM.consulter(      grpM.getId());
+                dispose();
                     
                 
         }else{
-            tempGm.removeGM_Classe();
+                  grpM.removeGM_Classe();
             
         }
         

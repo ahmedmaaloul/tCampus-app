@@ -209,6 +209,7 @@ private Boolean contientProjecteur;
 fetchInputs();
 Salle tempSalle=new Salle();
 tempSalle.ajouter(id, capacite, type, contientProjecteur);
+tempSalle.consulter(id);
 this.dispose();
     }//GEN-LAST:event_SaveButtonActionPerformed
 

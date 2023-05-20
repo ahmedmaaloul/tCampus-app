@@ -3,10 +3,18 @@ package Dashboard;
 
 import Panel.AbsencePanel;
 import Panel.ClassePanel;
+import Panel.CoursPanel;
+import Panel.DepartementPanel;
+import Panel.EnseignantPanel;
 import Panel.EvaluationPanel;
+import Panel.GroupeModulePanel;
 import Panel.GroupePanel;
+import Panel.MatierePanel;
+import Panel.RolePanel;
+import Panel.SallePanel;
 import Panel.StagePanel;
 import Panel.StudentPanel;
+import Panel.UtilisateurPanel;
 import java.awt.Color;
 import javax.swing.JComponent;
 
@@ -40,7 +48,8 @@ public class DashBoard extends javax.swing.JFrame {
                 setForm(new StudentPanel() );
             }
             else if("Groupe Modules".equals(gestionNom)){
-                
+            
+                setForm(new GroupeModulePanel() );
                 
             }
             else if("Stages".equals(gestionNom)){
@@ -49,14 +58,14 @@ public class DashBoard extends javax.swing.JFrame {
             }
             else if("Matieres".equals(gestionNom)){
                 
-                
+                setForm(new MatierePanel());
             }
             else if("Departement".equals(gestionNom)){
-                
+                setForm(new DepartementPanel());
                 
             }else if("Enseignants".equals(gestionNom)){
                 
-                
+                setForm(new EnseignantPanel());
             }
             else if("Evaluations".equals(gestionNom)){
                 setForm(new EvaluationPanel() );
@@ -64,9 +73,11 @@ public class DashBoard extends javax.swing.JFrame {
             }
             else if("Cours".equals(gestionNom)){
                 
+                        setForm(new CoursPanel() );
+                
                 
             }else if("Salles".equals(gestionNom)){
-                
+                 setForm(new SallePanel());
                 
             }
             else if("Absences".equals(gestionNom)){
@@ -75,10 +86,10 @@ public class DashBoard extends javax.swing.JFrame {
 
             }
             else if("Utilisateurs".equals(gestionNom)){
-                
+                        setForm(new UtilisateurPanel());
                 
             }else if("Roles".equals(gestionNom)){
-                
+                setForm(new RolePanel());
                 
             }
         });

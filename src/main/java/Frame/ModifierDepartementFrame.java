@@ -203,6 +203,7 @@ private Departement dept;
              
                dept.modifier(nom_JFIELD.getText());
                dept.consulter(dept.getId());
+               
                this.dispose();
                
         
@@ -223,7 +224,7 @@ private Departement dept;
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
 
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_AnnulerActionPerformed
 
     

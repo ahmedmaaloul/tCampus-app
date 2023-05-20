@@ -40,7 +40,7 @@ private int idChefDept;
     }
 
       ///////////===================================> AJOUT
-    public void ajouter(int id,String nom,int idChefDept) {
+    public void ajouter(int id,String nom) {
 
         if (verifExistence(id)) {
             displayError("Departement Existant  !");
@@ -50,12 +50,12 @@ private int idChefDept;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "INSERT INTO Departement(id, nom,idChefDept) VALUES (?, ?, ?)";
+            String query = "INSERT INTO Departement(id, nom) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, id);
             statement.setString(2, nom);
-            statement.setFloat(3, idChefDept);
+          
          
 
             int rows = statement.executeUpdate();
@@ -85,7 +85,7 @@ private int idChefDept;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Matiere SET nom = ? WHERE id = ?";
+            String query = "UPDATE Departement SET nom = ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, nom);

@@ -11,6 +11,7 @@ public class ActionPanelGRP extends javax.swing.JPanel {
     private int id;
     public ActionPanelGRP(int id) {
         initComponents();
+  
         this.id=id;
     }
 
@@ -49,7 +50,8 @@ public class ActionPanelGRP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          Groupe G = new Groupe();
+        System.out.println("NICE");
+        Groupe G = new Groupe();
           G.Consulter(id);
     }//GEN-LAST:event_jButton1ActionPerformed
 

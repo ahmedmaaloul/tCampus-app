@@ -209,9 +209,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="capacite_JFIELDActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="capacite_JFIELD.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="Type_JFIELD">
           <Properties>
@@ -228,9 +225,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Type_JFIELDActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="Type_JFIELD.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

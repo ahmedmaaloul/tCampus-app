@@ -10,7 +10,9 @@ public class AjouterRoleFrame extends javax.swing.JFrame {
   
     public AjouterRoleFrame() {
         initComponents();
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                 this.setResizable(false);
+         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(true);
     }
 
     public class GradientPanel extends JPanel {
@@ -417,7 +419,8 @@ dispose();        // TODO add your handling code here:
         };
         Role temp_role=new Role();
         temp_role.ajouter(id, nom, Description);
-        dispose();
+        temp_role.consulter(id);
+        this.dispose();
     }//GEN-LAST:event_Submit_Role1ActionPerformed
 
     private void Id_RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Id_RoleActionPerformed

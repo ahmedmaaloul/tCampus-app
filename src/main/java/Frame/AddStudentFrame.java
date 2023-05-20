@@ -460,7 +460,7 @@ public class AddStudentFrame extends javax.swing.JFrame {
         String nomIn = nom.getText().trim();
         String prenomIn = prenom.getText().trim();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+        int genreIn = (int) genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         int num_insc = Integer.valueOf(numinsc.getText());

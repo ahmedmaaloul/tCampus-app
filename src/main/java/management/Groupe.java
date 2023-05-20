@@ -69,31 +69,37 @@ public class Groupe {
     }
 
     public void ajouter(int Id, String nom, int num, int IdC) {
+        // Vérifier si le groupe existe déjà en fonction de son ID
         if (this.verifExistence(Id)) {
-            this.displayError("Problème d'unicite");
+            this.displayError("Problème d'unicité");
             return;
         }
+
+        // Vérifier si la classe existe en fonction de son ID
         Classe c = new Classe();
         if (c.verifExistence(IdC) == false) {
             this.displayError("Classe non trouvée !");
             return;
         }
+
+        // Affecter les valeurs aux attributs du groupe
         this.Id = Id;
         this.IdC = IdC;
         this.num = num;
         this.nom = nom;
+
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
-        String insertQuery = "INSERT INTO GROUPE (Id, nom,num,idClasse) VALUES (?, ?, ? ,?)";
+        String insertQuery = "INSERT INTO GROUPE (Id, nom, num, idClasse) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
-            // Set the values for the parameters
+            // Définir les valeurs des paramètres
             String Id_str = Integer.toString(Id);
             String IdC_str = Integer.toString(IdC);
-            String num_str = Float.toString(num);
+            String num_str = Integer.toString(num);
             statement.setString(1, Id_str);
             statement.setString(2, nom);
             statement.setString(3, num_str);
@@ -105,20 +111,17 @@ public class Groupe {
             if (rowsAffected > 0) {
                 this.displaySucc("Groupe ajouté");
             } else {
-                this.displayError("Groupe existe déja");
+                this.displayError("Le groupe existe déjà");
             }
         } catch (SQLException e) {
-
             e.printStackTrace();
             this.displayError("Impossible d'ajouter le groupe");
             return;
-
         }
-
     }
 
     public boolean verifExistence(int id) {
-        String url = "jdbc:mysql://localhost:3306/database_name";
+        String url = "jdbc:mysql://localhost:3306/tCampus";
         String username = "root";
         String password = "root";
 
@@ -127,7 +130,7 @@ public class Groupe {
         try (Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String id_str = Integer.toString(id);
             statement.setString(1, id_str);
 
@@ -142,10 +145,8 @@ public class Groupe {
             resultSet.close();
             return false;
         } catch (SQLException e) {
-
             e.printStackTrace();
             return false;
-
         }
     }
 
@@ -160,6 +161,7 @@ public class Groupe {
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(updateQuery)) {
 
+            // Définir les nouvelles valeurs pour les colonnes
             String Id_str = Integer.toString(Id);
             String num_str = Float.toString(num);
             statement.setString(1, nom);
@@ -189,7 +191,7 @@ public class Groupe {
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String Id_str = Integer.toString(Id);
             statement.setString(1, Id_str);
 
@@ -233,6 +235,7 @@ public class Groupe {
 
         frame.dispose();
     }
+
     public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -241,6 +244,7 @@ public class Groupe {
 
         frame.dispose();
     }
+
     public int fsetInfo() {
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
@@ -251,14 +255,14 @@ public class Groupe {
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String id_str = Integer.toString(this.Id);
             statement.setString(1, id_str);
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Retrieve values from the result set
+                // Récupérer les valeurs du résultat
                 nom = resultSet.getString("nom");
                 num = resultSet.getInt("num");
                 IdC = resultSet.getInt("idClasse");
@@ -277,13 +281,15 @@ public class Groupe {
         this.Id = id;
         if (fsetInfo() == -1) {
             this.displayError("Groupe non trouvé");
-        }else{
+        } else {
             displayInfo();
         }
     }
-    public void displayInfo(){
+
+    public void displayInfo() {
         new ConsulterGroupeFrame(this);
     }
+
     public static void main(String[] args) {
         Groupe g = new Groupe();
         g.Consulter(1);

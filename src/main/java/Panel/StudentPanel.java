@@ -125,7 +125,15 @@ public class StudentPanel extends javax.swing.JPanel {
             new String [] {
                 "CIN_Passport", "Num_insc", "Nom", "Prénom", "Tel", "Email", "Actions"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);

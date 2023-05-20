@@ -22,16 +22,17 @@ public class Etudiant extends Utilisateur {
 
     private int num_insc;
     private int idGRP;
-    public Etudiant(int num_insc, String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance,int idGRP) {
+
+    public Etudiant(int num_insc, String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int idGRP) {
         super(CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance, 2);
         this.num_insc = num_insc;
-        this.idGRP= idGRP;
+        this.idGRP = idGRP;
     }
 
     public Etudiant() {
         super();
         this.num_insc = 0;
-        this.idGRP= 0;
+        this.idGRP = 0;
         this.setIdRole(2);
     }
 
@@ -159,10 +160,16 @@ public class Etudiant extends Utilisateur {
     }
 
     public boolean verifUnicite_num_insc(int num_insc) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+                PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE typeUser='Etudiant' AND num_insc=?")) {
+            // Établir une connexion à la base de données en utilisant JDBC et définir le nom d'utilisateur et le mot de passe
 
-            String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE typeUser='Etudiant' num_insc=" + num_insc;
-            ResultSet resultSet = statement.executeQuery(query);
+            // Préparer une requête paramétrée avec un espace réservé pour le numéro d'inscription
+            // Le point d'interrogation sera remplacé par une valeur réelle ultérieurement
+            statement.setInt(1, num_insc); // Définir la valeur du paramètre (num_insc)
+
+            ResultSet resultSet = statement.executeQuery(); // Exécuter la requête de sélection
+
             if (resultSet.next()) {
                 int nbreU = resultSet.getInt("NbreU");
                 if (nbreU == 0) {
@@ -173,36 +180,45 @@ public class Etudiant extends Utilisateur {
             resultSet.close();
             return false;
         } catch (SQLException e) {
-
             e.printStackTrace();
             return false;
-
         }
     }
 
     public boolean verifExistanceEt(String CIN_Passport, int num_insc) {
         if (super.verifExistence(CIN_Passport)) {
+            // Vérifier l'existence de l'Etudiant par le CIN ou le Passport
+            // Si l'Etudiant existe, retourner true
             return true;
         }
         if (verifUnicite_num_insc(num_insc) == false) {
+            // Vérifier l'unicité du numéro d'inscription de l'Etudiant
+            // Si le numéro d'inscription existe déjà, retourner true
             return true;
         }
+        // Aucune condition n'a été satisfaite, donc retourner false
         return false;
     }
 
     public void calculerTauxAbsence(int IdMat) {
         int NbreCoursAb, NbreCours;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+                PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) nbreCoursAb FROM ABSENCE WHERE IdE=? AND IdC IN (SELECT IDC  FROM COURS WHERE IDMAT=?)")) {
+            // Établir une connexion à la base de données en utilisant JDBC et définir le nom d'utilisateur et le mot de passe
 
-            String query = "SELECT COUNT(*) nbreCoursAb FROM ABSENCE WHERE IdE=" + num_insc + " AND IdC IN (SELECT IDC  FROM COURS WHERE IDMAT =" + IdMat + ");";
-            ResultSet resultSet = statement.executeQuery(query);
+            statement.setInt(1, num_insc); // Définir la valeur du premier paramètre (IdE)
+            statement.setInt(2, IdMat); // Définir la valeur du deuxième paramètre (IdMAT)
+
+            ResultSet resultSet = statement.executeQuery(); // Exécuter la première requête de sélection
+
             if (resultSet.next()) {
                 NbreCoursAb = resultSet.getInt("nbreCoursAb");
             } else {
+                resultSet.close();
                 return;
             }
+            resultSet.close();
         } catch (SQLException e) {
-
             e.printStackTrace();
             JFrame frame = new JFrame("Error Dialog");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -211,22 +227,27 @@ public class Etudiant extends Utilisateur {
 
             frame.dispose();
             return;
-
         }
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
 
-            String query = "SELECT COUNT(*) nbreCours FROM COURS WHERE IDMAT =" + IdMat + ";";
-            ResultSet resultSet = statement.executeQuery(query);
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+                PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) nbreCours FROM COURS WHERE IDMAT=?")) {
+            // Établir une nouvelle connexion à la base de données
+
+            statement.setInt(1, IdMat); // Définir la valeur du paramètre (IdMAT)
+
+            ResultSet resultSet = statement.executeQuery(); // Exécuter la deuxième requête de sélection
+
             if (resultSet.next()) {
                 NbreCours = resultSet.getInt("nbreCours");
                 double tauxAb = NbreCoursAb / NbreCours;
                 tauxAb = tauxAb * 100;
                 displayTauxAbsences((float) tauxAb);
             } else {
+                resultSet.close();
                 return;
             }
+            resultSet.close();
         } catch (SQLException e) {
-
             e.printStackTrace();
             JFrame frame = new JFrame("Error Dialog");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -235,7 +256,6 @@ public class Etudiant extends Utilisateur {
 
             frame.dispose();
             return;
-
         }
     }
 
@@ -267,20 +287,23 @@ public class Etudiant extends Utilisateur {
     }
 
     public void removeGRP() {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+                PreparedStatement statement = connection.prepareStatement("UPDATE utilisateurs SET idGRP = NULL WHERE CIN_Passport = ?")) {
+            // Établir une connexion à la base de données en utilisant JDBC et définir le nom d'utilisateur et le mot de passe
 
-            String query = "UPDATE utilisateurs SET idGRP = NULL WHERE CIN_Passport ='" + CIN_Passport + "'";
-            int rowsAffected = statement.executeUpdate(query);
+            // Préparer une requête paramétrée avec un espace réservé
+            // Le point d'interrogation sera remplacé par une valeur réelle ultérieurement
+            statement.setString(1, CIN_Passport); // Définir la valeur du paramètre (CIN_Passport)
+
+            int rowsAffected = statement.executeUpdate(); // Exécuter la requête de mise à jour
 
             if (rowsAffected > 0) {
                 this.displaySucc("L'Etudiant a été retiré du groupe");
-                idGRP=0;
-                
+                idGRP = 0;
             } else {
                 displayError("La requête de mise à jour n'a modifié aucune donnée.");
             }
         } catch (SQLException e) {
-
             e.printStackTrace();
             JFrame frame = new JFrame("Error Dialog");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -289,24 +312,28 @@ public class Etudiant extends Utilisateur {
 
             frame.dispose();
             return;
-
         }
     }
 
     public void assignGRP(int idGRP) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+                PreparedStatement statement = connection.prepareStatement("UPDATE utilisateurs SET idGRP = ? WHERE CIN_Passport = ?")) {
+            // Établir une connexion à la base de données en utilisant JDBC et définir le nom d'utilisateur et le mot de passe
 
-            String query = "UPDATE utilisateurs SET idGRP =" + idGRP + " WHERE CIN_Passport ='" + CIN_Passport + "'";
-            int rowsAffected = statement.executeUpdate(query);
+            // Préparer une requête paramétrée avec des espaces réservés
+            // Les points d'interrogation seront remplacés par les valeurs réelles ultérieurement
+            statement.setInt(1, idGRP); // Définir la valeur du premier paramètre (idGRP)
+            statement.setString(2, CIN_Passport); // Définir la valeur du deuxième paramètre (CIN_Passport)
+
+            int rowsAffected = statement.executeUpdate(); // Exécuter la requête de mise à jour
 
             if (rowsAffected > 0) {
                 this.displaySucc("Etudiant ajouté au groupe");
-                this.idGRP=idGRP;
+                this.idGRP = idGRP;
             } else {
                 displayError("La requête de mise à jour n'a modifié aucune donnée.");
             }
         } catch (SQLException e) {
-
             e.printStackTrace();
             JFrame frame = new JFrame("Error Dialog");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -315,15 +342,18 @@ public class Etudiant extends Utilisateur {
 
             frame.dispose();
             return;
-
         }
     }
 
     public void ajouter(String CIN_Passport, String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance, int num_insc) {
         if (this.verifExistanceEt(CIN_Passport, num_insc)) {
+            // Vérifier l'existence de l'Etudiant par le CIN ou le Passport et le numéro d'inscription
+            // Si l'Etudiant existe déjà, afficher un message d'erreur et quitter la méthode
             this.displayError("probleme d'unicite");
             return;
         }
+
+        // Aucun problème d'unicité, procéder à l'ajout de l'Etudiant
         this.CIN_Passport = CIN_Passport;
         this.nomUtilisateur = nomUtilisateur;
         this.email = email;
@@ -335,30 +365,31 @@ public class Etudiant extends Utilisateur {
         this.photo = photo;
         this.dateNaissance = dateNaissance;
         this.num_insc = num_insc;
+
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
 
-        String insertQuery = "INSERT INTO UTILISATEUR (CIN_Passport, nomUtilisateur,email,password,prenom,nom,tel,genre,photo,dateNaissance,num_insc,typeUser,idRole) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO UTILISATEUR (CIN_Passport, nomUtilisateur, email, password, prenom, nom, tel, genre, photo, dateNaissance, num_insc, typeUser, idRole) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
-            // Set the values for the parameters
+            // Définir les valeurs des paramètres
             statement.setString(1, CIN_Passport);
             statement.setString(2, nomUtilisateur);
             statement.setString(3, email);
             statement.setString(4, password);
             statement.setString(5, prenom);
             statement.setString(6, nom);
-            String genre_str = genre == 1 ? "1" : "0";
+            String genre_str = genre == 1 ? "1" : "0"; // Conversion du genre en chaîne de caractères ("0" pour masculin, "1" pour féminin)
             statement.setString(7, genre_str);
             statement.setString(8, tel);
             statement.setString(9, photo);
             statement.setString(10, dateNaissance);
-            String num_insc_str = Integer.toString(num_insc);
+            String num_insc_str = Integer.toString(num_insc); // Conversion du numéro d'inscription en chaîne de caractères
             statement.setString(12, num_insc_str);
-            statement.setString(13, "2");
+            statement.setString(13, "2"); // Valeur fixe pour le type d'utilisateur (2 pour étudiant)
 
             int rowsAffected = statement.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
@@ -376,9 +407,13 @@ public class Etudiant extends Utilisateur {
 
     public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
         if (this.verifUnicite_num_insc(num_insc)) {
+            // Vérifier l'unicité de l'étudiant par le numéro d'inscription
+            // Si l'étudiant n'est pas unique, afficher un message d'erreur et quitter la méthode
             this.displayError("Etudiant non modifié");
             return;
         }
+
+        // L'étudiant est unique, procéder à la modification des informations
         this.nomUtilisateur = nomUtilisateur;
         this.email = email;
         this.password = password;
@@ -388,21 +423,22 @@ public class Etudiant extends Utilisateur {
         this.tel = tel;
         this.photo = photo;
         this.dateNaissance = dateNaissance;
+
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-        String updateQuery = "UPDATE UTILISATEUR SET nomUtilisateur= ? ,email=?,password=?,prenom=?,nom=?genre=?,tel=?,photo=?,dateNaissance=? WHERE CIN_Passport= ?";
+        String updateQuery = "UPDATE UTILISATEUR SET nomUtilisateur=?, email=?, password=?, prenom=?, nom=?, genre=?, tel=?, photo=?, dateNaissance=? WHERE CIN_Passport=?";
 
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(updateQuery)) {
 
-            // Set the new value for the column
+            // Définir les nouvelles valeurs pour chaque colonne
             statement.setString(1, nomUtilisateur);
             statement.setString(2, email);
             statement.setString(3, password);
             statement.setString(4, prenom);
             statement.setString(5, nom);
-            String genre_str = genre == 1 ? "1" : "0";
+            String genre_str = genre == 1 ? "1" : "0"; // Conversion du genre en chaîne de caractères ("0" pour masculin, "1" pour féminin)
             statement.setString(6, genre_str);
             statement.setString(7, tel);
             statement.setString(8, photo);
@@ -434,14 +470,14 @@ public class Etudiant extends Utilisateur {
         try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(selectQuery)) {
 
-            // Set the parameter value for the condition
+            // Définir la valeur du paramètre pour la condition
             String num_insc_str = Integer.toString(num_insc);
             statement.setString(1, num_insc_str);
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Retrieve values from the result set
+                // Récupérer les valeurs du jeu de résultats
                 CIN_Passport = resultSet.getString("CIN_Passport");
                 nomUtilisateur = resultSet.getString("nomUtilisateur");
                 email = resultSet.getString("email");
@@ -449,13 +485,12 @@ public class Etudiant extends Utilisateur {
                 prenom = resultSet.getString("prenom");
                 nom = resultSet.getString("nom");
                 tel = resultSet.getString("tel");
-                photo =resultSet.getString("photo");
-                dateNaissance =resultSet.getString("dateNaissance");
-                num_insc =resultSet.getInt("num_insc");
+                photo = resultSet.getString("photo");
+                dateNaissance = resultSet.getString("dateNaissance");
+                num_insc = resultSet.getInt("num_insc");
                 idGRP = resultSet.getInt("idGRP");
                 return 0;
-            }
-            else{
+            } else {
                 return -1;
             }
 
@@ -464,21 +499,24 @@ public class Etudiant extends Utilisateur {
             return -1;
         }
     }
-    public void Consulter(int num_insc){
+
+    public void Consulter(int num_insc) {
         this.num_insc = num_insc;
-        if(this.fsetInfo() == -1)
-        {
+        if (this.fsetInfo() == -1) {
+            // Vérifier si l'étudiant a été trouvé ou non
+            // Si l'étudiant n'a pas été trouvé, afficher un message d'erreur et quitter la méthode
             this.displayError("Etudiant non trouvé");
             return;
-        }
-        else{
+        } else {
+            // Afficher les informations de l'étudiant
             displayInfo();
         }
-        
     }
-    public void displayInfo(){
+
+    public void displayInfo() {
         new ConsulterStudentFrame(this);
     }
+
     public static void main(String[] args) {
         Etudiant e = new Etudiant();
         e.Consulter(156132);

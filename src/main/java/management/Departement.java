@@ -1,5 +1,6 @@
 package management;
 
+import Frame.ConsulterDepartementFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,17 +12,27 @@ import javax.swing.JOptionPane;
 public class Departement {
 private int id;
 private String nom;
-
+private int idChefDept;
     public Departement() {
     }
 
-    public Departement(int id, String nom) {
+    public Departement(int id, String nom,int idChefDept) {
         this.id = id;
         this.nom = nom;
+        this.idChefDept=idChefDept;
+        
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getIdChefDept() {
+        return idChefDept;
+    }
+
+    public void setIdChefDept(int idChefDept) {
+        this.idChefDept = idChefDept;
     }
 
     public String getNom() {
@@ -32,7 +43,7 @@ private String nom;
     public void ajouter(int id,String nom,int idChefDept) {
 
         if (verifExistence(id)) {
-            displayErrorAdd("Departement Existant  !");
+            displayError("Departement Existant  !");
             return;
         }
 
@@ -49,17 +60,17 @@ private String nom;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccAdd();
+                displaySucc();
 
             } else {
-                displayErrorAdd("impossible d'ajouter le Departement !");
+                displayError("impossible d'ajouter le Departement !");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorAdd("impossible d'ajouter le Departement !");
+            displayError("impossible d'ajouter le Departement !");
             e.printStackTrace();
 
         }
@@ -82,17 +93,17 @@ private String nom;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccModif();
+                displaySucc();
 
             } else {
-                displayErrorModif("impossible de modifier le Departement !");
+                displayError("impossible de modifier le Departement !");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorModif("impossible de modifier  le Departement!");
+            displayError("impossible de modifier  le Departement!");
             e.printStackTrace();
 
         }
@@ -120,17 +131,17 @@ private String nom;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccDel();
+                displaySucc();
 
             } else {
-                displayErrorDel("impossible de supprimer  le Departement!");
+                displayError("impossible de supprimer  le Departement!");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorDel("impossible de supprimer le Departement!");
+            displayError("impossible de supprimer le Departement!");
             e.printStackTrace();
 
         }
@@ -155,87 +166,24 @@ private String nom;
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySuccAdd();
+                displaySucc();
 
             } else {
-                displayErrorAdd("impossible d'assigner le chef departement !");
+                displayError("impossible d'assigner le chef departement !");
 
             }
 
             statement.close();
 
         } catch (SQLException e) {
-            displayErrorAdd("impossible d'assigner le chef departement!");
+            displayError("impossible d'assigner le chef departement!");
             e.printStackTrace();
 
         }
 
     }
-    ///////////===================================> ADD
-      public void addClasse(int idClasse) {
-         if(verifExistenceInDept(idClasse))return;
-         if(!verifExistenceClasse(idClasse))return;
-         
-
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
-
-            String query = "UPDATE Classe SET idDept= ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-
-            statement.setInt(1, this.id);
-                    statement.setInt(2,idClasse );
-
-            int rows = statement.executeUpdate();
-            if (rows > 0) {
-                displaySuccAdd();
-
-            } else {
-                displayErrorAdd("impossible d'ajouter la classe !");
-
-            }
-
-            statement.close();
-
-        } catch (SQLException e) {
-            displayErrorModif("impossible d'ajouter la classe!");
-            e.printStackTrace();
-
-        }
-
-    }
-         ///////////===================================> REMOVE
-         public void removeClasse(int idClasse) {
-         if(!verifExistenceInDept(idClasse))return;
+    
         
-            
-
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
-
-            String query = "UPDATE Classe SET idDept =NULL  WHERE  id = ? ";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-                    statement.setInt(1,idClasse );
-            int rows = statement.executeUpdate();
-            if (rows > 0) {
-                displaySuccDel();
-
-            } else {
-                displayErrorDel("impossible de retirer  la classe !");
-
-            }
-
-            statement.close();
-
-        } catch (SQLException e) {
-            displayErrorModif("impossible de retirer  la classe!");
-            e.printStackTrace();
-
-        }
-
-    }
     
       
  
@@ -253,7 +201,7 @@ private String nom;
 
             statement.setInt(1, id);
 
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
 
@@ -286,11 +234,23 @@ private String nom;
 
             statement.setInt(1, idChefDept);
 
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
 
                 ChefDeptExists = resultSet.getInt(1) > 0;
+                 query="Select 1 from departement where idChefDept=?";
+                  statement = connection.prepareStatement(query);
+                           statement.setInt(1, idChefDept);
+
+             resultSet = statement.executeQuery(query);
+             if(resultSet.next()){
+                 
+                ChefDeptExists = resultSet.getInt(1) == 0;
+                 
+             }else{
+                 ChefDeptExists=false;
+             }
 
             }
 
@@ -307,104 +267,71 @@ private String nom;
         
         
     }
-        private boolean verifExistenceInDept( int idClasse){
+      
+          
         
-         
-              boolean classeExists = false;
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
-
-            String query = "SELECT 1 FROM classe where id=? and idDept=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setInt(1, idClasse);
-                  statement.setInt(2,this.id);
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            if (resultSet.next()) {
-
-                classeExists = resultSet.getInt(1) > 0;
-
-            }
-
-            resultSet.close();
-            statement.close();
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-        }
-        return classeExists;
-        
-        
-        
-    }
-            private boolean verifExistenceClasse( int idClasse){
-        
-         
-              boolean ClasseExists = false;
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
-
-            String query = "SELECT 1 FROM Classe where id=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setInt(1, idClasse);
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            if (resultSet.next()) {
-
-                ClasseExists = resultSet.getInt(1) > 0;
-
-            }
-
-            resultSet.close();
-            statement.close();
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-        }
-        return ClasseExists;
-        
-        
-        
-    }
+    
     
     
    ///////////===================================> DISPLAY
-    private void displayErrorAdd(String Message) {
+    private void displayError(String Message) {
                        JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
 
-    private void displaySuccAdd() {
+    private void displaySucc() {
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    private void displaySuccModif() {
-                                    JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
+    
 
+  
+    
+///////////===================================>  CONSULTER 
+    
+    public void consulter(int idDept ){
+        this.id=idDept;
+        fsetInfo();
+        displayInfo(this);
+        
+    
+    }
+    
+
+
+    private  void displayInfo(Departement dept) {
+     ConsulterDepartementFrame roleFrame=new ConsulterDepartementFrame(dept);
     }
 
-    private void displayErrorModif(String Message) {
-                     JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
+    private void fsetInfo() {
+       try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"))
+                {
+             
+            String query = "SELECT * FRom departement where id= ?  ";
+           
+            PreparedStatement statement = connection.prepareStatement(query);
 
+            statement.setInt(1, id);
+                ResultSet   resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                this.id=resultSet.getInt("id");
+                 this.nom=resultSet.getString("nom");
+                           this.idChefDept=resultSet.getInt("idChefDept");
+
+                    
+           
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+    
     }
-
-    private void displaySuccDel() {
-                                    JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
-
+    public static void main(String[] args) {
+ 
     }
-
-    private void displayErrorDel(String Message) {
-                            JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
-
-    }
-
 }

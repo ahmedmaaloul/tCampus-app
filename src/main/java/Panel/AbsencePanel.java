@@ -3,7 +3,6 @@ package Panel;
 
 
 import Frame.AddAbsenceForm;
-import Frame.AddEvaluationFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,7 +33,7 @@ public class AbsencePanel extends javax.swing.JPanel {
 
             String search = header2.getText();
             System.out.println(search);
-            String query = "SELECT idE,idC,justification FROM Absence";
+            String query = "SELECT idE,idC,justificatif FROM Absence";
 
             if (!search.isEmpty()) {
 
@@ -82,7 +81,7 @@ public class AbsencePanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new Panel.TableAb();
 
-        jPanel1.setBackground(new java.awt.Color(228, 228, 228));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));

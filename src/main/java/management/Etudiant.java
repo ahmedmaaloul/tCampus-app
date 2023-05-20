@@ -374,10 +374,12 @@ public class Etudiant extends Utilisateur {
         }
     }
 
-    public void modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
+   
+    @Override
+    public int modifier(String nomUtilisateur, String email, String password, String prenom, String nom, String tel, int genre, String photo, String dateNaissance) {
         if (this.verifUnicite_num_insc(num_insc)) {
             this.displayError("Etudiant non modifié");
-            return;
+            return 0;
         }
         this.nomUtilisateur = nomUtilisateur;
         this.email = email;
@@ -422,6 +424,7 @@ public class Etudiant extends Utilisateur {
             System.err.println("Error executing update query: " + e.getMessage());
             this.displayError("Etudiant non modifié");
         }
+        return 1;
     }
 
     public int fsetInfo() {

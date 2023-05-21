@@ -360,7 +360,7 @@ statement.setString(2, this.CIN_Passport);
         }
     }
 
-   private boolean verifExistenceRole(int idRole) {
+   public boolean verifExistenceRole(int idRole) {
         boolean roleExists = false;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
@@ -456,13 +456,13 @@ statement.setString(2, this.CIN_Passport);
         displayInfo();
 
     }
-    private void displayInfo() {
+    public void displayInfo() {
    
 
        ConsulterUtilisateurFrame utlisateurFrame = new ConsulterUtilisateurFrame(this);
     }
 
-    private void fsetInfo() {
+    public int fsetInfo() {
         try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
             String query = "SELECT * FRom utilisateur where CIN_Passport= ?  ";
@@ -495,7 +495,7 @@ statement.setString(2, this.CIN_Passport);
             e.printStackTrace();
 
         }
-
+        return 1;
     }
 
     public static void main(String[] args) {

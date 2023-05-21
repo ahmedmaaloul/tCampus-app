@@ -1,4 +1,7 @@
 
+
+
+
 package management;
 
 
@@ -235,7 +238,7 @@ public class GroupeModule {
     ///////////===================================> VERIF EXISTENCE
 
     
-    private boolean verifExistence(int id) {
+    public boolean verifExistence(int id) {
         
               boolean gmExists = false;
         try (
@@ -269,7 +272,7 @@ public class GroupeModule {
         
     }
     
-     private boolean verifExistenceInClasse(int idClasse) {
+     public  boolean verifExistenceInClasse(int idClasse) {
         
               boolean classeExists = false;
         try (
@@ -312,12 +315,12 @@ public class GroupeModule {
          ///////////===================================> DISPLAY
 
 
-    private void displaySucc() {
+    public void displaySucc() {
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    private void displayError(String Message) {
+    public void displayError(String Message) {
                                JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
@@ -335,11 +338,11 @@ public class GroupeModule {
     
 
 
-    private  void displayInfo() {
+    public  void displayInfo() {
      ConsulterGroupeModuleFrame salleFrame=new ConsulterGroupeModuleFrame(this);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"))
                 {
              

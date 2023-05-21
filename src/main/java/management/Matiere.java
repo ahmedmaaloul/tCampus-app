@@ -179,7 +179,7 @@ private int idGm;
     ///////////===================================> VERIF EXISTENCE
 
     
-    private boolean verifExistence(int id) {
+    public boolean verifExistence(int id) {
         
               boolean matExists = false;
         try (
@@ -211,7 +211,7 @@ private int idGm;
         
         
     }
-       private boolean verifExistenceGM(int id) {
+       public boolean verifExistenceGM(int id) {
         
               boolean gmExists = false;
         try (
@@ -311,11 +311,11 @@ private int idGm;
 
     }
 ///////////===================================> DISPLAY
-private void displayError(String Message) {
+public void displayError(String Message) {
                                    JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
-    private void displaySucc() {
+    public void displaySucc() {
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -331,13 +331,13 @@ private void displayError(String Message) {
 
     }
 
-    private void displayInfo(Matiere matiere) {
+    public void displayInfo(Matiere matiere) {
    
 
         ConsulterMatiereFrame matiereFrame = new ConsulterMatiereFrame(matiere);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
         try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
             String query = "SELECT * FRom matiere where id= ?  ";

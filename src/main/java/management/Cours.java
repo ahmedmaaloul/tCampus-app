@@ -357,7 +357,7 @@ public class Cours {
     }
 
     ///////////===================================> VERIF EXISTENCE
-    private boolean verifExistence(int id) {
+    public boolean verifExistence(int id) {
         boolean salleExists = false;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
@@ -386,7 +386,7 @@ public class Cours {
         return salleExists;
     }
 
-    private boolean verifExistenceEtDisponibiliteEns(String idEns,String day,float duree,String horaireDebut) {
+    public boolean verifExistenceEtDisponibiliteEns(String idEns,String day,float duree,String horaireDebut) {
         boolean EnsExists = false;
         boolean EnsDispo = true;
         if(idEns==null)return true;
@@ -440,7 +440,7 @@ public class Cours {
         return EnsExists && EnsDispo;
     }
 
-    private boolean verifExistenceMat(int id) {
+    public boolean verifExistenceMat(int id) {
 
         boolean MatExists = false;
         try (
@@ -470,7 +470,7 @@ public class Cours {
         return MatExists;
     }
 
-    private boolean verifExistenceEtDisponibiliteSalle(int idSalle,String day,float duree,String horaireDebut) {
+    public  boolean verifExistenceEtDisponibiliteSalle(int idSalle,String day,float duree,String horaireDebut) {
         boolean SalleExists = false;
         boolean SalleDispo = true;
         if(idSalle==0)return true;
@@ -565,12 +565,12 @@ public class Cours {
 
     }
 
-    private void displayInfo(Cours cours) {
+    public void displayInfo(Cours cours) {
 
         ConsulterCoursFrame coursFrame = new ConsulterCoursFrame(cours);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
         try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
             String query = "SELECT * FRom Cours where id= ?  ";
@@ -601,14 +601,14 @@ public class Cours {
     }
 
 ///////////===================================> DISPLAY
-    private void displayError(String Message) {
+    public void displayError(String Message) {
         JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
 
     ;
 
-    private void displaySucc() {
+    public void displaySucc() {
         JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }

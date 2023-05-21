@@ -183,7 +183,7 @@ public class Enseignant extends Utilisateur {
         return false;
     }
 
-    private boolean verifUnicite_CNSS(int CNSS) {
+    public boolean verifUnicite_CNSS(int CNSS) {
         boolean unique = true;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
@@ -221,12 +221,13 @@ public class Enseignant extends Utilisateur {
 
     }
 
-    private void displayInfo() {
+    public void displayInfo() {
 
         ConsulterEnseignantFrame matiereFrame = new ConsulterEnseignantFrame(this);
     }
 
-    private void fsetInfo() {
+    @Override
+    public int fsetInfo() {
         try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
             String query = "SELECT * FRom utilisateur where CNSS= ?  ";
@@ -266,6 +267,7 @@ public class Enseignant extends Utilisateur {
             e.printStackTrace();
 
         }
+        return 1;
 
     }
 

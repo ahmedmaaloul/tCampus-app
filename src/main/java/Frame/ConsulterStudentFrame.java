@@ -423,7 +423,7 @@ Et.Consulter(Et.getNum_insc());
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 new String[]{"Oui", "Non"},
-                "Non");
+                "Non"); 
 
         if (result == JOptionPane.YES_OPTION) {
             // add supprimer'method
@@ -432,7 +432,7 @@ Et.Consulter(Et.getNum_insc());
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void EditButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButton1ActionPerformed
-        // TODO add your handling code here:
+        new EditStudentFrame(Et);
     }//GEN-LAST:event_EditButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -50,58 +50,58 @@ public class Menu extends javax.swing.JPanel {
 
     private void init() {
         if (this.roles.contains("G_CLASSE")) {
-            listMenu1.addItem(new Model_Menu("Groupes", "Classes", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("1", "Classes", Model_Menu.MenuType.MENU));
         }
         if (this.roles.contains("G_GRP")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Groupes", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Groupes", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_ETU")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Etudiants", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Etudiants", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_GM")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Groupe Modules", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Groupe Modules", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_STG")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Stages", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Stages", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_MAT")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Matieres", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Matieres", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_DEPT")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Departement", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Departement", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_ENS")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Enseignants", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Enseignants", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_EVA")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Evaluations", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Evaluations", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_COURS")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Cours", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Cours", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_SAL")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Salles", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Salles", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_ABS")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Absences", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Absences", Model_Menu.MenuType.MENU));
 
         }
         if (this.roles.contains("G_UTI")) {
-                    listMenu1.addItem(new Model_Menu("Groupes", "Utilisateurs", Model_Menu.MenuType.MENU));
+                    listMenu1.addItem(new Model_Menu("1", "Utilisateurs", Model_Menu.MenuType.MENU));
 
         }
              if (this.roles.contains("G_ROLE")) {
-        listMenu1.addItem(new Model_Menu("Groupes", "Roles", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("1", "Roles", Model_Menu.MenuType.MENU));
 
         }
 
@@ -118,7 +118,7 @@ public class Menu extends javax.swing.JPanel {
 
         panelMoving.setOpaque(false);
 
-        title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tCampus.png"))); // NOI18N
+        title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tCampus-125.png"))); // NOI18N
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
@@ -126,8 +126,8 @@ public class Menu extends javax.swing.JPanel {
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

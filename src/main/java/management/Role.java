@@ -178,7 +178,7 @@ public class Role {
     
   ///////////===================================> VERIF EXISTENCE
 
-    private boolean verifExistence(int id) {
+    public boolean verifExistence(int id) {
         boolean roleExists=false;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
@@ -216,13 +216,13 @@ public class Role {
     
 ///////////===================================>  DISPLAY
 
-    private void displaySucc() {
+    public void displaySucc() {
 
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    private void displayError(String Message) {
+    public void displayError(String Message) {
 
                                                JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
@@ -242,11 +242,11 @@ public class Role {
     
 
 
-    private  void displayInfo() {
+    public  void displayInfo() {
      ConsulterRoleFrame roleFrame=new ConsulterRoleFrame(id,nom,description);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"))
                 {
              

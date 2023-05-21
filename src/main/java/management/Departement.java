@@ -228,7 +228,7 @@ private String idChefDept;
         
         
     }
-    private boolean verifExistenceChefDept( String idChefDept){
+    public boolean verifExistenceChefDept( String idChefDept){
         
          
         try (
@@ -279,12 +279,12 @@ private String idChefDept;
     
     
    ///////////===================================> DISPLAY
-    private void displayError(String Message) {
+    public void displayError(String Message) {
                        JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
 
-    private void displaySucc() {
+    public void displaySucc() {
                                     JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -305,11 +305,11 @@ private String idChefDept;
     
 
 
-    private  void displayInfo(Departement dept) {
+    public  void displayInfo(Departement dept) {
      ConsulterDepartementFrame roleFrame=new ConsulterDepartementFrame(dept);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"))
                 {
              

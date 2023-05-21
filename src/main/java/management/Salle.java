@@ -190,7 +190,7 @@ public class Salle {
     
   ///////////===================================> VERIF EXISTENCE
 
-    private boolean verifExistence(int id) {
+    public boolean verifExistence(int id) {
       
         boolean salleExists=false;
         try (
@@ -227,13 +227,13 @@ public class Salle {
     
 ///////////===================================>  DISPLAY
 
-    private void displaySucc() {
+    public void displaySucc() {
 
                                     JOptionPane.showMessageDialog(null, "Operation terminé avec success", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
     
     }
-    private void displayError(String Message) {
+    public void displayError(String Message) {
 
                                                JOptionPane.showMessageDialog(null, Message,"ERROR", JOptionPane.ERROR_MESSAGE);
 
@@ -253,11 +253,11 @@ public class Salle {
     
 
 
-    private  void displayInfo() {
+    public  void displayInfo() {
      ConsulterSalleFrame salleFrame=new ConsulterSalleFrame(this);
     }
 
-    private void fsetInfo() {
+    public void fsetInfo() {
        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"))
                 {
              

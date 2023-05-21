@@ -9,7 +9,7 @@ import management.Classe;
 
 public class ActionPanelC extends javax.swing.JPanel {
     private int id;
-    public ActionPanelC(int idE) {
+    public ActionPanelC(int id) {
         initComponents();
         this.id=id;
         

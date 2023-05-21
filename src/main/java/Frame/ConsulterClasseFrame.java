@@ -353,7 +353,8 @@ public class ConsulterClasseFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void gererJus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gererJus2ActionPerformed
-        // TODO add your handling code here:
+        EditClasseFrame classe =new EditClasseFrame(c);
+        this.dispose();
     }//GEN-LAST:event_gererJus2ActionPerformed
 
     private void SuppBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppBtn2ActionPerformed

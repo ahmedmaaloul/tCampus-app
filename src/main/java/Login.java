@@ -98,8 +98,8 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Code to be executed when the button is clicked
                 Utilisateur uti=new Utilisateur();
-       //         String id=uti.Login(email.getText(), password.getText());
-                String id=uti.Login("Abdou48", "Abdou48");
+               String id=uti.Login(email.getText(), password.getText());
+           //     String id=uti.Login("Abdou48", "Abdou48");
                 if(!"".equals(id)){
                     DashBoard dashboard=new DashBoard(id);
                     dispose();

@@ -5,9 +5,9 @@ package Panel;
 import Frame.AddAbsenceForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -27,41 +27,36 @@ public class AbsencePanel extends javax.swing.JPanel {
         initComponents();
         fetchAbsences();
      }
-    private void fetchAbsences(){
-            try (
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+   private void fetchAbsences() {
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+         PreparedStatement statement = connection.prepareStatement("SELECT idE, idC, justification FROM Absence WHERE idE LIKE ? OR idC LIKE ?")) {
 
-            String search = header2.getText();
-            System.out.println(search);
-            String query = "SELECT idE,idC,justificatif FROM Absence";
+        String search = header2.getText();
+        System.out.println(search);
 
-            if (!search.isEmpty()) {
+        // Set the search parameter values as strings
+        statement.setString(1, "%" + search + "%");
+        statement.setString(2, "%" + search + "%");
 
-                query += " WHERE idE LIKE '%" + search + "%'    OR idC LIKE '%" + search + "%' ";
-            }
+        ResultSet resultSet = statement.executeQuery();
 
-            ResultSet resultSet = statement.executeQuery(query);
-
-            table.setRowCount(0);
-            while (resultSet.next()) {
-                Object[] rowData = new Object[5];
-                rowData[0] = resultSet.getString("idE");
-                rowData[1] = resultSet.getString("idC");
-                rowData[3] = resultSet.getString("justification");
-                rowData[4] = "Actions";
-                table.addRow(rowData);
-                System.out.println(rowData);
-            }
-
-            resultSet.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
+        table.setRowCount(0);
+        while (resultSet.next()) {
+            Object[] rowData = new Object[4];
+            rowData[0] = resultSet.getString("idE");
+            rowData[1] = resultSet.getString("idC");
+            rowData[2] = resultSet.getString("justification");
+            rowData[3] = "Actions";
+            table.addRow(rowData);
+            System.out.println(rowData);
         }
 
+        resultSet.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

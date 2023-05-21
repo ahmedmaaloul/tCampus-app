@@ -10,10 +10,12 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
 
     public ConsulterMatiereFrame(Matiere matiere) {
         initComponents();
-        this.setResizable(false);
+            this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
            this.matiere=matiere;
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+ 
         id_JField.setText(Integer.toString(matiere.getId()  ));
         nom_JFIELD.setText(matiere.getNom());
       
@@ -21,6 +23,7 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
         vhoraire_JFIELD.setText(Float.toString(matiere.getvHoraire()));
 
         idGM_JFILED.setText(Integer.toString(matiere.getIdGm()));
+        if(matiere.getIdGm()!=0)Assigner_GM.setText("Retirer");
         this.setVisible(true);
     }
 
@@ -52,7 +55,7 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         Modifier = new javax.swing.JButton();
         Supprimer_ROLE1 = new javax.swing.JButton();
-        Assigner_Salle = new javax.swing.JButton();
+        Assigner_GM = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,18 +223,18 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
         kGradientPanel1.add(Supprimer_ROLE1);
         Supprimer_ROLE1.setBounds(730, 510, 98, 39);
 
-        Assigner_Salle.setBackground(new java.awt.Color(0, 102, 153));
-        Assigner_Salle.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        Assigner_Salle.setForeground(new java.awt.Color(255, 255, 255));
-        Assigner_Salle.setText("Assigner");
-        Assigner_Salle.setBorder(null);
-        Assigner_Salle.addActionListener(new java.awt.event.ActionListener() {
+        Assigner_GM.setBackground(new java.awt.Color(0, 102, 153));
+        Assigner_GM.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        Assigner_GM.setForeground(new java.awt.Color(255, 255, 255));
+        Assigner_GM.setText("Assigner");
+        Assigner_GM.setBorder(null);
+        Assigner_GM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Assigner_SalleActionPerformed(evt);
+                Assigner_GMActionPerformed(evt);
             }
         });
-        kGradientPanel1.add(Assigner_Salle);
-        Assigner_Salle.setBounds(760, 150, 98, 39);
+        kGradientPanel1.add(Assigner_GM);
+        Assigner_GM.setBounds(760, 150, 98, 39);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -293,13 +296,40 @@ public class ConsulterMatiereFrame extends javax.swing.JFrame {
        
     }//GEN-LAST:event_Supprimer_ROLE1ActionPerformed
 
-    private void Assigner_SalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Assigner_SalleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Assigner_SalleActionPerformed
+    private void Assigner_GMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Assigner_GMActionPerformed
+        if(Assigner_GM.getText()=="Assigner"){
+                String idGM_text= JOptionPane.showInputDialog(null, "Entrer l'identifiant du Groupe Module:");
+                int idGM=0;
+                Boolean validIdFormat=false;
+             try {
+            
+                  idGM=Integer.parseInt(idGM_text);
+                
+                  if(idGM==matiere.getIdGm())return;
+                  validIdFormat=true;
+             
+                 
+        } catch (Exception e) {
+            
+        JOptionPane.showMessageDialog(null, "identifiant Groupe Module  invalide !", "warning", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+             if(validIdFormat){
+                    matiere.AssignerMat_GM(idGM);
+                    matiere.consulter(matiere.getId());
+                    this.dispose();
+             }
+        }else{
+            
+            matiere.RetierMat_GM();
+             matiere.consulter(matiere.getId());
+                    this.dispose();
+        }
+    }//GEN-LAST:event_Assigner_GMActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Assigner_Salle;
+    private javax.swing.JButton Assigner_GM;
     private javax.swing.JButton ConsulterEvaluations;
     private javax.swing.JButton Modifier;
     private javax.swing.JButton Supprimer_ROLE1;

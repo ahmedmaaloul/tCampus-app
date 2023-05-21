@@ -23,6 +23,9 @@ private GroupeModule       grpM;
                                         idClasse_JFIELD.setText(Integer.toString(grpM.getIdClasse()));
             
                 }
+                    this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
           
         this.setVisible(true);
     }

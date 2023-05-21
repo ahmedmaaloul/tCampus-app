@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.Enseignant;
 
@@ -36,6 +37,9 @@ public class ModifierEnseignantFrame extends javax.swing.JFrame {
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
         PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -83,10 +87,10 @@ public class ModifierEnseignantFrame extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         cinpassport = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        cnss = new javax.swing.JPasswordField();
         jLabel19 = new javax.swing.JLabel();
         type = new javax.swing.JComboBox<>();
         SaveButton1 = new javax.swing.JButton();
+        cnss = new javax.swing.JTextField();
 
         setTitle("Modifier un étudiant");
         setResizable(false);
@@ -330,13 +334,6 @@ public class ModifierEnseignantFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel18);
         jLabel18.setBounds(270, 510, 180, 35);
 
-        cnss.setEditable(false);
-        cnss.setBackground(new java.awt.Color(187, 206, 255));
-        cnss.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        cnss.setForeground(new java.awt.Color(0, 0, 0));
-        kGradientPanel1.add(cnss);
-        cnss.setBounds(270, 550, 180, 43);
-
         jLabel19.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(51, 51, 51));
         jLabel19.setText("type");
@@ -367,6 +364,14 @@ public class ModifierEnseignantFrame extends javax.swing.JFrame {
         });
         kGradientPanel1.add(SaveButton1);
         SaveButton1.setBounds(800, 580, 102, 39);
+
+        cnss.setEditable(false);
+        cnss.setBackground(new java.awt.Color(187, 206, 255));
+        cnss.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        cnss.setForeground(new java.awt.Color(0, 0, 0));
+        fonction.setEditable(false);
+        kGradientPanel1.add(cnss);
+        cnss.setBounds(270, 550, 184, 42);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -462,7 +467,7 @@ public class ModifierEnseignantFrame extends javax.swing.JFrame {
     private javax.swing.JLabel PhotoLabel;
     private javax.swing.JButton SaveButton1;
     private javax.swing.JTextField cinpassport;
-    private javax.swing.JPasswordField cnss;
+    private javax.swing.JTextField cnss;
     private javax.swing.JSpinner day;
     private javax.swing.JTextField email;
     private javax.swing.JTextField fonction;

@@ -22,6 +22,9 @@ public class AddGroupeFrame extends javax.swing.JFrame {
     public AddGroupeFrame() {
         G = new Groupe();
         initComponents();
+           this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -67,6 +70,11 @@ public class AddGroupeFrame extends javax.swing.JFrame {
         IdGRP.setBackground(new java.awt.Color(204, 204, 204));
         IdGRP.setForeground(new java.awt.Color(0, 0, 0));
         IdGRP.setBorder(null);
+        IdGRP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdGRPActionPerformed(evt);
+            }
+        });
         IdGRP.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 IdGRPKeyTyped(evt);
@@ -127,10 +135,6 @@ public class AddGroupeFrame extends javax.swing.JFrame {
         IdClabel.setForeground(new java.awt.Color(255, 255, 255));
         IdClabel.setText("Identifiant Classe");
 
-        NomGRP.setEditable(false);
-        NumGRP.setEditable(false);
-        IdC.setEditable(false);
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -161,7 +165,7 @@ public class AddGroupeFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(237, 237, 237)
                         .addComponent(SaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,6 +250,10 @@ public class AddGroupeFrame extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_IdCKeyTyped
+
+    private void IdGRPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdGRPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IdGRPActionPerformed
 
     public int verifCoordonnees() {
         int IdGRPIn = Integer.valueOf(IdGRP.getText());

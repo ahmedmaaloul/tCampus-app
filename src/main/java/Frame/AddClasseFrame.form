@@ -68,16 +68,13 @@
                               <Component id="Specialite" linkSize="1" pref="146" max="32767" attributes="0"/>
                               <Component id="NumGRPLabel" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Component id="Diplome" linkSize="1" min="-2" pref="115" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Component id="IdClabel" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="IdClabel" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -132,11 +129,13 @@
                       </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="IdC" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Specialite" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Diplome" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="Nom" linkSize="2" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="IdC" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="Specialite" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="Diplome" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -212,9 +211,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IdCActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="IdCKeyTyped"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="IdC.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="Nom">
           <Properties>
@@ -225,9 +221,6 @@
               <Border info="null"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="Nom.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="NomGRPLabel">
           <Properties>
@@ -249,9 +242,6 @@
               <Border info="null"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="Specialite.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="NumGRPLabel">
           <Properties>
@@ -300,9 +290,6 @@
               <Border info="null"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="Diplome.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="IdClabel">
           <Properties>
@@ -341,9 +328,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NiveauActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="Niveau.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="IdGLabel2">
           <Properties>
@@ -371,9 +355,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AnneeUniActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="AnneeUni.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="IdDept">
           <Properties>
@@ -391,9 +372,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IdDeptActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="IdDeptKeyTyped"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="IdDept.setEditable(false);"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="IdGLabel3">
           <Properties>

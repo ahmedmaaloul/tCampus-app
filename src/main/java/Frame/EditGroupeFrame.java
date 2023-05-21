@@ -21,11 +21,14 @@ public class EditGroupeFrame extends javax.swing.JFrame {
      */
     public EditGroupeFrame(Groupe G) {
         initComponents();
-        this.GRP = GRP;
+        this.GRP = G;
         IdGRP.setText(Integer.toString(GRP.getId()));
         NomGRP.setText(GRP.getNom());
         NumGRP.setText(Integer.toString(GRP.getNum()));
         IdC.setText(Integer.toString(GRP.getIdC()));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Classe;
 
@@ -34,6 +35,9 @@ public class ConsulterClasseFrame extends javax.swing.JFrame {
         AnneeUni.setText(c.getAnneeUni());
         IdDept.setText(Integer.toString(c.getIdDept()));
         this.fetchGroupes();
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
     }

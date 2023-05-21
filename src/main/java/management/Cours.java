@@ -15,8 +15,23 @@ public class Cours {
     private String nom, description;
     private float duree;
     private String horaireDebut;
-    private int idEns, idMat, idSalle;
+    private int idMat, idSalle;
+    private String idEns="";
 
+    
+    public enum Day {
+        LUNDI,
+        MARDI,
+        MERCREDI,
+        JEUDI,
+        VENDREDI,
+        SAMEDI
+        
+    }
+
+    private Day day;
+
+  
     public Cours() {
     }
 
@@ -30,6 +45,34 @@ public class Cours {
 
     public int getId() {
         return id;
+    }
+  public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
+    }
+
+    public Day stringToDay(String day) {
+        if ("LUNDI".equals(day)) {
+            return Cours.Day.LUNDI;
+        }
+        if ("MARDI".equals(day)) {
+            return Cours.Day.MARDI;
+        }
+        if ("MERCREDI".equals(day)) {
+            return Cours.Day.MERCREDI;
+        }
+           if ("JEUDI".equals(day)) {
+            return Cours.Day.JEUDI;
+        }
+        if ("VENDREDI".equals(day)) {
+            return Cours.Day.VENDREDI;
+        }
+        
+            return Cours.Day.SAMEDI;
+
     }
 
     public String getNom() {
@@ -52,11 +95,11 @@ public class Cours {
         this.id = id;
     }
 
-    public int getIdEns() {
+    public String getIdEns() {
         return idEns;
     }
 
-    public void setIdEns(int idEns) {
+    public void setIdEns(String idEns) {
         this.idEns = idEns;
     }
 
@@ -93,7 +136,7 @@ public class Cours {
     }
 
     ///////////===================================> AJOUT
-    public void ajouter(int id, String nom, String description, float duree, String horaireDebut) {
+    public void ajouter(int id, String nom, String description, float duree, String horaireDebut, String day) {
 
         if (verifExistence(id)) {
             displayError("Cours Existant  !");
@@ -103,7 +146,7 @@ public class Cours {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "INSERT INTO Cours(id, nom,description, horaireDebut,duree) VALUES (?, ?, ?, ?,?)";
+            String query = "INSERT INTO Cours(id, nom,description, horaireDebut,duree,day) VALUES (?, ?, ?, ?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, id);
@@ -111,6 +154,7 @@ public class Cours {
             statement.setString(3, description);
             statement.setString(4, horaireDebut);
             statement.setFloat(5, duree);
+            statement.setString(6, day);
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
@@ -134,19 +178,27 @@ public class Cours {
     ;
     ///////////===================================> MODIF
     
-    public void modifier(String nom, String description, float duree, String horaireDebut) {
-
+    public void modifier(String nom, String description, float duree, String horaireDebut, String day) {
+        
+       
+      
+        if( !verifExistenceEtDisponibiliteEns(idEns,day,duree,horaireDebut )
+                ||  !verifExistenceEtDisponibiliteSalle(idSalle,day,duree,horaireDebut))
+            {displayError("Vueillez respecter la disponibilité des enseignants et salles ");
+            return ;
+        }
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Cours SET nom = ?, description = ?,duree=? ,horaireDebut=? WHERE id = ?";
+            String query = "UPDATE Cours SET nom = ?, description = ?,duree=? ,horaireDebut=? ,day=? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, nom);
             statement.setString(2, description);
             statement.setFloat(3, duree);
             statement.setString(4, horaireDebut);
-            statement.setInt(5, this.id);
+            statement.setString(5, day);
+            statement.setInt(6, this.id);
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
@@ -198,20 +250,20 @@ public class Cours {
     }
     ///////////===================================> ASSIGNER 
 
-    public void AssignerAEns(int idEns) {
+    public void AssignerAEns(String idEns) {
 
-        if (verifExistenceEns(idEns)) {
-            displayError("Enseignant inExistant  !");
+        if (!verifExistenceEtDisponibiliteEns(idEns,this.day.toString(),this.duree,this.horaireDebut)) {
+            displayError("Enseignant non existant or non disponible  !");
             return;
         }
 
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Cours SET idEns= ?WHERE id = ?";
+            String query = "UPDATE Cours SET idEns= ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setInt(1, idEns);
+            System.out.println("id ens " + idEns + "   id cours " + this.id);
+            statement.setString(1, idEns);
             statement.setInt(2, this.id);
 
             int rows = statement.executeUpdate();
@@ -234,8 +286,8 @@ public class Cours {
     }
 
     public void AssignerAMat(int idMat) {
-
-        if (verifExistenceMat(idMat)) {
+       
+        if (!verifExistenceMat(idMat)) {
             displayError("Matiere inExistante  !");
             return;
         }
@@ -269,16 +321,17 @@ public class Cours {
     }
 
     public void AssignerASalle(int idSalle) {
+ 
+        if (!verifExistenceEtDisponibiliteSalle(idSalle,this.day.toString(),this.duree,this.horaireDebut)) {
 
-        if (VerifExistenceEtDisponibilite(idSalle)) {
             displayError("Salle inExistante ou non Disponible  !");
             return;
         }
-
+        System.out.println("VERIF CHECK BY PASSED");
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE Cours SET idSalle= ?WHERE id = ?";
+            String query = "UPDATE Cours SET idSalle= ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, idSalle);
@@ -333,34 +386,58 @@ public class Cours {
         return salleExists;
     }
 
-    private boolean verifExistenceEns(int id) {
-
+    private boolean verifExistenceEtDisponibiliteEns(String idEns,String day,float duree,String horaireDebut) {
         boolean EnsExists = false;
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
-
-            String query = "SELECT 1 FROM Enseignants where id=?";
+        boolean EnsDispo = true;
+        if(idEns==null)return true;
+        try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+            String query = "SELECT 1 FROM Utilisateur WHERE CIN_Passport=?";
             PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setInt(1, id);
-
+            statement.setString(1, idEns);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                EnsExists = true;
 
-                EnsExists = resultSet.getInt(1) > 0;
+                query = "SELECT idEns FROM Cours WHERE   id!=? AND idEns=? AND day=? AND "
+                        + " ("
+                        + " (TIME(HoraireDebut) >= TIME(?) AND TIME(HoraireDebut) <= TIME(?)) "
+                        + "OR"
+                        + " (TIME(HoraireDebut) <= TIME(?) AND ADDTIME(HoraireDebut, SEC_TO_TIME(Cours.Duree * 3600)) >= TIME(?)     )  "
+                        + "      )";
 
+                PreparedStatement statement2 = connection.prepareStatement(query);
+                    statement2.setInt(1, this.id);
+                statement2.setString(2, idEns);
+                  statement2.setString(3, day);
+                
+                statement2.setString(4, horaireDebut);
+
+                int duration = (int) duree * 60;
+                LocalTime horaireDebutTime = LocalTime.parse(horaireDebut);
+                LocalTime horaireFinTime = horaireDebutTime.plusMinutes(duration);
+                statement2.setString(5, horaireFinTime.toString());
+                statement2.setString(6, horaireDebut);
+                statement2.setString(7, horaireDebut);
+
+                ResultSet resultSet2 = statement2.executeQuery();
+
+                if (resultSet2.next() && resultSet2.getString("idEns").equals(idEns)) {
+                    EnsDispo = false;
+                }
+
+                resultSet2.close();
+                statement2.close();
             }
 
             resultSet.close();
             statement.close();
 
         } catch (SQLException e) {
-
             e.printStackTrace();
-
         }
-        return EnsExists;
+
+        return EnsExists && EnsDispo;
     }
 
     private boolean verifExistenceMat(int id) {
@@ -393,57 +470,57 @@ public class Cours {
         return MatExists;
     }
 
-    private boolean VerifExistenceEtDisponibilite(int IdSalle) {
-
+    private boolean verifExistenceEtDisponibiliteSalle(int idSalle,String day,float duree,String horaireDebut) {
         boolean SalleExists = false;
-        boolean SalleDispo = false;
-        try (
-                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+        boolean SalleDispo = true;
+        if(idSalle==0)return true;
+        try ( Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
+            System.out.println("before query");
+            String query = "SELECT id FROM Salle where id=?";
 
-            String query = "SELECT 1 FROM Salle where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setInt(1, id);
-
+            statement.setInt(1, idSalle);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                SalleExists = true;
 
-                SalleExists = resultSet.getInt(1) > 0;
-                if (SalleExists) {
-                    query = "SELECT 1 FROM Cours where idSalle=? and  HoraireDebut>=? and HoraireDebut<=?";
-                    statement = connection.prepareStatement(query);
-                    statement.setInt(1, IdSalle);
-                    statement.setString(2, this.horaireDebut);
+                query = "SELECT idSalle FROM Cours WHERE   id!=? AND idSalle=? AND day=? AND "
+                        + " ("
+                        + " (TIME(HoraireDebut) >= TIME(?) AND TIME(HoraireDebut) <= TIME(?)) "
+                        + "OR"
+                        + " (TIME(HoraireDebut) <= TIME(?) AND ADDTIME(HoraireDebut, SEC_TO_TIME(Cours.Duree * 3600)) >= TIME(?)     )  "
+                        + "      )";
+                PreparedStatement statement2 = connection.prepareStatement(query);
+                      statement2.setInt(1, this.id);
+                statement2.setInt(2, idSalle);
+                  statement2.setString(3, day);
+                statement2.setString(4, horaireDebut);
 
-                    // ==> preparing the horaire of ending the course
-                   int duration = (int) this.duree * 60;
-    LocalTime horaireDebutTime = LocalTime.parse(this.horaireDebut);
-    LocalTime horaireFinTime = horaireDebutTime.plusMinutes(duration);
+                int duration = (int)duree * 60;
+                LocalTime horaireDebutTime = LocalTime.parse(horaireDebut);
+                LocalTime horaireFinTime = horaireDebutTime.plusMinutes(duration);
 
-    statement.setString(3, horaireFinTime.toString()); // Set HoraireFin
+                statement2.setString(5, horaireFinTime.toString()); // Set HoraireFin
+                statement2.setString(6, horaireDebut);
+                statement2.setString(7, horaireDebut);
+                ResultSet resultSet2 = statement2.executeQuery();
 
-                    resultSet = statement.executeQuery();
-
-                    if (resultSet.next()) {
-
-                        SalleDispo = resultSet.getInt(1) > 0;
-
-                    }
-
+                if (resultSet2.next() && resultSet2.getInt("IdSalle") == idSalle) {
+                    SalleDispo = false;
                 }
 
+                resultSet2.close();
+                statement2.close();
             }
 
             resultSet.close();
             statement.close();
-
         } catch (SQLException e) {
-
             e.printStackTrace();
-
         }
-        return SalleDispo;
+
+        return SalleExists && SalleDispo;
     }
 
 ///////////===================================> DISPLAY
@@ -480,23 +557,7 @@ public class Cours {
 
     }
 
-///////////===================================> DISPLAY
-    private void displayError(String Message) {
-        JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
-
-    }
-
-    ;
-
-    private void displaySucc() {
-        JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
-
-    }
-
-    ;
-
 ///////////===================================>  CONSULTER 
-    
     public void consulter(int idGM) {
         this.id = idGM;
         fsetInfo();
@@ -505,7 +566,6 @@ public class Cours {
     }
 
     private void displayInfo(Cours cours) {
-   
 
         ConsulterCoursFrame coursFrame = new ConsulterCoursFrame(cours);
     }
@@ -526,7 +586,8 @@ public class Cours {
                 this.duree = resultSet.getFloat("duree");
                 this.idMat = resultSet.getInt("idMat");
                 this.idSalle = resultSet.getInt("idSalle");
-                this.idEns = resultSet.getInt("idEns");
+                this.idEns = resultSet.getString("idEns");
+                this.day=stringToDay( resultSet.getString("day"));
 
             }
 
@@ -539,12 +600,19 @@ public class Cours {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println("hii");
-        Cours tempCours = new Cours();
-        //       tempGM.ajouter(1,"Algo",(float)3.5);
-        tempCours.consulter(5);
+///////////===================================> DISPLAY
+    private void displayError(String Message) {
+        JOptionPane.showMessageDialog(null, "ERROR", Message, JOptionPane.ERROR_MESSAGE);
 
     }
+
+    ;
+
+    private void displaySucc() {
+        JOptionPane.showMessageDialog(null, "SUCCESS", "Operation terminé avec success", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+;
 
 }

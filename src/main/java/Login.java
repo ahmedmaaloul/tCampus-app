@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import management.Utilisateur;
+import underHood.RoundJPasswordField;
 import underHood.RoundJTextField;
 
 public class Login extends JFrame {
@@ -97,7 +98,8 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Code to be executed when the button is clicked
                 Utilisateur uti=new Utilisateur();
-                String id=uti.Login(email.getText(), password.getText());
+       //         String id=uti.Login(email.getText(), password.getText());
+                String id=uti.Login("Abdou48", "Abdou48");
                 if(!"".equals(id)){
                     DashBoard dashboard=new DashBoard(id);
                     dispose();
@@ -130,10 +132,10 @@ public class Login extends JFrame {
         email = new RoundJTextField(46);
         email.setPreferredSize(new Dimension(350, 40));
         email.setBackground(inputColor);
-        password = new RoundJTextField(46);
+        password = new RoundJPasswordField(46);
         password.setPreferredSize(new Dimension(350, 40));
         password.setBackground(inputColor);
-
+       
         emailPanel.add(emailLabel);
         emailPanel.add(email);
         passwordPanel.add(passwordLabel);

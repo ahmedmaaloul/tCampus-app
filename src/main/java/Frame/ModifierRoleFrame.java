@@ -13,7 +13,9 @@ public class ModifierRoleFrame extends javax.swing.JFrame {
         this.setVisible(true);
             Id_Role.setText(Integer.toString(id));
          Nom_Role.setText(nom);
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                               this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         if (description.contains("G_ABS")) {
             CheckBox_GAbs.setSelected(true);

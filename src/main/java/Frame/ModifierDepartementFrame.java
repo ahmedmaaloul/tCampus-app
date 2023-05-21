@@ -10,11 +10,13 @@ private Departement dept;
 
     public ModifierDepartementFrame(Departement dept) {
         initComponents();
-        this.setResizable(false);
+              this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dept=dept;
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                  
                 id_JField.setText( Integer.toString(dept.getId()) );
-                idChefDept_JFIELD.setText(Integer.toString(dept.getIdChefDept()));
+                idChefDept_JFIELD.setText(dept.getIdChefDept());
                 nom_JFIELD.setText(dept.getNom());
        
         

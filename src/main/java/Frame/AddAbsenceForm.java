@@ -4,8 +4,6 @@
  */
 package Frame;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Absence;
@@ -24,6 +22,9 @@ public class AddAbsenceForm extends javax.swing.JFrame {
     public AddAbsenceForm() {
         Ab = new Absence();
         initComponents();
+   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

@@ -27,7 +27,10 @@ public class AddStudentFrame extends javax.swing.JFrame {
     public AddStudentFrame() {
         Et = new Etudiant();
         initComponents();
-        setVisible(true);
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(true);
     }
 
     public class GradientPanel extends JPanel {
@@ -319,22 +322,21 @@ public class AddStudentFrame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(28, 28, 28)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(day)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(month)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(year)))
+                                .addGap(22, 22, 22))
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(numinsc)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(numinsc))
+                        .addGap(533, 533, 533)))
                 .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
@@ -460,7 +462,7 @@ public class AddStudentFrame extends javax.swing.JFrame {
         String nomIn = nom.getText().trim();
         String prenomIn = prenom.getText().trim();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+        int genreIn =  genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         int num_insc = Integer.valueOf(numinsc.getText());
@@ -503,7 +505,7 @@ public class AddStudentFrame extends javax.swing.JFrame {
         String nomIn = nom.getText().trim();
         String prenomIn = prenom.getText().trim();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+        int genreIn = genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String yearIn = year.getValue().toString();
         String monthIn = month.getValue().toString();
@@ -521,7 +523,7 @@ public class AddStudentFrame extends javax.swing.JFrame {
         }
         String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
         Pattern pattern2 = Pattern.compile(passwordRegex);
-        Matcher matcher2 = pattern.matcher(passwordIn);
+        Matcher matcher2 = pattern2.matcher(passwordIn);
         if (!matcher2.matches()) {
             displayError("Vous devez taper un mot de passe valide");
             return -1;
@@ -539,7 +541,7 @@ public class AddStudentFrame extends javax.swing.JFrame {
             return -1;
         }
         if (photo.length() == 0) {
-            displayError("Vous devez ajout un numéro");
+            displayError("Vous devez ajout une photo");
             return -1;
         }
         return 0;

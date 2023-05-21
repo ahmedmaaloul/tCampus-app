@@ -19,7 +19,7 @@ public class Menu extends javax.swing.JPanel {
 
     private String id;
     private String roles="";
-    private EventMenuSelected event;
+    private EventMenuSelected event;    
 
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;

@@ -33,17 +33,20 @@ public class ConsulterEnseignantFrame extends javax.swing.JFrame {
         genre.setSelectedIndex(enseignant.getGenre());
         tel.setText(enseignant.getTel());
         fonction.setText(enseignant.getFonction());
+        
         if(enseignant.getType()==Enseignant.Type.PERMANENT){
                type.setSelectedIndex(1);
         }else{
              type.setSelectedIndex(0);
         }
-     this.setResizable(false);
-                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+             this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         savedImageIcon= new javax.swing.ImageIcon(enseignant.getPhoto());
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
         PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
+        
         this.setVisible(true);
 
     }

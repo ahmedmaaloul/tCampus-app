@@ -17,10 +17,9 @@ public class AjouterEnseignantFrame extends javax.swing.JFrame {
     public AjouterEnseignantFrame() {
         initComponents();
         
-        this.setResizable(false);
-                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-    
+                 this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

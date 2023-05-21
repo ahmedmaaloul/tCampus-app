@@ -11,7 +11,7 @@ public class ActionPanelS extends javax.swing.JPanel {
     private int id;
     public ActionPanelS(int idE) {
         initComponents();
-        this.id=id;
+        this.id=idE;
         
     }
 

@@ -12,8 +12,10 @@ private Salle salle;
         initComponents();
         this.setResizable(false);
         this.salle=salle;
- 
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                
                 id_JField.setText( Integer.toString(salle.getId()) );
                 capacite_JFIELD.setText(Integer.toString(salle.getCapacite()));
                 Type_JFIELD.setText(salle.getType());

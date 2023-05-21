@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
 public class Departement {
 private int id;
 private String nom;
-private int idChefDept;
+private String idChefDept;
     public Departement() {
     }
 
-    public Departement(int id, String nom,int idChefDept) {
+    public Departement(int id, String nom,String idChefDept) {
         this.id = id;
         this.nom = nom;
         this.idChefDept=idChefDept;
@@ -27,11 +27,11 @@ private int idChefDept;
         return id;
     }
 
-    public int getIdChefDept() {
+    public String getIdChefDept() {
         return idChefDept;
     }
 
-    public void setIdChefDept(int idChefDept) {
+    public void setIdChefDept(String idChefDept) {
         this.idChefDept = idChefDept;
     }
 
@@ -149,9 +149,15 @@ private int idChefDept;
     }
         ///////////===================================> ASSIGNER
     
-     public void AssignChefDept(int idChefDept) {
-         if(!verifExistenceChefDept(idChefDept))return;
+     public void AssignChefDept(String idChefDept) {
+         
+         if(!verifExistenceChefDept(idChefDept))
+         {
+               displayError("Chef département non existant ou deja assigné ");
+             return;
     
+         }
+           
          
 
         try (
@@ -161,7 +167,7 @@ private int idChefDept;
             PreparedStatement statement = connection.prepareStatement(query);
 
 
-            statement.setInt(1, idChefDept);
+            statement.setString(1, idChefDept);
                     statement.setInt(2,this.id );
 
             int rows = statement.executeUpdate();
@@ -222,34 +228,33 @@ private int idChefDept;
         
         
     }
-    private boolean verifExistenceChefDept( int idChefDept){
+    private boolean verifExistenceChefDept( String idChefDept){
         
          
-              boolean ChefDeptExists = false;
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "SELECT 1 FROM utilisateur where CNSS=?";
+            String query = "SELECT CIN_PASSPORT FROM utilisateur where typeUser!=2 AND CIN_PASSPORT= ?  ";
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, idChefDept);
+            statement.setString(1, idChefDept);
+          
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
 
-                ChefDeptExists = resultSet.getInt(1) > 0;
-                 query="Select 1 from departement where idChefDept=?";
+                if(resultSet.getString("CIN_PASSPORT")==idChefDept)return false;
+                
+                 query="Select idChefDept from departement where idChefDept=?";
                   statement = connection.prepareStatement(query);
-                           statement.setInt(1, idChefDept);
+                           statement.setString(1, idChefDept);
 
              resultSet = statement.executeQuery(query);
              if(resultSet.next()){
                  
-                ChefDeptExists = resultSet.getInt(1) == 0;
+                if(resultSet.getString("idChefDpet")==idChefDept)return false;
                  
-             }else{
-                 ChefDeptExists=false;
              }
 
             }
@@ -262,7 +267,7 @@ private int idChefDept;
             e.printStackTrace();
 
         }
-        return ChefDeptExists;
+        return true;
         
         
         
@@ -317,7 +322,7 @@ private int idChefDept;
             if (resultSet.next()) {
                 this.id=resultSet.getInt("id");
                  this.nom=resultSet.getString("nom");
-                           this.idChefDept=resultSet.getInt("idChefDept");
+                           this.idChefDept=resultSet.getString("idChefDept");
 
                     
            

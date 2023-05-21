@@ -4,7 +4,6 @@
  */
 package Frame;
 
-import java.time.LocalDate;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Stage;
@@ -32,6 +31,9 @@ public class EditStageFrame extends javax.swing.JFrame {
         month2.setValue(Integer.parseInt(dateFin[1]));
         year2.setValue(Integer.parseInt(dateFin[0]));
         idE.setText(s.getIdEtu());
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -321,7 +323,7 @@ public class EditStageFrame extends javax.swing.JFrame {
         String type = Type.getText();
         String dateDebut = year1.getValue() + "-" + month1.getValue() + "-" + day1.getValue();
         String dateFin = year2.getValue() + "-" + month2.getValue() + "-" + day2.getValue();        
-        LocalDate localDate1 = LocalDate.parse(dateDebut);
+  /*      LocalDate localDate1 = LocalDate.parse(dateDebut);
         LocalDate localDate2 = LocalDate.parse(dateFin);
 
         int comparisonResult = localDate1.compareTo(localDate2);
@@ -329,7 +331,7 @@ public class EditStageFrame extends javax.swing.JFrame {
         if (comparisonResult > 0) {
             displayError("la date de debut doit être inferieur ou égael à la date de fin");
             return -1;
-        }
+        }*/
         if (type.length() == 0) {
             displayError("Vous devez donner un type");
             return -1;

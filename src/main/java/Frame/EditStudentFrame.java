@@ -2,13 +2,9 @@ package Frame;
 
 import java.awt.Image;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.Etudiant;
 
@@ -47,6 +43,9 @@ public class EditStudentFrame extends javax.swing.JFrame {
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
         PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -419,7 +418,7 @@ public class EditStudentFrame extends javax.swing.JFrame {
         String nomIn = nom.getText();
         String prenomIn = prenom.getText();
         String telIn = tel.getText();
-        int genreIn = (int) genre.getSelectedItem();
+        int genreIn =  genre.getSelectedIndex();
         String photo = FileUploaded.getText();
         String dateNaissance = year.getValue() + "-" + month.getValue() + "-" + day.getValue();
         Et.modifier(nomUtilisateur, emailIn, passwordIn, prenomIn, nomIn, telIn, genreIn, photo, dateNaissance);

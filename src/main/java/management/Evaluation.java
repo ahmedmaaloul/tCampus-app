@@ -63,10 +63,10 @@ public class Evaluation {
     }
 
     public void displaySucc(String info) {
-        JFrame frame = new JFrame("Error Dialog");
+        JFrame frame = new JFrame(" Info Dialog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, info, "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Erreur", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }

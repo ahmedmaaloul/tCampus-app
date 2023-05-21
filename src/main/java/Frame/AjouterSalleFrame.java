@@ -11,9 +11,9 @@ private String type;
 private Boolean contientProjecteur;
     public AjouterSalleFrame() {
                 initComponents();
-                this.setResizable(false);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+                       this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

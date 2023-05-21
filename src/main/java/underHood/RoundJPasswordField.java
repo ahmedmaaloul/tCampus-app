@@ -4,18 +4,21 @@ package underHood;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
-public class RoundJTextField extends JTextField  {
+public class RoundJPasswordField extends JPasswordField  {
     private Shape shape;
     private int radius;
     private Color inputColor = new Color(0xBBCEFF);
-    public RoundJTextField(int size) {
+    public RoundJPasswordField(int size) {
         super(size);
         setOpaque(false); // As suggested by @AVD in comment.
+        this.setEchoChar('*');
         this.radius = 15;
     }
-    public RoundJTextField(int size,int radius) {
+    public RoundJPasswordField(int size,int radius) {
         super(size);
         setOpaque(false); // As suggested by @AVD in comment.
+                this.setEchoChar('*');
+
         this.radius = radius;
     }
     @Override

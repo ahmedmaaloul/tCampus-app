@@ -12,11 +12,8 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
      
         initComponents();
         this.setResizable(false);
-        
-       
-     
+        this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       
         this.setVisible(true);
     }
 
@@ -47,6 +44,8 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
         horaire_JFIELD = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         Ajouter_Cours = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        day_JFIELD = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,6 +193,24 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(Ajouter_Cours);
         Ajouter_Cours.setBounds(610, 510, 102, 39);
 
+        jLabel13.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Jour :");
+        kGradientPanel1.add(jLabel13);
+        jLabel13.setBounds(400, 200, 381, 35);
+
+        day_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
+        day_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        day_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
+        day_JFIELD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI" }));
+        day_JFIELD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                day_JFIELDActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(day_JFIELD);
+        day_JFIELD.setBounds(400, 240, 252, 42);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,20 +258,23 @@ public class AjouterCoursFrame extends javax.swing.JFrame {
        
 
      cours=new Cours();
+      cours.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText(),day_JFIELD.getSelectedItem().toString());
       
-      
-      
-      cours.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText());
 this.dispose();
 
 
     }//GEN-LAST:event_Ajouter_CoursActionPerformed
+
+    private void day_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day_JFIELDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_day_JFIELDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ajouter_Cours;
     private javax.swing.JButton Annuler;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> day_JFIELD;
     private javax.swing.JTextField desc_JFIELD1;
     private javax.swing.JTextField duree_JFILED;
     private javax.swing.JTextField horaire_JFIELD;
@@ -262,6 +282,7 @@ this.dispose();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

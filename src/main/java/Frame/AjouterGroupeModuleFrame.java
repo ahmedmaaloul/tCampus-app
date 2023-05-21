@@ -8,10 +8,9 @@ public class AjouterGroupeModuleFrame extends javax.swing.JFrame {
 
     public AjouterGroupeModuleFrame() {
         initComponents();
-        this.setResizable(false);
-                      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-          
+                  this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
     

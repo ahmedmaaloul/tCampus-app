@@ -4,6 +4,7 @@
  */
 package Frame;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Absence;
 
@@ -31,6 +32,9 @@ public class ConsulterAbsenceFrame extends javax.swing.JFrame {
         } else {
             gererJus.setText("Ajouter Jus.");
         }
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -94,6 +98,7 @@ public class ConsulterAbsenceFrame extends javax.swing.JFrame {
         gererJus.setBackground(new java.awt.Color(138, 192, 255));
         gererJus.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         gererJus.setForeground(new java.awt.Color(18, 66, 129));
+        gererJus.setText("Modifier");
         gererJus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gererJusActionPerformed(evt);

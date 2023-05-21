@@ -4,6 +4,7 @@
  */
 package Frame;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Stage;
 
@@ -32,6 +33,9 @@ public class ConsulterStageForm extends javax.swing.JFrame {
         month2.setValue(Integer.parseInt(dateFin[1]));
         year2.setValue(Integer.parseInt(dateFin[0]));
         idE.setText(s.getIdEtu());
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

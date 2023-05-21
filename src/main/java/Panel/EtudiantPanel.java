@@ -35,10 +35,10 @@ public class EtudiantPanel extends javax.swing.JPanel {
     try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
         String search = header2.getText();
         System.out.println(search);
-        String query = "SELECT CIN_Passport,nomUtilisateur,nom,prenom,tel,email FROM Utilisateur where num_insc is not null ";
+        String query = "SELECT CIN_Passport,num_insc,nomUtilisateur,nom,prenom,tel,email FROM Utilisateur where num_insc is not null ";
 
         if (!search.isEmpty()) {
-            query += " and  (id LIKE ? OR nom LIKE ? or prenom like ?) ";
+            query += " and  (num_INSC LIKE ? OR nom LIKE ? or prenom like ?) ";
         }
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -53,9 +53,9 @@ public class EtudiantPanel extends javax.swing.JPanel {
 
         table.setRowCount(0);
         while (resultSet.next()) {
-            Object[] rowData = new Object[5];
+            Object[] rowData = new Object[7];
             rowData[0] = resultSet.getString("CIN_Passport");
-            String holderID=resultSet.getString("CIN_Passport");
+            int  holderID=resultSet.getInt("num_insc");
             rowData[1] = resultSet.getString("nomUtilisateur");
             rowData[2] = resultSet.getString("nom");
             rowData[3] = resultSet.getString("prenom");
@@ -69,8 +69,8 @@ public class EtudiantPanel extends javax.swing.JPanel {
                Etudiant etu=new Etudiant();
                
                
-               
-               etu.consulter( holderID);
+             
+               etu.Consulter( holderID);
                
                
                

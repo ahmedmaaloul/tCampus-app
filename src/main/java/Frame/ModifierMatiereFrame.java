@@ -20,6 +20,9 @@ public class ModifierMatiereFrame extends javax.swing.JFrame {
         vhoraire_JFIELD.setText(Float.toString(matiere.getvHoraire()));
 
         idGM_JFILED.setText(Integer.toString(matiere.getIdGm()));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

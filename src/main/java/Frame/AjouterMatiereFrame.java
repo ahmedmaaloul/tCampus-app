@@ -9,11 +9,9 @@ public class AjouterMatiereFrame extends javax.swing.JFrame {
 
     public AjouterMatiereFrame() {
         initComponents();
-        this.setResizable(false);
-                         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-
-
+            this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -207,7 +205,8 @@ public class AjouterMatiereFrame extends javax.swing.JFrame {
         Matiere tempMatiere=new Matiere();
         
         tempMatiere.ajouter(Integer.parseInt(id_JField.getText()),nom_JFIELD.getText(), Float.parseFloat(coeff_JFIELD1.getText()),Float.parseFloat(vhoraire_JFIELD.getText())    );
-
+  
+        this.dispose();
 
     }//GEN-LAST:event_AjouterActionPerformed
 

@@ -22,6 +22,9 @@ public class AddEvaluationFrame extends javax.swing.JFrame {
     public AddEvaluationFrame() {
         Ev = new Evaluation();
         initComponents();
+   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

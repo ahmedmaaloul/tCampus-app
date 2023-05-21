@@ -2,11 +2,6 @@ package Frame;
 
 
 import java.awt.Image;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,6 +26,7 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
     public ConsulterStudentFrame(Etudiant Et) {
         initComponents();
         this.Et = Et;
+        
         cin_passport.setText(Et.getCIN_Passport());
         username.setText(Et.getNomUtilisateur());
         email.setText(Et.getEmail());
@@ -44,11 +40,21 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
         nom.setText(Et.getNom());
         genre.setSelectedIndex(Et.getGenre());
         tel.setText(Et.getTel());
+        groupeID.setText(Integer.toString(Et.getIdGRP()));
         savedImageIcon= new javax.swing.ImageIcon(Et.getPhoto());
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
         PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
+                  this.setResizable(false);
+       this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        System.out.println("id etu+ "+Et.getIdGRP() );
+        if(Et.getIdGRP()!=0 ){
+                Assigner.setText("retirer");
+    
+        }
         this.setVisible(true);
+   
 
     }
 
@@ -76,12 +82,12 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
         nom = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        tel = new javax.swing.JTextField();
+        groupeID = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         genre = new javax.swing.JComboBox<>();
         password = new javax.swing.JPasswordField();
         PhotoLabel = new javax.swing.JLabel();
-        EditButton = new javax.swing.JButton();
+        Assigner = new javax.swing.JButton();
         day = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -92,20 +98,28 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         numinsc = new javax.swing.JTextField();
         deleteButton = new javax.swing.JButton();
+        tel = new javax.swing.JTextField();
+        EditButton1 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         kGradientPanel1.setkEndColor(new java.awt.Color(98, 156, 255));
         kGradientPanel1.setkStartColor(new java.awt.Color(16, 58, 171));
+        kGradientPanel1.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Infos sur L'Etudiant");
+        kGradientPanel1.add(jLabel1);
+        jLabel1.setBounds(32, 43, 364, 45);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CIN / N° Passport");
+        kGradientPanel1.add(jLabel2);
+        jLabel2.setBounds(32, 106, 422, 35);
 
         cin_passport.setBackground(new java.awt.Color(187, 206, 255));
         cin_passport.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -115,10 +129,15 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
                 cin_passportActionPerformed(evt);
             }
         });
+        cin_passport.setEditable(false);
+        kGradientPanel1.add(cin_passport);
+        cin_passport.setBounds(32, 147, 422, 39);
 
         jLabel3.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nom d'utilistateur");
+        kGradientPanel1.add(jLabel3);
+        jLabel3.setBounds(32, 192, 422, 35);
 
         username.setBackground(new java.awt.Color(187, 206, 255));
         username.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -128,6 +147,9 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
+        username.setEditable(false);
+        kGradientPanel1.add(username);
+        username.setBounds(32, 240, 422, 42);
 
         email.setBackground(new java.awt.Color(187, 206, 255));
         email.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -137,46 +159,72 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
                 emailActionPerformed(evt);
             }
         });
+        email.setEditable(false);
+        kGradientPanel1.add(email);
+        email.setBounds(32, 333, 422, 39);
 
         jLabel4.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Email");
+        kGradientPanel1.add(jLabel4);
+        jLabel4.setBounds(32, 292, 422, 35);
 
         jLabel5.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Mot de passe");
+        kGradientPanel1.add(jLabel5);
+        jLabel5.setBounds(32, 378, 422, 35);
 
         jLabel6.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Prénom");
+        kGradientPanel1.add(jLabel6);
+        jLabel6.setBounds(515, 43, 190, 35);
 
         prenom.setBackground(new java.awt.Color(187, 206, 255));
         prenom.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         prenom.setForeground(new java.awt.Color(0, 0, 0));
+        prenom.setEditable(false);
+        kGradientPanel1.add(prenom);
+        prenom.setBounds(515, 84, 190, 39);
 
         jLabel7.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("Nom");
+        kGradientPanel1.add(jLabel7);
+        jLabel7.setBounds(711, 43, 220, 35);
 
         nom.setBackground(new java.awt.Color(187, 206, 255));
         nom.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         nom.setForeground(new java.awt.Color(0, 0, 0));
+        nom.setEditable(false);
+        kGradientPanel1.add(nom);
+        nom.setBounds(711, 84, 220, 39);
 
         jLabel8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setText("Genre");
+        kGradientPanel1.add(jLabel8);
+        jLabel8.setBounds(515, 157, 190, 19);
 
         jLabel9.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel9.setText("Tél/Mobile");
+        jLabel9.setText("Identifiant Groupe");
+        kGradientPanel1.add(jLabel9);
+        jLabel9.setBounds(710, 260, 220, 19);
 
-        tel.setBackground(new java.awt.Color(187, 206, 255));
-        tel.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        tel.setForeground(new java.awt.Color(0, 0, 0));
+        groupeID.setBackground(new java.awt.Color(187, 206, 255));
+        groupeID.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        groupeID.setForeground(new java.awt.Color(0, 0, 0));
+        groupeID.setEditable(false);
+        kGradientPanel1.add(groupeID);
+        groupeID.setBounds(710, 290, 220, 41);
 
         jLabel10.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
         jLabel10.setText("Photo");
+        kGradientPanel1.add(jLabel10);
+        jLabel10.setBounds(515, 240, 76, 38);
 
         genre.setBackground(new java.awt.Color(187, 206, 255));
         genre.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -188,52 +236,83 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
                 genreActionPerformed(evt);
             }
         });
+        kGradientPanel1.add(genre);
+        genre.setBounds(515, 192, 190, 42);
 
         password.setBackground(new java.awt.Color(187, 206, 255));
         password.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         password.setForeground(new java.awt.Color(0, 0, 0));
+        password.setEditable(false);
+        kGradientPanel1.add(password);
+        password.setBounds(32, 419, 422, 43);
 
         Image image = savedImageIcon.getImage();
         Image editedImage = image.getScaledInstance(186, 179, Image.SCALE_SMOOTH);
         PhotoLabel.setIcon(new javax.swing.ImageIcon(editedImage));
+        kGradientPanel1.add(PhotoLabel);
+        PhotoLabel.setBounds(526, 288, 179, 186);
 
-        EditButton.setBackground(new java.awt.Color(0, 102, 153));
-        EditButton.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        EditButton.setForeground(new java.awt.Color(255, 255, 255));
-        EditButton.setText("Modifier");
-        EditButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 163, 255)));
-        EditButton.addActionListener(new java.awt.event.ActionListener() {
+        Assigner.setBackground(new java.awt.Color(0, 102, 153));
+        Assigner.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        Assigner.setForeground(new java.awt.Color(255, 255, 255));
+        Assigner.setText("Assigner");
+        Assigner.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 163, 255)));
+        Assigner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditButtonActionPerformed(evt);
+                AssignerActionPerformed(evt);
             }
         });
+        kGradientPanel1.add(Assigner);
+        Assigner.setBounds(830, 340, 102, 39);
 
         day.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        day.setEnabled(false);
+        kGradientPanel1.add(day);
+        day.setBounds(38, 536, 64, 25);
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Jour");
+        kGradientPanel1.add(jLabel11);
+        jLabel11.setBounds(38, 514, 64, 16);
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Mois");
+        kGradientPanel1.add(jLabel12);
+        jLabel12.setBounds(108, 514, 43, 16);
 
         month.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        month.setEnabled(false);
+        kGradientPanel1.add(month);
+        month.setBounds(108, 536, 64, 25);
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Année");
+        kGradientPanel1.add(jLabel13);
+        jLabel13.setBounds(179, 514, 43, 16);
 
         year.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        year.setEnabled(false);
+        kGradientPanel1.add(year);
+        year.setBounds(178, 536, 64, 25);
 
         jLabel14.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Date de Naissance");
+        kGradientPanel1.add(jLabel14);
+        jLabel14.setBounds(32, 485, 232, 19);
 
         jLabel15.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Num Insc");
+        kGradientPanel1.add(jLabel15);
+        jLabel15.setBounds(270, 480, 115, 28);
 
         numinsc.setBackground(new java.awt.Color(187, 206, 255));
         numinsc.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         numinsc.setForeground(new java.awt.Color(0, 0, 0));
+        numinsc.setEditable(false);
+        kGradientPanel1.add(numinsc);
+        numinsc.setBounds(270, 518, 184, 42);
 
         deleteButton.setBackground(new java.awt.Color(0, 102, 153));
         deleteButton.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -245,167 +324,45 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
                 deleteButtonActionPerformed(evt);
             }
         });
+        kGradientPanel1.add(deleteButton);
+        deleteButton.setBounds(735, 518, 104, 42);
 
-        cin_passport.setEditable(false);
-        username.setEditable(false);
-        email.setEditable(false);
-        prenom.setEditable(false);
-        nom.setEditable(false);
         tel.setEditable(false);
-        password.setEditable(false);
-        day.setEnabled(false);
-        month.setEnabled(false);
-        year.setEnabled(false);
-        numinsc.setEditable(false);
+        tel.setBackground(new java.awt.Color(187, 206, 255));
+        tel.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        tel.setForeground(new java.awt.Color(0, 0, 0));
+        groupeID.setEditable(false);
+        kGradientPanel1.add(tel);
+        tel.setBounds(711, 193, 220, 41);
 
-        javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
-        kGradientPanel1.setLayout(kGradientPanel1Layout);
-        kGradientPanel1Layout.setHorizontalGroup(
-            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(password)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cin_passport)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(email)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(numinsc))))
-                .addGap(61, 61, 61)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(genre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(prenom))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(nom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                        .addGap(340, 340, 340))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(EditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18))
-        );
-        kGradientPanel1Layout.setVerticalGroup(
-            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(prenom, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                            .addComponent(nom))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cin_passport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(genre, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(PhotoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19))
-                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(numinsc, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(EditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(22, 22, 22))
-        );
+        EditButton1.setBackground(new java.awt.Color(0, 102, 153));
+        EditButton1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        EditButton1.setForeground(new java.awt.Color(255, 255, 255));
+        EditButton1.setText("Modifier");
+        EditButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 163, 255)));
+        EditButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditButton1ActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(EditButton1);
+        EditButton1.setBounds(603, 519, 102, 39);
+
+        jLabel16.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel16.setText("Tél/Mobile");
+        kGradientPanel1.add(jLabel16);
+        jLabel16.setBounds(711, 157, 220, 19);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 949, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -427,10 +384,36 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_genreActionPerformed
 
-    private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        new EditStudentFrame(Et);
-        this.dispose();
-    }//GEN-LAST:event_EditButtonActionPerformed
+    private void AssignerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignerActionPerformed
+if(Et.getIdGRP()==0){     
+                String GrpId_text= JOptionPane.showInputDialog(null, "Entrer l'identifiant du Groupe:");
+                int grpId=0;
+                Boolean validIdFormat=false;
+             try {
+            
+                  grpId=Integer.parseInt(GrpId_text);
+                
+                  if(grpId==Et.getIdGRP())return;
+                  validIdFormat=true;
+             
+                 
+        } catch (Exception e) {
+            
+        JOptionPane.showMessageDialog(null, "identifiant Groupe invalide !", "warning", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+             if(validIdFormat){
+                    Et.assignGRP(grpId);
+                    Et.Consulter(Et.getNum_insc());
+                    this.dispose();
+             }
+}else{
+    
+Et.removeGRP();
+Et.Consulter(Et.getNum_insc());
+    this.dispose();
+}
+    }//GEN-LAST:event_AssignerActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
          int result = JOptionPane.showOptionDialog(null,
@@ -448,14 +431,25 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void EditButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton EditButton;
+    private javax.swing.JButton Assigner;
+    private javax.swing.JButton EditButton1;
     private javax.swing.JLabel PhotoLabel;
     private javax.swing.JTextField cin_passport;
     private javax.swing.JSpinner day;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField email;
     private javax.swing.JComboBox<String> genre;
+    private javax.swing.JTextField groupeID;
+    private javax.swing.JTextField idRole_Filed;
+    private javax.swing.JTextField idRole_Filed1;
+    private javax.swing.JTextField idSalle_JFILED;
+    private javax.swing.JTextField idSalle_JFILED1;
+    private javax.swing.JTextField idSalle_JFILED2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -463,6 +457,7 @@ public class ConsulterStudentFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

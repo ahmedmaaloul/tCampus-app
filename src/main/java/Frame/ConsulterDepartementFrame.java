@@ -13,11 +13,13 @@ private Departement dept;
         initComponents();
         this.setResizable(false);
         this.dept=dept;
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                 
                 id_JField.setText( Integer.toString(dept.getId()) );
-                idChefDept_JFIELD.setText(Integer.toString(dept.getIdChefDept()));
+                idChefDept_JFIELD.setText(dept.getIdChefDept());
                 nom_JFIELD.setText(dept.getNom());
-       
+                  this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         this.setVisible(true);
     }
@@ -254,6 +256,13 @@ private Departement dept;
     private void AssingerChefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssingerChefActionPerformed
         
         
+                String idChef= JOptionPane.showInputDialog(null, "Entrer l'identifiant du chef departement:");
+          
+                  if(idChef==dept.getIdChefDept())return;
+                    dept.AssignChefDept(idChef);
+                    dept.consulter(dept.getId());
+                    this.dispose();
+             
         
     }//GEN-LAST:event_AssingerChefActionPerformed
 

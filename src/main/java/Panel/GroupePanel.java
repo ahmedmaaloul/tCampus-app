@@ -5,9 +5,9 @@ package Panel;
 import Frame.AddGroupeFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -28,28 +28,31 @@ public class GroupePanel extends javax.swing.JPanel {
         fetchGroupes();
      }
     private void fetchGroupes(){
-            try (
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+   try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+     PreparedStatement statement = connection.prepareStatement("SELECT id, nom, num, idClasse FROM Groupe WHERE id LIKE ? OR nom LIKE ?")) {
 
-            String search = header2.getText();
-            System.out.println(search);
-            String query = "SELECT id,nom,num,idClasse FROM Groupe";
+    String search = header2.getText();
+    System.out.println(search);
 
-            if (!search.isEmpty()) {
+    if (!search.isEmpty()) {
+        statement.setString(1, "%" + search + "%");
+        statement.setString(2, "%" + search + "%");
+    } else {
+        statement.setString(1, "%");
+        statement.setString(2, "%");
+    }
 
-                query += " WHERE id LIKE '%" + search + "%'    OR nom LIKE '%" + search + "%' ";
-            }
+    ResultSet resultSet = statement.executeQuery();
 
-            ResultSet resultSet = statement.executeQuery(query);
 
             table.setRowCount(0);
             while (resultSet.next()) {
-                Object[] rowData = new Object[6];
+                Object[] rowData = new Object[5];
                 rowData[0] = resultSet.getString("id");
                 rowData[1] = resultSet.getString("nom");
-                rowData[3] = resultSet.getString("num");
-                rowData[4] = resultSet.getString("idClasse");
-                rowData[5] = "Actions";
+                 rowData[2] = resultSet.getString("nom");
+                rowData[3] = resultSet.getString("idClasse");
+                rowData[4] = "Actions";
                 table.addRow(rowData);
                 System.out.println(rowData);
             }

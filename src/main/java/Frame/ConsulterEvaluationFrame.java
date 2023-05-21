@@ -4,6 +4,7 @@
  */
 package Frame;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Evaluation;
 
@@ -23,6 +24,9 @@ public class ConsulterEvaluationFrame extends javax.swing.JFrame {
         IdM.setText(Integer.toString(Ev.getIdM()));
         TypeNote.setText(Ev.getType());
         Note.setText(Float.toString(Ev.getNote()));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -202,7 +206,7 @@ public class ConsulterEvaluationFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void gererJus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gererJus2ActionPerformed
-        // TODO add your handling code here:
+    new EditEvaluationFrame(Ev);
     }//GEN-LAST:event_gererJus2ActionPerformed
 
     private void SuppBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppBtn2ActionPerformed

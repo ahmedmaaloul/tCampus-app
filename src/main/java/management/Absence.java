@@ -90,7 +90,7 @@ public class Absence {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int nbreA = resultSet.getInt("NbreU");
+                int nbreA = resultSet.getInt("NbreA");
                 if (nbreA == 0) {
                     resultSet.close();
                     return true;
@@ -128,7 +128,7 @@ public class Absence {
 
     public void ajouterJustificatif(String Justificatif) {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
-                PreparedStatement statement = connection.prepareStatement("UPDATE tcampus.absence SET Justifie = true, justificatif = ? WHERE IdC = ? AND IdE = ?")) {
+                PreparedStatement statement = connection.prepareStatement("UPDATE tcampus.absence SET Justifie = true, justification = ? WHERE IdC = ? AND IdE = ?")) {
 
             // Définir les valeurs des paramètres pour la requête préparée
             statement.setString(1, Justificatif);
@@ -274,6 +274,6 @@ public class Absence {
 
     public static void main(String[] args) {
         Absence a = new Absence();
-        a.Consulter("165123", 1);
+       
     }
 }

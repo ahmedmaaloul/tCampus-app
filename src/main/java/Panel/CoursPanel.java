@@ -22,9 +22,7 @@ import management.Cours;
 
 public class CoursPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form StudentPanel
-     */
+    
     public CoursPanel() {
         initComponents();
         fetch();

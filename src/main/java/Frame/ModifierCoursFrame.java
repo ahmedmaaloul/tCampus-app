@@ -12,20 +12,30 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         
      
         initComponents();
-        this.setResizable(false);
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.cours=cours;
        
      
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       
         id_JField.setText(Integer.toString(cours.getId()  ));
         nom_JFIELD.setText(cours.getNom());
         duree_JFILED.setText(Float.toString(cours.getDuree()));
-             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         horaire_JFIELD.setText(cours.getHoraireDebut());
         desc_JFIELD1.setText(cours.getDescription());
-        idEns_JFIELD.setText(Integer.toString(cours.getIdEns()));
+        idEns_JFIELD.setText(cours.getIdEns()); 
         idMat_JFIELD.setText(Integer.toString(cours.getIdMat()));
         idSalle_JFILED.setText(Integer.toString(cours.getIdSalle()));
+        if(cours.getDay()==Cours.Day.LUNDI)  day_JFIELD.setSelectedIndex(0); 
+        else if(cours.getDay()==Cours.Day.MARDI)day_JFIELD.setSelectedIndex(1);
+        else if(cours.getDay()==Cours.Day.MERCREDI)day_JFIELD.setSelectedIndex(2);
+        else if(cours.getDay()==Cours.Day.JEUDI)day_JFIELD.setSelectedIndex(3);
+        else if(cours.getDay()==Cours.Day.VENDREDI)day_JFIELD.setSelectedIndex(4);
+        else if(cours.getDay()==Cours.Day.SAMEDI)day_JFIELD.setSelectedIndex(5);
+        
+        
         this.setVisible(true);
     }
 
@@ -62,6 +72,8 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         horaire_JFIELD = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         Modifier_ROLE1 = new javax.swing.JButton();
+        day_JFIELD = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,7 +146,6 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         Annuler.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         Annuler.setForeground(new java.awt.Color(255, 255, 255));
         Annuler.setText("Annuler");
-        Annuler.setActionCommand("Annuler");
         Annuler.setBorder(null);
         Annuler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,7 +155,6 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(Annuler);
         Annuler.setBounds(730, 510, 98, 39);
 
-        duree_JFILED.setEditable(false);
         duree_JFILED.setBackground(new java.awt.Color(187, 206, 255));
         duree_JFILED.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         duree_JFILED.setForeground(new java.awt.Color(0, 0, 0));
@@ -239,7 +249,6 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(jLabel11);
         jLabel11.setBounds(6, 287, 381, 35);
 
-        horaire_JFIELD.setEditable(false);
         horaire_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
         horaire_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         horaire_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
@@ -253,9 +262,9 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("horaireDebut  :");
+        jLabel12.setText("Jour :");
         kGradientPanel1.add(jLabel12);
-        jLabel12.setBounds(10, 380, 381, 35);
+        jLabel12.setBounds(430, 380, 381, 35);
 
         Modifier_ROLE1.setBackground(new java.awt.Color(0, 102, 153));
         Modifier_ROLE1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -269,6 +278,24 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         });
         kGradientPanel1.add(Modifier_ROLE1);
         Modifier_ROLE1.setBounds(610, 510, 102, 39);
+
+        day_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
+        day_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        day_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
+        day_JFIELD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI" }));
+        day_JFIELD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                day_JFIELDActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(day_JFIELD);
+        day_JFIELD.setBounds(430, 420, 252, 42);
+
+        jLabel13.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("horaireDebut  :");
+        kGradientPanel1.add(jLabel13);
+        jLabel13.setBounds(10, 380, 381, 35);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,20 +352,25 @@ public class ModifierCoursFrame extends javax.swing.JFrame {
         
         
              
-      
+      String day=day_JFIELD.getSelectedItem().toString();
        
-           cours.modifier(nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText());
+           cours.modifier(nom_JFIELD.getText(),desc_JFIELD1.getText(),Float.parseFloat(duree_JFILED.getText()) , horaire_JFIELD.getText(),day);
            cours.consulter(cours.getId());
-this.dispose();
+            this.dispose();
 
 
     }//GEN-LAST:event_Modifier_ROLE1ActionPerformed
+
+    private void day_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day_JFIELDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_day_JFIELDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Annuler;
     private javax.swing.JButton Modifier_ROLE1;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> day_JFIELD;
     private javax.swing.JTextField desc_JFIELD1;
     private javax.swing.JTextField duree_JFILED;
     private javax.swing.JTextField horaire_JFIELD;
@@ -350,6 +382,7 @@ this.dispose();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

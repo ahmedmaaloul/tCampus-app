@@ -101,7 +101,7 @@ public class Enseignant extends Utilisateur {
             int rows = statement.executeUpdate();
 
             if (rows > 0) {
-                this.displaySucc();
+                this.displaySucc("SUCCES");
             } else {
                 this.displayError("Echec lors de l'ajout");
             }
@@ -159,7 +159,7 @@ public class Enseignant extends Utilisateur {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                this.displaySucc();
+                this.displaySucc("SUCCES");
             } else {
                 this.displayError("");
             }
@@ -241,6 +241,7 @@ public class Enseignant extends Utilisateur {
                 this.CIN_Passport = resultSet.getString("CIN_Passport");
                 this.CNSS = resultSet.getInt("CNSS");
                 this.email = resultSet.getString("email");
+                this.password=resultSet.getString("password");
                 this.tel = resultSet.getString("tel");
                 this.dateNaissance = resultSet.getString("dateNaissance");
                 this.photo = resultSet.getString("photo");

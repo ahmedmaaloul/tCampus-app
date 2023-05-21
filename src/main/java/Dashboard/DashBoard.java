@@ -6,6 +6,7 @@ import Panel.ClassePanel;
 import Panel.CoursPanel;
 import Panel.DepartementPanel;
 import Panel.EnseignantPanel;
+import Panel.EtudiantPanel;
 import Panel.EvaluationPanel;
 import Panel.GroupeModulePanel;
 import Panel.GroupePanel;
@@ -13,7 +14,6 @@ import Panel.MatierePanel;
 import Panel.RolePanel;
 import Panel.SallePanel;
 import Panel.StagePanel;
-import Panel.StudentPanel;
 import Panel.UtilisateurPanel;
 import java.awt.Color;
 import javax.swing.JComponent;
@@ -44,7 +44,7 @@ private String id;
             }
             else if("Etudiants".equals(gestionNom)){
                 
-                setForm(new StudentPanel() );
+                setForm(new EtudiantPanel() );
             }
             else if("Groupe Modules".equals(gestionNom)){
             
@@ -71,8 +71,7 @@ private String id;
                 
             }
             else if("Cours".equals(gestionNom)){
-                
-                        setForm(new CoursPanel() );
+                setForm(new CoursPanel() );
                 
                 
             }else if("Salles".equals(gestionNom)){

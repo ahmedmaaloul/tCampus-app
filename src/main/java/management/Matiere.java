@@ -246,7 +246,7 @@ private int idGm;
   ///////////===================================> ADD   
     
     public void AssignerMat_GM(int idGM) {
-         if(verifExistenceGM(idGM))return;
+         if(!verifExistenceGM(idGM))return;
         
          
 

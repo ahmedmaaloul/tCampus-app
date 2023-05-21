@@ -14,7 +14,7 @@ public class ConsulterGroupeModuleFrame extends javax.swing.JFrame {
         this.setResizable(false);
         this.grpM =    grpM;
      
-                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    
                 id_JField.setText( Integer.toString(grpM.getId()    ) );
                 nom_JFIELD.setText(grpM.getNom()    );
                 coef_JFIELD1.setText(Float.toString(grpM.getCoefficient()));
@@ -26,6 +26,9 @@ public class ConsulterGroupeModuleFrame extends javax.swing.JFrame {
                   AssignerClasse.setText("Retirer du classe");
                 }
           
+                           this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
     
@@ -293,6 +296,8 @@ public class ConsulterGroupeModuleFrame extends javax.swing.JFrame {
                 
         }else{
                   grpM.removeGM_Classe();
+                  grpM.consulter(grpM.getId());
+                            dispose();
             
         }
         

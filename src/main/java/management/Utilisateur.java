@@ -163,7 +163,7 @@ public class Utilisateur {
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySucc();
+                displaySucc("SUCCES");
             
             } else {
        displayError("impossible d'ajouter l'utlisateur !");
@@ -205,7 +205,7 @@ public class Utilisateur {
            statement.setString(10, this.CIN_Passport);
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySucc();
+                displaySucc("SUCCES");
                 return 1;
             } else {
          displayError("impossible d'ajouter l'utlisateur !");
@@ -236,7 +236,7 @@ statement.setString(1, this.CIN_Passport);
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySucc();
+             
                 return 1;
             } else {
     displayError("impossible d'ajouter l'utlisateur !");
@@ -273,7 +273,7 @@ statement.setString(2, password);
             if (resultSet.next()) {
                      String id = resultSet.getString(1);
                      if(!"".equals(id)){
-                         displaySucc();
+                         displaySucc("SUCCES");
                 return id;
                      }else{
                            displayError("username ou mot de passe incorrect !");
@@ -316,7 +316,7 @@ statement.setString(2, this.CIN_Passport);
 
             int rows = statement.executeUpdate();
             if (rows > 0) {
-                displaySucc();
+                displaySucc("SUCCES");
                 
             } else {
     displayError("impossible d'ajouter l'utlisateur !");
@@ -394,23 +394,9 @@ statement.setString(2, this.CIN_Passport);
 
  
 
-    public void displaySucc() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, "Operation terminé !", "Info", JOptionPane.INFORMATION_MESSAGE);
 
-        frame.dispose();
-    }
-
-    public void displaySuccAdd() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-   
-
-        frame.dispose();
-    }
+    
 
     public void displaySucc(String info) {
         JFrame frame = new JFrame("Error Dialog");
@@ -421,41 +407,9 @@ statement.setString(2, this.CIN_Passport);
         frame.dispose();
     }
 
-    public void displaySuccDel() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
 
-        JOptionPane.showMessageDialog(frame, "Utilisateur supprimé", "Info", JOptionPane.INFORMATION_MESSAGE);
 
-        frame.dispose();
-    }
-
-    public void displayErrorModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Utilisateur non modifié", "Info", JOptionPane.ERROR_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccModif() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Utilisateur modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
-
-    public void displaySuccAssign() {
-        JFrame frame = new JFrame("Error Dialog");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JOptionPane.showMessageDialog(frame, "Utilisateur modifié", "Info", JOptionPane.INFORMATION_MESSAGE);
-
-        frame.dispose();
-    }
 
     public void displayError(String reason) {
         JFrame frame = new JFrame("Error Dialog");
@@ -470,7 +424,7 @@ statement.setString(2, this.CIN_Passport);
         String url = "jdbc:mysql://localhost:3306/tCampus";
         String usernameDB = "root";
         String passwordDB = "root";
-          String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE CIN_Passport=?'";
+          String query = "SELECT COUNT(*) AS NbreU FROM Utilisateur WHERE CIN_Passport=?  ";
       try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
                 PreparedStatement statement = connection.prepareStatement(query)) {
          
@@ -502,7 +456,6 @@ statement.setString(2, this.CIN_Passport);
         displayInfo();
 
     }
-
     private void displayInfo() {
    
 

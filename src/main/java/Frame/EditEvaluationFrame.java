@@ -26,6 +26,9 @@ public class EditEvaluationFrame extends javax.swing.JFrame {
         IdM.setText(Integer.toString(Ev.getIdM()));
         TypeNote.setText(Ev.getType());
         Note.setText(Float.toString(Ev.getNote()));
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

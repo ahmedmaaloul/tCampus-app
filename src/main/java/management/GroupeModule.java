@@ -208,7 +208,7 @@ public class GroupeModule {
         try (
                  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root")) {
 
-            String query = "UPDATE GroupeModule SET idGM =NULL  WHERE  id = ?";
+            String query = "UPDATE GroupeModule SET idClasse =NULL  WHERE  id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
                     statement.setInt(1,this.id );

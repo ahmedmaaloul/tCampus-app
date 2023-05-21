@@ -110,6 +110,7 @@ public class Stage {
             return;
         }
         Etudiant t = new Etudiant();
+    
         if (t.verifExistence(idEtu) == false) {
             this.displayError("Etudiant non trouvé");
             return;
@@ -220,10 +221,10 @@ public class Stage {
     }
 
     public void displaySucc(String info) {
-        JFrame frame = new JFrame("Error Dialog");
+        JFrame frame = new JFrame("info");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JOptionPane.showMessageDialog(frame, info, "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, info, "Info", JOptionPane.INFORMATION_MESSAGE);
 
         frame.dispose();
     }
@@ -263,6 +264,7 @@ public class Stage {
 
     public void Consulter(int id) {
         this.id = id;
+        System.out.println("id is "+id);
         if (fsetInfo() == -1) {
             this.displayError("Impossible de trouver ce stage");
         } else {

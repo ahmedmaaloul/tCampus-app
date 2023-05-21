@@ -10,8 +10,9 @@ public class AjouterRoleFrame extends javax.swing.JFrame {
   
     public AjouterRoleFrame() {
         initComponents();
-                 this.setResizable(false);
-         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                      this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 

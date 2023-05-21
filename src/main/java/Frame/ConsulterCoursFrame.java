@@ -19,9 +19,18 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
         duree_JFILED.setText(Float.toString(cours.getDuree()));
         horaire_JFIELD.setText(cours.getHoraireDebut());
         desc_JFIELD1.setText(cours.getDescription());
-        idEns_JFIELD.setText(Integer.toString(cours.getIdEns()));
+        idEns_JFIELD.setText(cours.getIdEns());
         idMat_JFIELD.setText(Integer.toString(cours.getIdMat()));
         idSalle_JFILED.setText(Integer.toString(cours.getIdSalle()));
+               if(cours.getDay()==Cours.Day.LUNDI)  day_JFIELD.setSelectedIndex(0); 
+        else if(cours.getDay()==Cours.Day.MARDI)day_JFIELD.setSelectedIndex(1);
+        else if(cours.getDay()==Cours.Day.MERCREDI)day_JFIELD.setSelectedIndex(2);
+        else if(cours.getDay()==Cours.Day.JEUDI)day_JFIELD.setSelectedIndex(3);
+        else if(cours.getDay()==Cours.Day.VENDREDI)day_JFIELD.setSelectedIndex(4);
+        else if(cours.getDay()==Cours.Day.SAMEDI)day_JFIELD.setSelectedIndex(5);
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -62,6 +71,8 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
         Supprimer_ROLE1 = new javax.swing.JButton();
         Assigner_Salle = new javax.swing.JButton();
         Assigner_Mat = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        day_JFIELD = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -323,6 +334,25 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
         kGradientPanel1.add(Assigner_Mat);
         Assigner_Mat.setBounds(760, 240, 98, 39);
 
+        jLabel13.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Jour :");
+        kGradientPanel1.add(jLabel13);
+        jLabel13.setBounds(430, 380, 381, 35);
+
+        day_JFIELD.setBackground(new java.awt.Color(187, 206, 255));
+        day_JFIELD.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        day_JFIELD.setForeground(new java.awt.Color(0, 0, 0));
+        day_JFIELD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI" }));
+        day_JFIELD.setEnabled(false);
+        day_JFIELD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                day_JFIELDActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(day_JFIELD);
+        day_JFIELD.setBounds(430, 420, 252, 42);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -351,16 +381,16 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
 
     private void Assigner_EnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Assigner_EnsActionPerformed
 
-        int option = JOptionPane.showOptionDialog(null, "supprimer ce Cours?", "Warning",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-        if (option == JOptionPane.OK_OPTION) {
-            
+        
+                String EnsCIN= JOptionPane.showInputDialog(null, "Entrer l'identifiant(CNSS) du Matiere:");
+              
+             
          
-            
-            cours.supprimer();
-
-        }
+                    cours.AssignerAEns(EnsCIN);
+                    cours.consulter(cours.getId());
+                    this.dispose();
+             
     }//GEN-LAST:event_Assigner_EnsActionPerformed
 
     private void ConsulterAbsenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsulterAbsenceActionPerformed
@@ -408,12 +438,67 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Supprimer_ROLE1ActionPerformed
 
     private void Assigner_SalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Assigner_SalleActionPerformed
-        // TODO add your handling code here:
+        
+        
+                String SalleId_text= JOptionPane.showInputDialog(null, "Entrer l'identifiant du Salle:");
+                int SalleId=0;
+                Boolean validIdFormat=false;
+             try {
+            
+                  SalleId=Integer.parseInt(SalleId_text);
+                
+                  if(SalleId==cours.getIdSalle())return;
+                  validIdFormat=true;
+             
+                 
+        } catch (Exception e) {
+            
+        JOptionPane.showMessageDialog(null, "identifiant Salle invalide !", "warning", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+             if(validIdFormat){
+                    cours.AssignerASalle(SalleId);
+                    cours.consulter(cours.getId());
+                    this.dispose();
+             }
+          
+        
+        
     }//GEN-LAST:event_Assigner_SalleActionPerformed
 
     private void Assigner_MatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Assigner_MatActionPerformed
-        // TODO add your handling code here:
+        
+        
+
+        
+                String MatId_text= JOptionPane.showInputDialog(null, "Entrer l'identifiant du Matiere:");
+                int MatId=0;
+                Boolean validIdFormat=false;
+             try {
+            
+                  MatId=Integer.parseInt(MatId_text);
+                
+                  if(MatId==cours.getIdMat())return;
+                  validIdFormat=true;
+             
+                 
+        } catch (Exception e) {
+            
+        JOptionPane.showMessageDialog(null, "identifiant Matiere invalide !", "warning", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+             if(validIdFormat){
+                    cours.AssignerAMat(MatId);
+                    cours.consulter(cours.getId());
+                    this.dispose();
+             }
+        
+        
     }//GEN-LAST:event_Assigner_MatActionPerformed
+
+    private void day_JFIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day_JFIELDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_day_JFIELDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -424,6 +509,7 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
     private javax.swing.JButton Modifier_ROLE1;
     private javax.swing.JButton Supprimer_ROLE1;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> day_JFIELD;
     private javax.swing.JTextField desc_JFIELD1;
     private javax.swing.JTextField duree_JFILED;
     private javax.swing.JTextField horaire_JFIELD;
@@ -435,6 +521,7 @@ public class ConsulterCoursFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

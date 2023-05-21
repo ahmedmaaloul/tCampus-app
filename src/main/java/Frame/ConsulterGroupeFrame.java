@@ -6,9 +6,10 @@ package Frame;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import management.Groupe;
 
@@ -26,11 +27,15 @@ public class ConsulterGroupeFrame extends javax.swing.JFrame {
     public ConsulterGroupeFrame(Groupe GRP) {
         initComponents();
         this.GRP = GRP;
+   
         IdGRP.setText(Integer.toString(GRP.getId()));
         NomGRP.setText(GRP.getNom());
         NumGRP.setText(Integer.toString(GRP.getNum()));
         IdC.setText(Integer.toString(GRP.getIdC()));
         fetchStudents();
+                   this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -261,7 +266,11 @@ public class ConsulterGroupeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void gererJus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gererJus2ActionPerformed
-        // TODO add your handling code here:
+     
+        EditGroupeFrame grpf=new EditGroupeFrame(GRP);
+        this.dispose();
+        
+        
     }//GEN-LAST:event_gererJus2ActionPerformed
 
     private void SuppBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppBtn2ActionPerformed
@@ -284,43 +293,42 @@ public class ConsulterGroupeFrame extends javax.swing.JFrame {
         fetchStudents();
     }//GEN-LAST:event_SearchBtnActionPerformed
     private void fetchStudents() {
-        // instance mil classe
-        //instance.consulter 
-        try (
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root"); Statement statement = connection.createStatement()) {
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tCampus", "root", "root");
+         PreparedStatement statement = connection.prepareStatement("SELECT CIN_Passport, num_insc, nom, prenom, tel, email FROM Utilisateur"
+                 + " WHERE idRole=2  AND(nom like ? or prenom like ? or num_insc like  ? )"
+                 + "  AND idGRP=?")
+            
+            ) {
 
-            String search = headerEG.getText();
-            System.out.println(search);
-            String query = "SELECT CIN_Passport,num_insc,nom,prenom,tel,email FROM Utilisateur WHERE typeUser='Etudiant' AND idGRP=" + GRP.getId();
+        String search = headerEG.getText();
+        System.out.println("%" + search + "%");
+               statement.setString(1,"%" + search + "%");
+       statement.setString(2,"%" + search + "%");
+               statement.setString(3,"%" + search + "%");
+            statement.setString(4,Integer.toString(GRP.getId(  )));
+     
 
-            if (!search.isEmpty()) {
+        ResultSet resultSet = statement.executeQuery();
 
-                query += " AND nom LIKE '%" + search + "%'    OR CIN_Passport LIKE '%" + search + "%' OR num_insc LIKE '%" + search + "%'  ";
-            }
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            tableEG.setRowCount(0);
-            while (resultSet.next()) {
-                Object[] rowData = new Object[6];
-                rowData[0] = resultSet.getString("CIN_Passport");
-                rowData[1] = resultSet.getString("num_insc");
-                rowData[2] = resultSet.getString("nom");
-                rowData[3] = resultSet.getString("prenom");
-                rowData[4] = resultSet.getString("tel");
-                rowData[5] = resultSet.getString("email");
-                tableEG.addRow(rowData);
-                System.out.println(rowData);
-            }
-
-            resultSet.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
+        tableEG.setRowCount(0);
+        while (resultSet.next()) {
+            Object[] rowData = new Object[6];
+            rowData[0] = resultSet.getString("CIN_Passport");
+            rowData[1] = resultSet.getString("num_insc");
+            rowData[2] = resultSet.getString("nom");
+            rowData[3] = resultSet.getString("prenom");
+            rowData[4] = resultSet.getString("tel");
+            rowData[5] = resultSet.getString("email");
+            tableEG.addRow(rowData);
+            System.out.println(rowData);
         }
 
+        resultSet.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IdC;
